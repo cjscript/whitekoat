@@ -1,0 +1,3 @@
+_all_whitekoat_controllers:
+    resource: "@AxonMedicineWhiteKoatBundle/Controller"
+    type:     annotation

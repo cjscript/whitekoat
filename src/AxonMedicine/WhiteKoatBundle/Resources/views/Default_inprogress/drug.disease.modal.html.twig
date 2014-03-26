@@ -1,0 +1,18 @@
+<div class="modal-body">
+    <div class="row-fluid">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+            {%for drugdiseasename in drugdiseasenames%}
+                <tr style="cursor:default" onClick="javascript:updateAndCloseModal('#genericdrugdiseasename', '#genericdrugdiseasenameid', '', '{{drugdiseasename.id}}', '{{drugdiseasename.name}}')">
+                    <td>{{drugdiseasename.name}}</td>
+                    <td>{{drugdiseasename.description}}</td>
+                </tr>
+             {%endfor%}
+
+            </tbody>
+        </table>
+    </div>    
+</div>

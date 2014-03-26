@@ -1,0 +1,63 @@
+parameters:
+    whitekoat_login_service.class: AxonMedicine\WhiteKoatBundle\Service\LoginService
+    whitekoat_druglib_service.class: AxonMedicine\WhiteKoatBundle\Service\DrugLibService
+    whitekoat_classlib_service.class: AxonMedicine\WhiteKoatBundle\Service\ClassLibService
+    whitekoat_dcard_service.class: AxonMedicine\WhiteKoatBundle\Service\DrugCardService
+    whitekoat_diseasecard_service.class: AxonMedicine\WhiteKoatBundle\Service\DiseaseCardService
+    whitekoat_diseaselib_service.class: AxonMedicine\WhiteKoatBundle\Service\DiseaseLibService
+    whitekoat_moleculelib_service.class: AxonMedicine\WhiteKoatBundle\Service\MoleculeLibService
+    whitekoat_symptomlib_service.class: AxonMedicine\WhiteKoatBundle\Service\SymptomLibService
+    whitekoat_actionlib_service.class: AxonMedicine\WhiteKoatBundle\Service\ActionLibService
+    whitekoat_aliaslib_service.class: AxonMedicine\WhiteKoatBundle\Service\AliasLibService
+    whitekoat_typelib_service.class: AxonMedicine\WhiteKoatBundle\Service\TypeLibService
+    whitekoat_relationship_service.class: AxonMedicine\WhiteKoatBundle\Service\RelationshipService
+services:
+    whitekoat_login_service:
+        class: "%whitekoat_login_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_druglib_service:
+        class: "%whitekoat_druglib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_classlib_service:
+        class: "%whitekoat_classlib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_diseasecard_service:
+        class: "%whitekoat_diseasecard_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_diseaselib_service:
+        class: "%whitekoat_diseaselib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_moleculelib_service:
+        class: "%whitekoat_moleculelib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_symptomlib_service:
+        class: "%whitekoat_symptomlib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_dcard_service:
+        class: "%whitekoat_dcard_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_actionlib_service:
+        class: "%whitekoat_actionlib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_aliaslib_service:
+        class: "%whitekoat_aliaslib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_typelib_service:
+        class: "%whitekoat_typelib_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+    whitekoat_relationship_service:
+        class: "%whitekoat_relationship_service.class%"
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+            

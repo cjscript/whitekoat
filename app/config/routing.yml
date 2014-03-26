@@ -1,0 +1,7 @@
+axon_medicine_white_koat:
+     resource: "@AxonMedicineWhiteKoatBundle/Resources/config/routing.yml"
+     prefix:   /
+
+# file_filebundle:
+#    resource: "@FileFileBundle/Resources/config/routing.yml"
+#    prefix:   /

@@ -1,0 +1,72 @@
+{%extends "AxonMedicineWhiteKoatBundle:Default:home.html.twig"%}
+
+{%block libcontent %}
+
+<div id="someclass">
+    <div class="fileupload fileupload-new" data-provides="fileupload">
+        <div class="input-append">
+            <form class="form" method ="POST"  enctype="multipart/form-data" action="{{path('image_route_save')}}">
+                <fieldset id="drugrelationships">
+                    <legend>Image Library Tag</legend>
+
+                    <div style="padding-bottom:15px">
+                        <input type="hidden" name="libraryId" id="libraryId">
+                        <table>
+                            <tr>
+                                <td><select style="width:400px" size="3" id="libraryIds" name="libraryIds[]" multiple="multiple">
+                            {%for lib in libs%}
+                                        <option value="{{lib.id}}">{{lib.name}}</option>
+                            {%endfor%}
+                                    </select></td>
+                            </tr>
+                        </table>
+                    </div>
+                </fieldset>
+
+                <fieldset id="importdrugdata">
+                    <legend>Image File</legend>
+                    <div class="uneditable-input span6">
+                        <i class="icon-file fileupload-exists"></i> 
+                        <span class="fileupload-preview"></span>
+                    </div>
+                    <span class="btn btn-file">
+                        <span class="fileupload-new">Select file</span>
+                        <span class="fileupload-exists">Change</span>
+                        <input type="file" name="img"/>
+                    </span>
+                    <button class="btn btn-primary fileupload-exists" type="submit">Tag Libraries with Image</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block tablecontent %}
+
+<div style="height:300px;overflow:auto;">
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <th width="50px"></th>
+                <th>Image File Name</th>
+                <th>Library Tag</th>
+                <th>Action</th>
+            </tr>
+        </thead>     
+        <tbody>
+
+            {%for imageLib in imageLibs%}
+            <tr>
+                <td><a class="fancybox" rel="group" href="./images_3921343193822/{{imageLib.id}}">
+                        <img src="./images_3921343193822/{{imageLib.id}}_thmb" alt=""></a></td>
+                <td>{{imageLib.originalfilename}}</td>
+                <td>{{imageLib.name}}</td>
+                <td>remove</td>
+            </tr>
+             {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+{%endblock%}

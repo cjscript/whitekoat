@@ -1,0 +1,3 @@
+file_file_homepage:
+    resource: "@FileFileBundle/Controller"
+    type:     annotation
