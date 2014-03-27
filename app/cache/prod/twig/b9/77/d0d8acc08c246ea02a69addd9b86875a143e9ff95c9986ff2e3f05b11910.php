@@ -58,10 +58,6 @@ class __TwigTemplate_b977d0d8acc08c246ea02a69addd9b86875a143e9ff95c9986ff2e3f05b
         // line 18
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/css/jquery.fancybox.css"), "html", null, true);
         echo "\" rel=\"stylesheet\">        
-        <link href=\"";
-        // line 19
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("css/jquery.fancybox.css"), "html", null, true);
-        echo "\" rel=\"stylesheet\">        
 
         <style type=\"text/css\">
 
@@ -94,61 +90,57 @@ class __TwigTemplate_b977d0d8acc08c246ea02a69addd9b86875a143e9ff95c9986ff2e3f05b
         </style>
 
 ";
-        // line 51
+        // line 50
         $this->displayBlock('stylesheets', $context, $blocks);
-        // line 54
+        // line 53
         echo "
         <!-- jquery dependencies -->
         <script src=\"";
-        // line 56
+        // line 55
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/jquery.js"), "html", null, true);
         echo "\"></script> 
         <script src=\"";
-        // line 57
+        // line 56
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/bootstrap.js"), "html", null, true);
         echo "\"></script>
         <script src=\"";
-        // line 58
+        // line 57
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/rowlink.js"), "html", null, true);
         echo "\"></script>
 
         <!-- parsley dependencies -->
         <script src=\"";
-        // line 61
+        // line 60
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/parsley/parsley.min.js"), "html", null, true);
         echo "\"></script>
         <script src=\"";
-        // line 62
+        // line 61
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/parsley/parsley-standalone.min.js"), "html", null, true);
         echo "\"></script>
         <script src=\"";
-        // line 63
+        // line 62
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/parsley/parsley.extend.min.js"), "html", null, true);
         echo "\"></script>
 
         <!-- file upload -->
         <script src=\"";
-        // line 66
+        // line 65
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/bootstrap-fileupload.js"), "html", null, true);
         echo "\"></script>
         <script src=\"";
-        // line 67
+        // line 66
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/bootstrap-fileupload.min.js"), "html", null, true);
         echo "\"></script>
 
         <!-- silvio bootstrap select -->
         <script src=\"";
-        // line 70
+        // line 69
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/bootstrap-select/bootstrap-select.min.js"), "html", null, true);
         echo "\" type=\"text/javascript\"></script>
 
         <script src=\"";
-        // line 72
+        // line 71
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/js/jquery.fancybox.pack.js"), "html", null, true);
-        echo "\" type=\"text/javascript\"></script>
-        <script src=\"";
-        // line 73
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("js/jquery.fancybox.pack.js"), "html", null, true);
         echo "\" type=\"text/javascript\"></script>
 
         <script>
@@ -165,49 +157,49 @@ class __TwigTemplate_b977d0d8acc08c246ea02a69addd9b86875a143e9ff95c9986ff2e3f05b
                     padding: 0,
                     openEffect: 'elastic'
                 });
-                
-                alert ('jquery version: ' + \$().fancybox());
-                
+
+
+
             });
         </script>
 
 
 ";
-        // line 96
+        // line 94
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 99
+        // line 97
         echo "
     </head>
 
     <body>
 
 ";
-        // line 104
+        // line 102
         $this->displayBlock('container', $context, $blocks);
-        // line 106
+        // line 104
         echo "    </body>
 </html>
 
 ";
     }
 
-    // line 51
+    // line 50
     public function block_stylesheets($context, array $blocks = array())
     {
-        // line 52
+        // line 51
         echo "
 ";
     }
 
-    // line 96
+    // line 94
     public function block_javascripts($context, array $blocks = array())
     {
-        // line 97
+        // line 95
         echo "
  ";
     }
 
-    // line 104
+    // line 102
     public function block_container($context, array $blocks = array())
     {
     }
@@ -224,6 +216,6 @@ class __TwigTemplate_b977d0d8acc08c246ea02a69addd9b86875a143e9ff95c9986ff2e3f05b
 
     public function getDebugInfo()
     {
-        return array (  211 => 104,  206 => 97,  203 => 96,  198 => 52,  195 => 51,  188 => 106,  186 => 104,  179 => 99,  177 => 96,  151 => 73,  147 => 72,  142 => 70,  136 => 67,  132 => 66,  126 => 63,  122 => 62,  118 => 61,  112 => 58,  108 => 57,  104 => 56,  100 => 54,  98 => 51,  63 => 19,  59 => 18,  54 => 16,  49 => 14,  45 => 13,  41 => 12,  37 => 11,  33 => 10,  22 => 1,);
+        return array (  203 => 102,  198 => 95,  195 => 94,  190 => 51,  187 => 50,  180 => 104,  178 => 102,  171 => 97,  169 => 94,  143 => 71,  138 => 69,  132 => 66,  128 => 65,  122 => 62,  118 => 61,  114 => 60,  108 => 57,  104 => 56,  100 => 55,  96 => 53,  94 => 50,  59 => 18,  54 => 16,  49 => 14,  45 => 13,  41 => 12,  37 => 11,  33 => 10,  22 => 1,);
     }
 }
