@@ -23,9 +23,10 @@ create table `User` (
 );
 
 insert into `User` (`Id`, `UserName`,`Password`, `Version`,`Created`) values
-	  (GETID(), 'k@whitekoat.com', sha1('doctork'), 1, now()),
-	  (GETID(), 'cjscript@whitekoat.com', sha1('doctork'), 1, now()),
-	  (GETID(), 'jeff@whitekoat.com', sha1('doctork'), 1, now()),
+	  (GETID(), 'k@whitekoat.com', sha1('doctor2468'), 1, now()),
+	  (GETID(), 'cjscript@whitekoat.com', sha1('doctor2468'), 1, now()),
+	  (GETID(), 'steven@whitekoat.com', sha1('doctor2468'), 1, now()),
+	  (GETID(), 'matt@whitekoat.com', sha1('doctor2468'), 1, now()),
 	  (GETID(), 'student@whitekoat.com', sha1('doctork'), 1, now());
 
 	-- not currently used.  Placeholder for user images.  Images should be saved externally.
