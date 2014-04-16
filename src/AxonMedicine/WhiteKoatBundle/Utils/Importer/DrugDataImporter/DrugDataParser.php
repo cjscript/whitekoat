@@ -57,7 +57,7 @@ class DrugDataParser extends DataParser
             $inputFileType = \PHPExcel_IOFactory::identify($new);
             $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($new);
-            $processInfo = $this->processDrugData($objPHPExcel, $this->SHEET_TAB_NAME, $this->DRUG_DATA_NAME_COUNT_MAP, $this->DRUG_DATA_IDX_NAME_MAP, $this->processInfo);
+            $this->processDrugData($objPHPExcel, $this->SHEET_TAB_NAME, $this->DRUG_DATA_NAME_COUNT_MAP, $this->DRUG_DATA_IDX_NAME_MAP);
         } catch (Exception $e)
         {
             die('Error loading file "' . pathinfo($new, PATHINFO_BASENAME) . '": ' . $e->getMessage());

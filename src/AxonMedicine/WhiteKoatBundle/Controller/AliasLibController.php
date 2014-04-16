@@ -56,13 +56,12 @@ class AliasLibController extends GenericController
             return $this->redirect($this->generateUrl('login_route'));
         } else
         {
-            $name = $request->get('itemname');
-            $description = $request->get('itemdescription');
-            $aliasforname = $request->get('aliasforname');
+            $original = $request->get('original');
+            $alias = $request->get('alias');
 
-            $this->aliasLibService()->create($name, $description, $aliasforname, 'aliases');
+            $this->aliasLibService()->create($original, $alias);
 
-            $session->getFlashBag()->add('notice', 'Alias ' . $name . ' successfully added to library');
+            $session->getFlashBag()->add('notice', 'Alias ' . $alias . ' successfully added to library');
             return $this->redirect($this->generateUrl('alic_route_get'));
         }
     }

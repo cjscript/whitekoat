@@ -48,7 +48,7 @@ class __TwigTemplate_5cab43b950b5b109c619ce2a222adb27643ae15d2c7e6a8107371664bd4
                         <td><input style=\"width:383px\" type=\"text\" id=\"genericdrugdiseasename\" name=\"genericdrugdiseasename\" placeholder=\"(type name or click 'F2' to search)\" data-trigger=\"change\" data-required=\"true\">
                             <div id=\"drugcarddisplay\" style=\"padding-top:30px\">
                                 <input id=\"genericdrugdiseasesubmitbutton\" name=\"genericdrugdiseasesubmitbutton\" class=\"btn btn-primary btn-lg\" type=\"submit\" value=\"Display Card\"
-                                       onclick=\"showCard('card?dn=' + document.getElementById('genericdrugdiseasename').value, 'DrugCard_' + document.getElementById('genericdrugdiseasename').value.replace(/ /g, ''), 10, (screen.height / 2) - (600 / 2))\">
+                                       onclick=\"showWindow('card?dn=' + document.getElementById('genericdrugdiseasename').value, 'DrugCard_' + document.getElementById('genericdrugdiseasename').value.replace(/ /g, ''), 10, (screen.height / 2) - (600 / 2))\">
                             </div>
 
                         </td>
@@ -81,7 +81,7 @@ class __TwigTemplate_5cab43b950b5b109c619ce2a222adb27643ae15d2c7e6a8107371664bd4
                     </table>
                     <div style=\"padding-top:30px\">
                         <input id=\"drugsearchbutton\" name=\"drugsearchbutton\" class=\"btn btn-primary btn-lg\" type=\"submit\" value=\"Find\"
-                               onclick=\"showCard('search?drsrch=' + document.getElementById('drugsearchoption').value + ':::' + document.getElementById('genericdrugname').value, 'Find', 30, (screen.height / 2) - (600 / 2))\">
+                               onclick=\"showWindow('search?drsrch=' + document.getElementById('drugsearchoption').value + ':::' + document.getElementById('genericdrugname').value, 'Find', 30, (screen.height / 2) - (600 / 2))\">
                     </div
 
                 </div></fieldset>
@@ -113,7 +113,7 @@ class __TwigTemplate_5cab43b950b5b109c619ce2a222adb27643ae15d2c7e6a8107371664bd4
                     </table>
                     <div style=\"padding-top:30px\">
                         <input id=\"diseasesearchbutton\" name=\"diseasesearchbutton\" class=\"btn btn-primary btn-lg\" type=\"submit\" value=\"Find\"
-                               onclick=\"showCard('search?disrch=' + document.getElementById('diseasesearchoption').value + ':::' + document.getElementById('genericdiseasename').value, 'Find', 10, (screen.height / 2) - (600 / 2))\">
+                               onclick=\"showWindow('search?disrch=' + document.getElementById('diseasesearchoption').value + ':::' + document.getElementById('genericdiseasename').value, 'Find', 10, (screen.height / 2) - (600 / 2))\">
                     </div>
                 </div></fieldset>
 

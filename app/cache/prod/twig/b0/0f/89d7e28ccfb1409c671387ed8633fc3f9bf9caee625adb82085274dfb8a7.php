@@ -36,10 +36,10 @@ class __TwigTemplate_b00f89d7e28ccfb1409c671387ed8633fc3f9bf9caee625adb82085274d
         echo "\" data-validate=\"parsley\">
 
     <div style=\"padding-bottom:15px\">
-        <input style=\"width:200px\" type=\"text\" id=\"itemname\" name=\"original\" placeholder=\"Original\" data-trigger=\"change\" data-required=\"true\">
+        <input style=\"width:200px\" type=\"text\" id=\"original\" name=\"original\" placeholder=\"Original\" data-trigger=\"change\" data-required=\"true\">
     </div>
     <div style=\"padding-bottom:15px\">
-        <input style=\"width:200px\" type=\"text\" id=\"itemname\" name=\"alias\" placeholder=\"Alias\" data-trigger=\"change\" data-required=\"true\">
+        <input style=\"width:200px\" type=\"text\" id=\"alias\" name=\"alias\" placeholder=\"Alias\" data-trigger=\"change\" data-required=\"true\">
     </div>
 
     <input class=\"btn btn-primary btn-lg\" type=\"submit\" value=\"Add Item\">
