@@ -100,9 +100,8 @@ class ImportDrugDataController extends GenericController
 
     private function process($original, $new)
     {
-        $this->refreshDb('/Dev/project.whitekoat/Database/wk_db82332_1Qxdf/whitekoat.sql');
-        //$this->refreshDb('/WK/whitekoat.sql');
-// parse alias data...
+        $this->refreshDb('<enter path to whitekoat script>');
+		// parse alias data...
         (new AliasDataParser($this))->parse($original, $new);
         // parse drug data...
         (new DrugDataParser($this))->parse($original, $new);
