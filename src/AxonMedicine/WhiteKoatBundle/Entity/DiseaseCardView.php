@@ -10,41 +10,61 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="diseasecardview")
  * @ORM\Entity
  */
-class DiseaseCardView extends BaseEntity
+class DiseaseCardView extends BaseEntity implements GenericCard
 {
 
-    /**
-     * @var string
+    
+	/**
+     * @var \Libraryvalue
      *
-     * @ORM\Column(name="DiseaseName", type="string", length=1024, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Libraryvalue")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="DiseaseName", referencedColumnName="Id")
+     * })
      */
     private $diseasename;
 
     /**
-     * @var string
+     * @var \Libraryvalue
      *
-     * @ORM\Column(name="DiseaseType", type="string", length=1024, nullable=true)
+     * @ORM\ManyToMany(targetEntity="Libraryvalue")
+     * @ORM\JoinTable(name="diseases_types",
+	 *		joinColumns={@ORM\JoinColumn(name="DiseaseType", referencedColumnName="Id")},
+	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * )
      */
     private $diseasetype;
 
     /**
-     * @var string
+     * @var \Libraryvalue
      *
-     * @ORM\Column(name="DiseaseCause", type="string", length=1024, nullable=true)
+     * @ORM\ManyToMany(targetEntity="Libraryvalue")
+     * @ORM\JoinTable(name="diseases_causes",
+	 *		joinColumns={@ORM\JoinColumn(name="DiseaseCause", referencedColumnName="Id")},
+	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * )
      */
     private $diseasecause;
 
     /**
-     * @var string
+     * @var \Libraryvalue
      *
-     * @ORM\Column(name="DiseaseSymptom", type="string", length=1024, nullable=true)
+     * @ORM\ManyToMany(targetEntity="Libraryvalue")
+     * @ORM\JoinTable(name="diseases_symptoms",
+	 *		joinColumns={@ORM\JoinColumn(name="DiseaseSymptom", referencedColumnName="Id")},
+	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * )
      */
     private $diseasesymptom;
 
     /**
-     * @var string
+     * @var \Libraryvalue
      *
-     * @ORM\Column(name="DiseaseTreatment", type="string", length=1024, nullable=true)
+     * @ORM\ManyToMany(targetEntity="Libraryvalue")
+     * @ORM\JoinTable(name="diseases_treatments",
+	 *		joinColumns={@ORM\JoinColumn(name="DiseaseTreatment", referencedColumnName="Id")},
+	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * )
      */
     private $diseasetreatment;
 
@@ -162,5 +182,32 @@ class DiseaseCardView extends BaseEntity
     {
         return $this->diseasetreatment;
     }
-
+	
+	public function getName()
+	{
+		return $this->getDiseasename()->getName();
+	}
+	
+	public function getCardType()
+	{
+		return "Disease";
+	}
+	
+	public function getStringArray()
+	{
+		$array = array('label' => $this->getName(),
+		   'id' => $this->id,
+		   'cardType' => $this->getCardType(),
+		   'type' => $this->diseasetype,
+		   'cause' => $this->diseasecause,
+		   'symptoms' => $this->diseasesymptom,
+		   'treatment' => $this->diseasetreatment,
+		);
+		//TODO: get id var linked to db, add as value field
+		return $array;
+	}
+	
+	public function __toString() {
+		return $this->getName();
+	}
 }

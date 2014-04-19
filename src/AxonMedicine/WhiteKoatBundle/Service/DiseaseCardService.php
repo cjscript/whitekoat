@@ -81,7 +81,7 @@ class DiseaseCardService extends RelationshipService
             $treatments = $this->processDirectRelationship($disease, $treatmentIds, null, false);
 
             // create drug view.
-            $this->createView($disease->getName(), $types, $causes, $symptoms, $treatments);
+            $this->createView($disease, $types, $causes, $symptoms, $treatments);
 
             $this->em->flush();
         } else

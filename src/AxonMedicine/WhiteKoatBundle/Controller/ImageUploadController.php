@@ -97,23 +97,33 @@ class ImageUploadController extends GenericController
         $image = $this->typeLibService()->saveImage($originalName, $extension, $libIds, $userName);
 
         $newFileURL = $this->IMAGES_DIRECTORY . DIRECTORY_SEPARATOR . $image->getId();
+		$thumbFileURL = $newFileURL . '_thmb.' . $extension;
+		$newFileURL = $newFileURL . "." . $extension;
         $newFileURL = str_replace('\\\\', '/', $newFileURL);
 
         rename($uploadedURL, $newFileURL);
 
         // create a thumbnail for later view.
-        $this->createThumbnail($newFileURL, $newFileURL.'_thmb', 60);
+        $this->createThumbnail($newFileURL, $thumbFileURL, 160);
     }
 
-    private function createThumbnail($src, $dest, $desired_width)
+    private function createThumbnail($src, $dest, $desiredMaxDim)
     {
         // load image and get image size
         $source_image = imagecreatefromjpeg($src);
         $width = imagesx($source_image);
         $height = imagesy($source_image);
-
-        // calculate thumbnail size
-        $desired_height = floor($height * ($desired_width / $width));
+		$aspectRatio = $width / $height;
+		
+		// calculate thumbnail size
+		if ($width > $height) {
+			$desired_width = $desiredMaxDim;
+			$desired_height = floor($desired_width / $aspectRatio);
+		}
+		else {
+			$desired_height = $desiredMaxDim;
+			$desired_width = floor($desired_height * $aspectRatio);
+		}
 
         // create a new, "virtual" image
         $virtual_image = imagecreatetruecolor($desired_width, $desired_height);

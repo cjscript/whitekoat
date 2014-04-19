@@ -64,10 +64,10 @@ class Libraryvalue extends \AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue imp
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'name', 'description', 'type', 'id');
+            return array('__isInitialized__', 'name', 'description', 'type', 'hasImages', 'id');
         }
 
-        return array('__isInitialized__', 'name', 'description', 'type', 'id');
+        return array('__isInitialized__', 'name', 'description', 'type', 'hasImages', 'id');
     }
 
     /**
@@ -237,6 +237,28 @@ class Libraryvalue extends \AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue imp
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', array());
 
         return parent::getType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setImages($hasImages)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setImages', array($hasImages));
+
+        return parent::setImages($hasImages);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasImages()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'hasImages', array());
+
+        return parent::hasImages();
     }
 
     /**

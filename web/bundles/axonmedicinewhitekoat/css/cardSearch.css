@@ -1,0 +1,340 @@
+.card {
+	border-style:solid;
+	border-color:#4F94B4;
+	border-width: 2px;
+	border-radius:25px;
+	background-color:white;
+	display: block;
+	box-shadow:0px 0px 15px #888;
+	/*position: relative;*/
+	margin: 15px 15px;
+	white-space:normal;
+	float:left;
+	position:static;
+}
+
+.bubble {
+	border-style:solid;
+	border-color:#4F94B4;
+	border-width: 2px;
+	border-radius: 30px 30px 30px 0px;
+	background-color:white;
+	display: block;
+	/*box-shadow:0px 0px 15px #888;*/
+	margin: 0px;
+	padding: 10px 10px 5px 10px;
+	white-space:normal;
+	float:left;
+	position:static;
+	z-index:10;
+}
+
+/*.bubble {
+  position:relative;
+  padding:15px;
+  margin:1em 0 3em;
+  color:#fff;
+  background:#28A9E1; 
+
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#2e88c4), to(#28A9E1));
+  background:-moz-linear-gradient(#2e88c4, #28A9E1);
+  background:-o-linear-gradient(#2e88c4, #28A9E1);
+  background:linear-gradient(#2e88c4, #28A9E1);
+  -webkit-border-radius:10px 10px 10px 0;
+  -moz-border-radius:10px 10px 10px 0;
+  border-radius:10px 10px 10px 0;
+}
+
+
+
+
+.bubble:after {
+   content:"";
+  position:absolute;
+  bottom:-20px; 
+  left:0px; /
+  border-width:20px 20px 0 0; 
+  border-style:solid;
+  border-color:#28A9E1 transparent;
+
+  display:block;
+  width:0;
+}
+*/
+
+
+.cardPlaceholder {
+	min-height: 400px;
+	min-width: 275px;
+	border:dashed 4px rgba(79, 148, 180,.5);
+	box-shadow:none;
+	background-color:transparent;
+}
+
+.ui-sortable-placeholder {
+	display: inline-block;
+	height: 1px;
+}
+
+.sectionTitle {
+	color: #4F94B4;
+	/*text-align:center;*/
+	
+}
+#outerCardArea {
+	position:relative;
+	height:700px;
+}
+#cardAreaWrapper {
+	overflow-x:auto;
+	overflow-y: hidden;
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	background-image:url("../images/background.png");
+	background-position:bottom center;
+	background-repeat:no-repeat;
+	background-size:contain;
+	
+}
+#cardArea {
+	/*overflow-y: hidden;
+	overflow-x: scroll;
+	white-space: nowrap;
+	height: 600px;
+	width: 100000px;
+	float: left;*/
+	white-space:nowrap;
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	margin:0 auto;
+	/*transition:width ease-out.4s;*/
+}
+
+
+.cardContent {
+	padding:10px;
+	overflow: auto;
+}
+
+.drugCard {
+	height: 500px;
+	min-width: 375px;
+}
+.diseaseCard {
+	height: 500px;
+	min-width: 375px;
+}
+
+.imageCard {
+	height: 500px;
+	min-width: 375px;
+}
+
+
+.resultsCard {
+	height: 500px;
+	min-width: 275px;
+	max-width:375px;
+}
+
+.drugCardButtonArea {
+	text-align: center;
+}
+
+.card a{
+	color: black;
+}
+
+
+.card h1, .card h2, .card h3 {
+	font-family:"Century Gothic", Arial, Helvetica, sans-serif;
+	font-weight:normal;
+}
+
+.imageContent{
+	max-height: 100%;
+	overflow-y: auto;
+	height:320px;
+}
+
+.imageCard.cardContent {
+	overflow: hidden;
+
+}
+
+h3 {
+	padding-top:8px;
+	height:.85em;
+	line-height:0.1;
+	width:100%;
+	overflow-x:hidden;
+	overflow-y:visible;
+	position:relative;
+	font-family:"Century Gothic", Arial, Helvetica, sans-serif;
+	border-bottom:1px solid #CCC;
+}
+h3.sectionBreak {
+	display:none;
+}
+h3.sectionTitle .title {
+	text-align:left;
+	display:inline-block;
+	position:relative;
+}
+h3.sectionTitle .title:after {
+	content: "";
+	position: absolute;
+	height: 5px;
+	/*border-bottom: 1px solid #0CF;
+	border-top: 1px solid #0CC;*/
+	top: 0;
+	width: 300px;
+	left: 100%;
+	margin-left: 15px;
+	/*background-image: -webkit-linear-gradient(left, rgba(79, 148, 180,1),rgba(79, 148, 180,.05), rgba(0,0,0,0)); 
+	background-image:    -moz-linear-gradient(left, rgba(79, 148, 180,1),rgba(79, 148, 180,.05), rgba(0,0,0,0));
+	background-image:     -ms-linear-gradient(left, rgba(79, 148, 180,1),rgba(79, 148, 180,.05), rgba(0,0,0,0));
+	background-image:      -o-linear-gradient(left, rgba(79, 148, 180,1),rgba(79, 148, 180,.05) rgba(0,0,0,0));*/
+}
+h3.sectionTitle .maximizeButton {
+	width:17px;
+	height:14px;
+	position:absolute;
+	right:0;
+	top:5px;
+	/*background-color:blue;*/
+	background-image:url("../images/expand.png");
+	background-repeat:no-repeat;
+	vertical-align:middle;
+	background-color:rgba(255,255,255,.5);
+	box-shadow:0px 0px 25px #FFF;
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	transform: rotate(180deg);
+	transition:all .4s;
+}
+
+/* fixed heights for DRUG card sections */
+.drug-class>ul, .drug-target>ul, .drug-indications>ul, .drug-name>ul, .drug-side-effects>ul, .drug-contraindications>ul {
+	height:40px;
+	overflow:hidden;
+}
+
+.disease-cause>ul, .disease-symptom>ul, .disease-treatments>ul, .disease-type>ul, .disease-demographics>ul, .disease-organs>ul, .disease-billing>ul, .disease-mechanism>ul, disease-labs>ul, disease-resources>ul,  .disease-media>ul {
+	height:40px;
+	overflow:hidden;	
+}
+.results-diseases>ul, .results-drugs>ul  {
+	height:auto;
+	overflow:hidden;
+}
+
+.hamburger {
+	margin-left:15px;
+	filter: greyscale(50%);
+	background-image:url("../images/MoreInfo.png");
+	width:14px;
+	height:12px;
+	background-repeat:no-repeat;
+	vertical-align:middle;
+	display:inline-block;
+}
+
+.hamburgerSubNav {
+	display:none;
+	width: 125px;
+	position:relative;
+	z-index:99;
+}
+
+.visibleMenu {
+	display:block;
+	position:absolute;
+}
+
+
+
+input[type=button] {
+	background:none;
+	border-radius:10px;
+}
+input[type=button].btn-primary {
+	
+}
+.topBar {
+	position:relative;
+}
+.cardTitle {
+	margin-right:25px;
+}
+
+.topRightButtons {
+	float:right;
+	position:absolute;
+	top:-20px;
+	right:5px;
+}
+.topRightButtons .buttonTitle {
+	color:#999;	
+}
+.topRightButtons .closeButton {
+	/*background-color:red;*/
+	width:20px;
+	height:20px;
+	content:"";
+	display:block;
+	border-radius:10px;
+	float:right;
+	background-image:url("../images/close.png");
+}
+.topRightButtons .closeButton:hover {
+	box-shadow: 0 0 5px #990000;
+	transition:box-shadow .5s;
+	transition-delay:.15s;
+}
+
+.cardInfo {
+	white-space:normal;
+	text-overflow:ellipsis;
+	max-width:355px;
+}
+.cardInfo {
+	max-height:500px;
+	width:100%;
+}
+.cardInfo+.maximized{
+	max-height:500px;
+	overflow:auto;
+}
+.cardInfo+.maximized>ul{
+	overflow-y:auto;
+	height:320px;
+	transition:height .4s;
+}
+.cardInfo.maximized .maximizeButton {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+	transition:all .4s;
+}
+.cardInfo>ul {
+	list-style:circle url("../images/bullet.png");
+	padding-left:15px;
+}
+.cardTabContainer {
+	height:500px;	
+}
+
+.card .spacer {
+	margin:20px;
+}

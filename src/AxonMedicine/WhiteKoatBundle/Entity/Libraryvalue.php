@@ -36,6 +36,15 @@ class Libraryvalue extends BaseEntity
      * })
      */
     private $type;
+	
+	private $hasImages;
+	
+	
+	
+	function __construct()
+    {
+		parent::__construct();
+    }
 
     /**
      * Set name
@@ -105,5 +114,16 @@ class Libraryvalue extends BaseEntity
     {
         return $this->type;
     }
+	
+	public function setImages($hasImages) 
+	{
+		$this->hasImages = $hasImages;
+		return $this;
+	}
+	
+	public function hasImages()
+	{
+		return $this->hasImages;
+	}
 
 }

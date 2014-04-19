@@ -3,52 +3,7 @@
 {%block stylesheets %}
 
 <style type="text/css">
-    .text-placeholder {color: #AAA !important}
-
-    table{
-        table-layout: fixed;
-    }
-
-    td{
-        word-wrap: break-word
-    }
-
-    .success_message
-    {
-        color: green;
-        font-size:75%;
-        font-weight:bold;
-    }
-
-    .error_message
-    {
-        color: red;
-        font-size:75%;
-        font-weight:bold;
-    }
-
-    .loader
-    {
-        background-image: url({{ asset('bundles/axonmedicinewhitekoat/images/ajax-loader.gif') }});
-        background-repeat: no-repeat;
-        background-position: center;
-        height: 100px;
-    }
-    .main 
-    {
-        width: 800px;
-        padding: 10px 30px 30px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 1px solid #e5e5e5;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-        box-shadow: 0 1px 2px rgba(0,0,0,.05);
-    }
-
+    
 </style>
 
 {%endblock%}
@@ -129,7 +84,7 @@
                     }
             );
         });
-
+		
 
 
 
@@ -313,17 +268,33 @@
          }, "json");
          */
     }
+	$(document).ready(function() {
+		var resizeCardAreaFn = function($this) {
+			var newHeight = $(window).height()-150;
+			$this.height(newHeight);
+			console.log('new height', newHeight);
+		};
+		var $outerCardArea = $("#outerCardArea");
+		resizeCardAreaFn($outerCardArea);
+		$(window).resize(function(){resizeCardAreaFn($outerCardArea);});
+	});
 
 </script>
 
 
 <div class="main">
-    <div align="right"><a href="{{path('logout_route')}}" data-toggle="tab">Logout</a></div>
-
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#home" data-toggle="tab">Search and Card View</a></li>
-        <li><a href="#help" data-toggle="tab">Help</a></li>
-    </ul>
+    
+	<div class="nav-bar">
+		<div class="nav-tabs-nobs">
+			<ul class="nav-nobs ">
+				<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+				<li><a href="#about" data-toggle="tab">About</a></li>
+				<li><a href="#help" data-toggle="tab">Help</a></li>
+				<li><a href="{{path('logout_route')}}" data-toggle="tab">Sign Out</a></li>
+			</ul>
+		</div>
+		<span id="WhiteKoatLogo">&nbsp;</span>
+	</div>
 
         {%block libcontent %}
         {%endblock%}
@@ -360,9 +331,9 @@
     </div><!-- /.modal -->
             {%endblock%}
 
-
+	<div class="push"></div>
 </div>
-<div style="text-align:center; font-size: x-small">&copy;2013-14 Axon Medicine, LLC</div>
+<div id="footer">&copy;2013-14 Axon Medicine, LLC</div>
 
 
 {%endblock%}

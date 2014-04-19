@@ -1,0 +1,40 @@
+<div class="card resultsCard">
+	<div class="cardContent">
+		<div class="topBar">
+			<div class="topBarPadding"></div>
+			<div class="cardTitle">
+				<h1><small>Results for</small><br> {{ libValue.name }}</h1>
+			</div>
+			<div class="spacer"></div>
+			<div class="topRightButtons">
+				<div class="buttonTitle">&nbsp;</div>
+				<a href="#" class="closeButton" data-tooltip="Close"></a>
+			</div>
+		</div>
+		<div class="cardTabContainer">
+			<div class="cardTab">
+				<div class="cardInfo results-diseases">
+					<h3 class="sectionTitle"><span class="title">Diseases</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for disease in diseases %}
+						<li>
+							<a href="#" onclick="addDiseaseCard('{{disease.id}}');return false;" data-libraryID="{{disease.id}}" alt="{{ disease.diseasename.description }}">{{ disease.diseasename.name }}</a><br/>
+						</li>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo results-drugs">
+					<h3 class="sectionTitle"><span class="title">Drugs</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for drug in drugs %}
+						<li>
+							<a href="#" onclick="addDrugCard('{{drug.id}}');return false;" data-libraryID="{{drug.id}}" alt="{{ drug.drugname.description }}">{{ drug.drugname.name }}</a><br/>
+							<!--{{ drug.drugname.description }}-->
+						</li>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

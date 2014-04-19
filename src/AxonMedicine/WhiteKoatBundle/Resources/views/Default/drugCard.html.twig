@@ -1,0 +1,181 @@
+<div class="card drugCard">
+	<div class="cardContent">
+		<div class="topBar">
+			<div class="topBarPadding"></div>
+			<div class="cardTitle">
+				<h1>{{ card.drugname.name }}</h1>
+			</div>
+			<div class="topRightButtons">
+				<div class="buttonTitle">&nbsp;</div>
+				<a href="#" class="closeButton" data-tooltip="Close"></a>
+			</div>
+		</div>
+		
+		<div class="drugCardButtonArea btn-toolbar">
+			<button type="button" class="btn btn-primary overviewBtn">Overview</button>
+			<button type="button" class="btn btn-default infoBtn">Info</button>
+			<button type="button" class="btn btn-default detailsBtn">Details</button>
+			<button type="button" class="btn btn-default highYieldBtn">High Yield</button>
+		</div>
+		
+		<div class="cardTabContainer">
+			<div class="overviewTab cardTab">
+				<div class="drugCardDescription">
+					{{ card.drugname.description }}
+				</div>
+				
+				<div class="cardInfo drug-class">
+					<h3 class="sectionTitle"><span class="title">Drug Class</span><span class="maximizeButton"></span></h3> 
+					<ul>
+					{% for class in card.drugclass %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{class.id}}', this);return false;" data-libraryID="{{class.id}}">{{class.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{class.id}}">Description</a>
+								</li>
+								{% if class.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{class.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo drug-target">
+					<h3 class="sectionTitle"><span class="title">Drug Target</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for target in card.drugtarget %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{target.id}}', this);return false;" data-libraryID="{{target.id}}">{{target.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{target.id}}">Description</a>
+								</li>
+								{% if target.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{target.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo drug-indications">
+					<h3 class="sectionTitle"><span class="title">Indications</span><span class="maximizeButton"></span></h3>
+					<ul>
+						{% for treatment in card.drugtreatment %}
+							<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{treatment.id}}', this);return false;" data-libraryID="{{treatment.id}}">{{treatment.name}}</a> <a href="#" class="hamburger"></a>
+								<ul class="hamburgerSubNav">
+									<li><a href="#" class="descriptionLink" data-libraryID="{{treatment.id}}">Description</a>
+									</li>
+									{% if treatment.hasImages %}
+										<li><a href="#" class="imageLink" data-libraryID="{{treatment.id}}">Images</a>
+										</li>
+									{% endif %}
+								</ul>
+							</li></span>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			
+			<div class="infoTab cardTab" style="display:none">
+				<div class="cardInfo drug-name">
+					<h3 class="sectionTitle"><span class="title">Drug Name</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for brand in card.drugbrand %}
+						<li>{{brand.name}}</li>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo drug-class">
+					<h3 class="sectionTitle"><span class="title">Drug Class</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for class in card.drugclass %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{class.id}}', this);return false;" data-libraryID="{{class.id}}">{{class.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{class.id}}">Description</a>
+								</li>
+								{% if class.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{class.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo">
+					<h3 class="sectionTitle"><span class="title">Dosage &amp; Usage</span><span class="maximizeButton"></span></h3>
+				</div>
+			</div>
+			
+			<div class="detailsTab cardTab" style="display:none">
+				<div class="cardInfo drug-target">
+					<h3 class="sectionTitle"><span class="title">Drug Target</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for target in card.drugtarget %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{target.id}}', this);return false;" data-libraryID="{{target.id}}">{{target.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{target.id}}">Description</a>
+								</li>
+								{% if target.hasImages %}
+									<li><a href="#" class="imageLink"  data-libraryID="{{target.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo">
+					<h3 class="sectionTitle drug-mechanism"><span class="title">Mechanism</span><span class="maximizeButton"></span></h3>
+					<p>{{ card.drugmechanism }}</p>
+				</div>
+				
+				
+			</div>
+			
+			<div class="highYieldTab cardTab" style="display:none">
+				<div class="cardInfo drug-side-effects">
+					<h3 class="sectionTitle"><span class="title">Side Effects</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for sideEffect in card.drugsideeffect %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{sideEffect.id}}', this);return false;" data-libraryID="{{sideEffect.id}}">{{sideEffect.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{sideEffect.id}}">Description</a>
+								</li>
+								{% if sideEffect.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{sideEffect.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo drug-contraindications">
+					<h3 class="sectionTitle"><span class="title">Contraindications</span><span class="maximizeButton"></span></h3> 
+					<ul>
+					{% for contraind in card.drugcontraind %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{contraind.id}}', this);return false;" data-libraryID="{{contraind.id}}">{{contraind.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{contraind.id}}">Description</a>
+								</li>
+								{% if contraind.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{contraind.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

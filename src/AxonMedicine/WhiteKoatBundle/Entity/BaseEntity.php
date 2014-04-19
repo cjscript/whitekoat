@@ -65,6 +65,7 @@ class BaseEntity
     function __construct()
     {
         $this->genUuid();
+        $this->modified = new \DateTime(); 
     }
 
     /**

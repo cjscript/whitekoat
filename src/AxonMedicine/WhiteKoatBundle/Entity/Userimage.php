@@ -20,7 +20,7 @@ class Userimage extends BaseEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -29,40 +29,7 @@ class Userimage extends BaseEntity
      */
     private $image;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="Inactive", type="boolean", nullable=true)
-     */
-    private $inactive = '0';
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="Version", type="integer", nullable=false)
-     */
-    private $version;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="Modified", type="datetime", nullable=false)
-     */
-    private $modified = '0000-00-00 00:00:00';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="CreatedBy", type="string", length=64, nullable=false)
-     */
-    private $createdby = 'cjscript';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ModifiedBy", type="string", length=64, nullable=true)
-     */
-    private $modifiedby;
+   
 
     /**
      * Get id

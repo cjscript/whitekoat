@@ -1,3 +1,7 @@
+whitekoat_default:
+    path: /
+    defaults: { _controller: AxonMedicineWhiteKoatBundle:login:login }
+
 _all_whitekoat_controllers:
     resource: "@AxonMedicineWhiteKoatBundle/Controller"
     type:     annotation

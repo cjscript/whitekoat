@@ -286,7 +286,7 @@ class DrugCardController extends GenericController
         {
             $loginInfo = $session->get('logininfo');
 
-            $drugcards = $this->getDrugCards();
+            $drugcards = $this->drugCardService()->getDrugCardViews();
 
             return $this->render('AxonMedicineWhiteKoatBundle:Default:drug.card.html.twig', array('name' => $loginInfo->getUsername(), 'cardname' => 'Drug', 'drugcards' => $drugcards));
         }
@@ -327,7 +327,7 @@ class DrugCardController extends GenericController
 
             $drugContraIndIds = $request->get('drugcontraindnameids');
 
-            $createdDrug = $this->drugCardService()->createDrugCardBy($genericDrugId, $brandDrugIds, $drugClassIds, $drugTargetIds, $drugTreatmentIds, $drugMechanism, $drugSideEffectIds, $drugContraIndIds);
+            $createdDrug = $this->drugCardService()->createDrugCardBy($genericDrugId, $brandDrugIds, $drugClassIds, $drugTargetIds, $drugTreatmentIds, $drugMechanism, $drugSideEffectIds, $drugContraIndIds, null, null, null, null);
 
             if (!$createdDrug)
             {

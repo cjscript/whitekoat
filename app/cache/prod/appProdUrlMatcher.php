@@ -27,6 +27,15 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
         $context = $this->context;
         $request = $this->request;
 
+        // whitekoat_default
+        if (rtrim($pathinfo, '/') === '') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'whitekoat_default');
+            }
+
+            return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\loginController::loginAction',  '_route' => 'whitekoat_default',);
+        }
+
         if (0 === strpos($pathinfo, '/a')) {
             if (0 === strpos($pathinfo, '/actc')) {
                 // actc_route_get
@@ -76,6 +85,15 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
             }
 
+        }
+
+        // homepage_search
+        if (rtrim($pathinfo, '/') === '/search') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'homepage_search');
+            }
+
+            return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\CardViewController::doSearch',  '_route' => 'homepage_search',);
         }
 
         if (0 === strpos($pathinfo, '/clc')) {
@@ -253,6 +271,89 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         }
 
+        if (0 === strpos($pathinfo, '/home')) {
+            // homepage_route_get
+            if ($pathinfo === '/home') {
+                return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::retrieveSearchAction',  '_route' => 'homepage_route_get',);
+            }
+
+            // homepage_autocomplete
+            if (rtrim($pathinfo, '/') === '/home/autocomplete') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'homepage_autocomplete');
+                }
+
+                return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::getAutocompleteResults',  '_route' => 'homepage_autocomplete',);
+            }
+
+            // homepage_namedCard
+            if (rtrim($pathinfo, '/') === '/home/cardByName') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'homepage_namedCard');
+                }
+
+                return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::addCardByName',  '_route' => 'homepage_namedCard',);
+            }
+
+            if (0 === strpos($pathinfo, '/home/d')) {
+                // homepage_drugCard
+                if (rtrim($pathinfo, '/') === '/home/drugCard') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'homepage_drugCard');
+                    }
+
+                    return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::renderDrugCard',  '_route' => 'homepage_drugCard',);
+                }
+
+                // homepage_diseaseCard
+                if (rtrim($pathinfo, '/') === '/home/diseaseCard') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'homepage_diseaseCard');
+                    }
+
+                    return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::renderDiseaseCard',  '_route' => 'homepage_diseaseCard',);
+                }
+
+            }
+
+            // homepage_resultsCard
+            if (rtrim($pathinfo, '/') === '/home/resultsCard') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'homepage_resultsCard');
+                }
+
+                return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::renderResultsCard',  '_route' => 'homepage_resultsCard',);
+            }
+
+            // homepage_valueCard
+            if (rtrim($pathinfo, '/') === '/home/libValueCard') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'homepage_valueCard');
+                }
+
+                return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::renderLibValueCard',  '_route' => 'homepage_valueCard',);
+            }
+
+            // homepage_imageCard
+            if (rtrim($pathinfo, '/') === '/home/imageCard') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'homepage_imageCard');
+                }
+
+                return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::renderImageCard',  '_route' => 'homepage_imageCard',);
+            }
+
+            // homepage_libValDesc
+            if (rtrim($pathinfo, '/') === '/home/libValueDescription') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'homepage_libValDesc');
+                }
+
+                return array (  '_format' => 'json',  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\HomepageController::getLibValueDescriptionById',  '_route' => 'homepage_libValDesc',);
+            }
+
+        }
+
         if (0 === strpos($pathinfo, '/imgtag')) {
             // img_route_get
             if ($pathinfo === '/imgtagg') {
@@ -356,11 +457,6 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                     return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\StudentController::retrieveSearchAction',  '_route' => 'sc_route_get',);
                 }
 
-                // sc_help_get
-                if ($pathinfo === '/sc/help') {
-                    return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\StudentController::helpAction',  '_route' => 'sc_help_get',);
-                }
-
                 // sc_drug_search
                 if ($pathinfo === '/sc/search') {
                     return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\StudentController::doSearch',  '_route' => 'sc_drug_search',);
@@ -397,6 +493,15 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
             }
 
+        }
+
+        // axonmedicine_whitekoat_test_index
+        if (rtrim($pathinfo, '/') === '/test') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'axonmedicine_whitekoat_test_index');
+            }
+
+            return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\TestController::indexAction',  '_route' => 'axonmedicine_whitekoat_test_index',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

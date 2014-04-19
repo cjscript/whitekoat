@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Relationship
  *
- * @ORM\Table(name="relationship", indexes={@ORM\Index(name="Initiator", columns={"Initiator"}), @ORM\Index(name="Initiated", columns={"Initiated"})})
+ * @ORM\Table(name="relationship")
  * @ORM\Entity
  */
 class Relationship extends BaseEntity

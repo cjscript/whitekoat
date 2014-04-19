@@ -1,6 +1,6 @@
 /* ============================================================
- * Bootstrap: rowlink.js v3.0.0-p7
- * http://jasny.github.io/bootstrap/javascript.html#rowlink
+ * bootstrap-rowlink.js j1
+ * http://jasny.github.com/bootstrap/javascript.html#rowlink
  * ============================================================
  * Copyright 2012 Jasny BV, Netherlands.
  *
@@ -17,66 +17,55 @@
  * limitations under the License.
  * ============================================================ */
 
-+function ($) { "use strict";
+!function ($) {
+  
+  "use strict"; // jshint ;_;
 
   var Rowlink = function (element, options) {
-    this.$element = $(element)
-    this.options = $.extend({}, Rowlink.DEFAULTS, options)
+    options = $.extend({}, $.fn.rowlink.defaults, options)
+    var tr = element.nodeName.toLowerCase() == 'tr' ? $(element) : $(element).find('tr:has(td)')
     
-    this.$element.on('click.bs.rowlink', 'td:not(.rowlink-skip)', $.proxy(this.click, this))
-  }
+    tr.each(function() {
+      var link = $(this).find(options.target).first()
+      if (!link.length) return
+      
+      var href = link.attr('href')
 
-  Rowlink.DEFAULTS = {
-    target: "a"
-  }
+      $(this).find('td').not('.nolink').click(function() {
+        window.location = href;
+      })
 
-  Rowlink.prototype.click = function(e) {
-    var target = $(e.currentTarget).closest('tr').find(this.options.target)[0]
-    if ($(e.target)[0] === target) return
-    
-    e.preventDefault();
-    
-    if (target.click) {
-      target.click()
-    } else if(document.createEvent) {
-      var evt = document.createEvent("MouseEvents"); 
-      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null); 
-      target.dispatchEvent(evt);
-    }
+      $(this).addClass('rowlink')
+      link.replaceWith(link.html())
+    })
   }
 
   
-  // ROWLINK PLUGIN DEFINITION
-  // ===========================
+ /* ROWLINK PLUGIN DEFINITION
+  * =========================== */
 
   $.fn.rowlink = function (options) {
     return this.each(function () {
       var $this = $(this)
-      var data = $this.data('rowlink')
+      , data = $this.data('rowlink')
       if (!data) $this.data('rowlink', (data = new Rowlink(this, options)))
     })
+  }
+
+  $.fn.rowlink.defaults = {
+    target: "a"
   }
 
   $.fn.rowlink.Constructor = Rowlink
 
 
-  // ROWLINK NO CONFLICT
-  // ====================
+ /* ROWLINK DATA-API
+  * ================== */
 
-  $.fn.rowlink.noConflict = function () {
-    $.fn.inputmask = old
-    return this
-  }
-
-
-  // ROWLINK DATA-API
-  // ==================
-
-  $(document).on('click.bs.rowlink.data-api', '[data-link="row"]', function (e) {
-    var $this = $(this)
-    if ($this.data('rowlink')) return
-    $this.rowlink($this.data())
-    $(e.target).trigger('click.bs.rowlink')
+  $(function () {
+    $('[data-provide="rowlink"],[data-provides="rowlink"]').each(function () {
+      $(this).rowlink($(this).data())
+    })
   })
   
 }(window.jQuery);

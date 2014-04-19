@@ -32,6 +32,8 @@ class Imagelibraryvalue extends BaseEntity
      * })
      */
     private $libraryref;
+	
+	
 
     /**
      * Set imageref

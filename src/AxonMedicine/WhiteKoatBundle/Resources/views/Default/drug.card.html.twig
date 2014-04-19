@@ -115,14 +115,14 @@
 
             {%for drugcard in drugcards%}
             <tr>
-                <td>{{drugcard.drugname}}</td>
-                <td>{{drugcard.drugbrand}}</td>
-                <td>{{drugcard.drugclass}}</td>
-                <td>{{drugcard.drugtarget}}</td>
-                <td>{{drugcard.drugtreatment}}</td>
-                <td>{{drugcard.drugsideeffect}}</td>
-                <td>{{drugcard.drugcontraind}}</td>
-                <td><a href="{{path('drug_route_remove', { 'id': drugcard.id, 'drugname' : drugcard.drugname })}}">remove</a>
+                <td>{{drugcard.generic}}</td>
+                <td>{{drugcard.brands}}</td>
+                <td>{{drugcard.classes}}</td>
+                <td>{{drugcard.targets}}</td>
+                <td>{{drugcard.treatments}}</td>
+                <td>{{drugcard.sideeffects}}</td>
+                <td>{{drugcard.contrainds}}</td>
+                <td><a href="{{path('drug_route_remove', { 'id': drugcard.id, 'drugname' : drugcard.generic })}}">remove</a>
             </tr>
              {%endfor%}
         </tbody>

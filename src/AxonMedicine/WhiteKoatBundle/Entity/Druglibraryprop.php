@@ -20,6 +20,11 @@ class Druglibraryprop extends BaseEntity
      * @ORM\Column(name="Generic", type="boolean", nullable=true)
      */
     private $generic = '0';
+	
+	function __construct()
+    {
+		parent::__construct();
+    }
 
     /**
      * Set generic
