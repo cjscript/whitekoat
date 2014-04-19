@@ -1,0 +1,155 @@
+<div class="card diseaseCard">
+	<div class="cardContent">
+		<div class="topBar">
+			<div class="topBarPadding"></div>
+			<div class="cardTitle">
+				<h1>{{ card.diseasename.name }}</h1>
+			</div>
+			<div class="topRightButtons">
+				<div class="buttonTitle">&nbsp;</div>
+				<a href="#" class="closeButton" data-tooltip="Close"></a>
+			</div>
+		</div>
+		
+		<div class="drugCardButtonArea btn-toolbar">
+			<button type="button" class="btn btn-primary overviewBtn">Overview</button>
+			<button type="button" class="btn btn-default infoBtn">Info</button>
+			<button type="button" class="btn btn-default detailsBtn">Details</button>
+			<button type="button" class="btn btn-default highYieldBtn">High Yield</button>
+		</div>
+		
+		<div class="cardTabContainer">
+			<div class="overviewTab cardTab">
+				<div class="drugCardDescription">
+					{{ card.diseasename.description }}
+				</div>
+				
+				
+				<div class="cardInfo disease-cause">
+					<h3 class="sectionTitle"><span class="title">Cause/Etiology</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for cause in card.diseasecause %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{cause.id}}', this);return false;" data-libraryID="{{cause.id}}">{{cause.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{cause.id}}">Description</a>
+								</li>
+								{% if cause.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{cause.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo disease-symptom">
+					<h3 class="sectionTitle"><span class="title">Symptoms</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for symptom in card.diseasesymptom %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{symptom.id}}', this);return false;" data-libraryID="{{symptom.id}}">{{symptom.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{symptom.id}}">Description</a>
+								</li>
+								{% if symptom.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{symptom.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo disease-treatments">
+					<h3 class="sectionTitle"><span class="title">Treatments</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for treatment in card.diseasetreatment %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{treatment.id}}', this);return false;" data-libraryID="{{treatment.id}}">{{treatment.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{treatment.id}}">Description</a>
+								</li>
+								{% if treatment.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{treatment.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+			</div>
+			
+			<div class="infoTab cardTab" style="display:none">
+				<div class="cardInfo diease-type">
+					<h3 class="sectionTitle"><span class="title">Disease Class/Type</span><span class="maximizeButton"></span></h3> 
+					<ul>
+					{% for type in card.diseasetype %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{type.id}}', this);return false;" data-libraryID="{{type.id}}">{{type.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{type.id}}">Description</a>
+								</li>
+								{% if type.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{type.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				<div class="cardInfo disease-demographics">
+					<h3 class="sectionTitle"><span class="title">Demographics</span><!--<span class="maximizeButton"></span>--></h3> 
+				</div>
+				
+				<div class="cardInfo disease-organs">
+					<h3 class="sectionTitle"><span class="title">Organ Sys &amp; Structs</span><!--<span class="maximizeButton"></span>--></h3>
+				</div>
+				<div class="cardInfo disease-billing">
+					<h3 class="sectionTitle"><span class="title">Billing Info</span><!--<span class="maximizeButton"></span>--></h3>
+				</div>
+			</div>
+			
+			<div class="detailsTab cardTab" style="display:none">
+				<div class="cardInfo disease-cause">
+					<h3 class="sectionTitle"><span class="title">Cause/Etiology</span><span class="maximizeButton"></span></h3>
+					<ul>
+					{% for cause in card.diseasecause %}
+						<span class="libValLinkContainer"><li><a href="#" onclick="addResultsCard('{{cause.id}}', this);return false;" data-libraryID="{{cause.id}}">{{cause.name}}</a> <a href="#" class="hamburger"></a>
+							<ul class="hamburgerSubNav">
+								<li><a href="#" class="descriptionLink" data-libraryID="{{cause.id}}">Description</a>
+								</li>
+								{% if cause.hasImages %}
+									<li><a href="#" class="imageLink" data-libraryID="{{cause.id}}">Images</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li></span>
+					{% endfor %}
+					</ul>
+				</div>
+				
+				<div class="cardInfo disease-mechanism">
+					<h3 class="sectionTitle"><span class="title">Mechanism</span><!--<span class="maximizeButton"></span>--></h3>
+				</div>
+				
+				
+			</div>
+			
+			<div class="highYieldTab cardTab" style="display:none">
+				<div class="cardInfo disease-labs">
+					<h3 class="sectionTitle"><span class="title">Labs &amp; Tests</span><!--<span class="maximizeButton"></span>--></h3>
+				</div>
+				
+				<div class="cardInfo disease-resources" >
+					<h3 class="sectionTitle"><span class="title">Study Resources</span><!--<span class="maximizeButton"></span>--></h3>
+				</div>
+				
+				<div class="cardInfo disease-media">
+					<h3 class="sectionTitle"><span class="title">Media</span><!--<span class="maximizeButton"></span>--></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

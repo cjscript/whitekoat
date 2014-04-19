@@ -41,28 +41,6 @@ class StudentController extends GenericController
     }
 
     /**
-     * @Route("/help", name="sc_help_get" )
-     * @param request the request
-     * @return type
-     */
-    public function helpAction(Request $request)
-    {
-        $session = $this->getRequest()->getSession();
-
-// always check session.
-        if (!$session->has('logininfo'))
-        {
-            $session->clear();
-            return $this->redirect($this->generateUrl('login_route'));
-        } else
-        {
-            $loginInfo = $session->get('logininfo');
-
-            return $this->render('AxonMedicineWhiteKoatBundle:Default:student.help.html.twig', array('name' => $loginInfo->getUsername()));
-        }
-    }
-
-    /**
      * @Route("/search", name="sc_drug_search" )
      * @param request the request
      * @return type

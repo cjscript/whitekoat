@@ -36,7 +36,8 @@ class LoginController extends GenericController
 
                 if ($user->getUsername() == 'student@whitekoat.com')
                 {
-                    $ret = $this->redirect($this->generateUrl('sc_route_get'));
+                    //$ret = $this->redirect($this->generateUrl('sc_route_get'));
+					$ret = $this->redirect($this->generateUrl('homepage_route_get'));
                 } else
                 {
                     $ret = $this->redirect($this->generateUrl('dlc_route_get'));

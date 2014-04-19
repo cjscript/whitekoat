@@ -1,0 +1,478 @@
+{%extends "AxonMedicineWhiteKoatBundle:Default:home.student.html.twig"%}
+
+{%block libcontent %}
+
+{%block cardstylesheets %}
+
+<style type="text/css">
+	
+</style>
+{%endblock%}
+{%block cardprejavascripts%}
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(function() {
+			$("#cardSearchField").autocomplete({
+				/*source: function(request, response) {
+					$.ajax({
+						url: "home/autocomplete",
+						dataType: "json",
+						data: {
+							term: request.term
+						},
+						success: function(data) {
+							//console.log(data);
+							response(data);
+						}
+					});
+				},*/
+				source: "home/autocomplete",
+				minLength: 1,
+				focus: function(event, ui) {
+					$("#cardSearchField").val(ui.item.label);
+					return false;
+				},
+				select: function(event, ui) {
+					$("#cardSearchField").val(ui.item.label);
+					console.log(ui.item.cardType);
+					if (ui.item.cardType === "Drug") {
+						addDrugCard(ui.item.cardId);
+					}
+					else if (ui.item.cardType === "Disease") {
+						addDiseaseCard(ui.item.cardId);
+					}
+					return false;
+				}
+					
+
+			})
+			/*.data("ui-autocomplete")._renderItem = function(ul, item) {
+				return $("<li>")
+					.append('<span class="cardName">' + item.label + ': </span><span class="cardType">' + item.cardType + '</span>')
+					.appendTo(ul);
+			};*/
+		});
+		
+		$("#cardArea").sortable({
+			axis: "x",
+			revert: false,
+			scroll: true,
+			tolerance: "pointer",
+			placeholder: "card cardPlaceholder",
+			containment: "#cardArea",
+			handle: ".topBar",
+			opacity: .5,
+			/*delay: 250,*/
+			distance:50,
+			scrollSensitivity:50,
+			scrollSpeed:100,
+			start: function(e, ui){
+				removeBubbles();
+				removeVisibleMenus();
+				ui.placeholder.width(ui.item.width()).height(ui.item.height());
+				ui.item.float=true;
+			}/*,
+			change: function (e,ui){
+				var $placeholder = $(ui.placeholder);
+				$placeholder.hide().show(300);
+				
+			}*/
+		});
+		//$('#cardArea').disableSelection();
+		/*$('#cardArea').find('.card').draggable({
+				axis: "x",
+				connectToSortable: "#cardArea"});*/
+		
+		
+
+		$('.hamburgerSubNav').menu();
+		
+				
+	});
+	
+	function updateCardAreaWidth(direction) {
+		var $cardArea = $("#cardArea");
+		var $cards = $cardArea.find(".card");
+		var width = $cardArea.parent('#cardAreaWrapper').width();
+		if ($cards.length > 0) {
+			width = 0;
+			$cards.each(function() {
+				var $card = $(this);
+				width += $card.outerWidth(true);
+			});
+			width += 15;
+		}
+		if (direction=="collapse") {
+			$cardArea.animate({"width":width},400);
+		} else {
+			$cardArea.width(width);
+		}
+	}
+	
+	function scrollToCard($card) {
+		$card = $($card);
+		var $cardAreaWrapper = $("#cardAreaWrapper");
+		var pos = $card.position();
+		console.log(pos, $card);
+		$cardAreaWrapper.animate({scrollLeft:pos.left},800);
+	}
+
+	
+	function addDrugCard(cardId) {
+		$.ajax({
+			url: 'home/drugCard',
+			data: {
+				id: cardId
+			},
+			dataType: 'text'
+		}).done(function (response) {
+			var $card = $(response);
+			$card.find('.hamburgerSubNav').menu();
+			addCard($card, null);
+		}).fail(function (response) {
+			console.log("Something went wrong with the drug card.");
+		});
+	};
+	function addDiseaseCard(cardId) {
+		$.ajax({
+			url: 'home/diseaseCard',
+			data: {
+				id: cardId
+			},
+			dataType: 'text'
+		}).done(function (response) {
+			var $card = $(response);
+			$card.find('.hamburgerSubNav').menu();
+			addCard($card, null);
+		}).fail(function (response) {
+			console.log("Something went wrong with the disease card.");
+		});
+	};
+	function addResultsCard(cardId, forEntry) {
+		$.ajax({
+			url: 'home/resultsCard',
+			data: {
+				id: cardId
+			},
+			dataType: 'text'
+		}).done(function (response) {
+			var $forEntry = $(forEntry);
+			var $card = $(response);
+			addCard($card, $forEntry);
+		}).fail(function (response) {
+			console.log("Something went wrong with the results card.");
+		});
+	};
+	
+	function addCard($card, $forEntry) {
+
+		if ($forEntry && $forEntry.length>=1) {
+			var $forCard = $forEntry.closest(".card");
+			$forCard.after($card);
+		} else {
+			$('#cardArea').append($card);
+		}
+		
+		//hide 
+		$card.hide();
+		$card.show();
+
+		updateCardAreaWidth();
+		scrollToCard($card);
+		$card.hide();
+		$card.toggle( "drop" );
+		//history.replaceState(null, "", "?drugCard[]=" + cardId);
+	}
+	
+	
+$(document).ready(function() {
+	var $cardArea = $("#cardArea");
+	
+	$cardArea.on('click', '.closeButton', function(e) {
+		$removeThis = $(this).closest(".card");
+		$removeThis.toggle("drop", function() {
+			$removeThis.remove();
+			updateCardAreaWidth("collapse");
+		});
+		updateCardAreaWidth("collapse");
+	});
+	
+	$cardArea.on('mouseenter', '.topRightButtons>a', function(e) {
+		var $this = $(this);
+		$this.siblings('.buttonTitle').html($this.data('tooltip'));
+	}).on('mouseleave', '.topRightButtons>a', function(e) {
+		$(this).siblings('.buttonTitle').html("&nbsp;");
+	});
+	
+	// maximize button
+	$cardArea.on('click', '.maximizeButton', function(e) {
+		var animationDuration = 400;
+		var $cardInfo = $(this).closest('.cardInfo');
+		var $siblings = $cardInfo.siblings('.cardInfo');
+		var $allCardInfo = $.merge($.merge($(), $cardInfo), $siblings);
+		$cardInfo.parent().css({"position":"relative","display":"block"});
+		var newTop = Math.min.apply(null, $allCardInfo.map(function() {return $(this).position().top;}));
+		var curPos = $cardInfo.position();
+		
+		if ($cardInfo.hasClass("maximized")) {
+			newTop = $cardInfo.data('initialPosition').top;  
+		} else {
+			
+			$allCardInfo.each(function(index, value) { // store current positions before we start messing with them
+				var $this = $(this), pos = $this.position();
+				
+				if ($this.css('position') != 'absolute') {
+						//move top position by 10px to fix jump on first maximize, source of which is currently unknown
+						pos.top -= 10;
+						
+						//also, this one moves by a little bit on the first maximize
+						if( index === 0 ) {
+							newTop -= 10;
+						}
+				}
+				
+				$this.data('initialPosition', pos);
+			});
+			$allCardInfo.each(function() { // mess with positions
+				var $this = $(this), pos;
+				pos = $this.data('initialPosition');
+				$this.css({"position":"absolute", "left": pos.left, "top":pos.top});
+			});
+		}
+		$cardInfo.toggleClass("maximized");
+		$cardInfo.animate({"top":newTop},animationDuration, "swing", function() {
+			
+		});
+		$siblings.toggle("drop",{direction:"up"});
+	});	
+});
+	
+	
+	
+	
+</script>
+{%endblock%}
+
+<div class="tab-content">
+    <link href="{{asset('bundles/axonmedicinewhitekoat/css/cardSearch.css')}}" rel="stylesheet">
+    
+	<form id="cardSearch" action="" autocomplete="off">	
+		<input type="text" name="term" id="cardSearchField" placeholder="Drug or Disease"/><input type="submit" value="search"/>
+	</form>
+	<div id="outerCardArea">
+		<div id="cardAreaWrapper">
+			<div id="cardArea">
+				{% for drugCard in drugCards %}
+					{% include 'AxonMedicineWhiteKoatBundle:Default:drugCard.html.twig' with {"card": drugCard } only %}
+				{% endfor %}
+				{% for diseaseCard in diseaseCards %}
+					{{diseaseCard}}
+				{% endfor %}
+				{% for resultsCard in resultsCards %}
+					{{resultsCard}}
+				{% endfor %}
+				
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+{%block cardpostjavascripts%}
+	<script type="text/javascript">
+		$("#cardSearch").submit(function(event) {
+			addTextSearchedCard($("#cardSearch").serialize());
+			event.preventDefault();
+			return false;
+		});
+		
+		$('#cardArea').on("click", ".hamburger", function(e) {
+			e.stopPropagation();
+			var animationDuration = 400;
+			var $this = $(this);
+			var existingMenu = $this.closest('.card').find('.visibleMenu');
+			
+			//checks to see if a menu is showing right now
+			if ( existingMenu.length > 0) {
+				removeVisibleMenus();
+			}
+			else {
+				var $card = $this.closest('.card');
+				var $menu = $this.siblings('.hamburgerSubNav').clone(true);
+				console.log($menu.offsetParent());
+				$menu.addClass('visibleMenu');
+				/*menu.position({
+					my: "left top",
+					at: "left bottom",
+					of: this,
+					collision: "none"
+				});*/
+				var pos = $this.position();
+				pos.top += $this.outerHeight(true);
+				pos.left += parseInt($this.css("marginLeft"));
+				$menu.css({"position":"absolute","top":pos.top,"left":pos.left});
+				
+				$this.after($menu);
+				$menu.hide();
+				$menu.show(animationDuration);
+				
+			}
+		});
+		
+		function removeVisibleMenus() {
+			var $visibleMenus = $('.visibleMenu');
+			$visibleMenus.hide(400, function() {
+				$visibleMenus.remove();
+			});
+		}
+		
+		$(document).on({
+		   click: function(){
+				removeVisibleMenus();
+				removeBubbles();
+		   }
+		});
+		
+		$('.bubble').on("click", ".bubble", function(e) {
+			e.stopPropagation();
+			removeVisibleMenus();
+		});
+		
+		
+		function removeBubbles() {
+			var $bubbles = $('.bubble');
+			$bubbles.hide(400, function() {
+				$bubbles.remove();
+			});
+		}
+		
+		function addTextSearchedCard(searchTerm) {
+			$.ajax({
+				url: 'home/cardByName',
+				data: searchTerm,
+				dataType: 'json'
+			}).done(function (response) {
+				var id = response['id'];
+				var type = response['type'];
+				if (type == "Drug") {
+					addDrugCard(id);
+				}
+				else if (type == "Disease") {
+					addDiseaseCard(id);
+				}
+
+			}).fail(function (response) {
+				console.log("Something went wrong with the text searched card.");
+			});
+		};
+		
+		function addLibValCard(cardId) {
+			$.ajax({
+				url: 'home/libValueCard',
+				data: {
+					id: cardId
+				},
+				dataType: 'text'
+			}).done(function (response) {
+				var $card = $(response);
+				$('#cardArea').append($card);
+				updateCardAreaWidth();
+				scrollToCard($card);
+			}).fail(function (response) {
+				console.log("Something went wrong with the lib value card.");
+			});
+		};
+	
+		$('#cardArea').on("click", '.descriptionLink', function(e) {
+			e.stopPropagation();
+			var $this = $(this);
+			var id = $(this).data("libraryid");
+			var $placementElement = $this.closest('.libValLinkContainer').find('.hamburger');
+			var $container = $this.closest('.cardInfo');
+			
+			$.ajax({
+				url: 'home/libValueCard',
+				data: {
+					id: id
+				},
+				dataType: 'text'
+			}).done(function (response) {
+				var $bubble = $($.parseHTML(response));
+				var pos = $placementElement.position();
+				$container.append($bubble)
+				console.log(pos);
+				console.log($bubble.outerHeight(true));
+				console.log($placementElement.outerWidth(true));
+				pos.left += $placementElement.outerWidth(true);
+				$bubble.css({"position":"absolute","left":pos.left});
+				//height of will change due to new line wrapping after moving along the x-axis
+				//need to place x-axis, calculate height, then position y-axis
+				pos.top -= $bubble.outerHeight(true);
+				$bubble.css({"top":pos.top});
+				$bubble.hide();
+				$bubble.show(400);
+				removeVisibleMenus();
+			}).fail(function (response) {
+				console.log("Something went wrong with the lib value card.");
+			});
+		});
+		
+		$('#cardArea').on("click", '.imageLink', function(e) {
+			e.stopPropagation();
+			var $this = $(this);
+			var id = $(this).data("libraryid");
+			var $placementElement = $this.closest('.card');
+			
+			$.ajax({
+				url: 'home/imageCard',
+				data: {
+					id: id
+				},
+				dataType: 'text'
+			}).done(function (response) {
+				var $imageCard = $($.parseHTML(response));
+				addCard($imageCard, $placementElement);
+				removeVisibleMenus();
+			}).fail(function (response) {
+				console.log("Something went wrong with the image card.");
+			});
+		});
+		
+		
+		$(document).ready(function() {
+			var showTabFunction = function(tabSelector) {
+				var $this = $(this);
+				var $cardContent = $this.closest(".cardContent");
+				$cardContent.find(".cardTab").hide();
+				$cardContent.find(tabSelector).show();
+				$this.siblings(".btn").switchClass("btn-primary", "btn-default");
+				$this.switchClass("btn-default", "btn-primary");
+			}
+			$("#cardArea").on("click", "div.card button.overviewBtn", function() {
+				showTabFunction.call(this, ".overviewTab");
+			});
+			$("#cardArea").on("click", "div.card  button.infoBtn", function() {
+				showTabFunction.call(this, ".infoTab");
+			});
+			$("#cardArea").on("click", "div.card  button.detailsBtn", function() {
+				showTabFunction.call(this, ".detailsTab");
+			});
+			$("#cardArea").on("click", "div.card  button.highYieldBtn", function() {
+				showTabFunction.call(this, ".highYieldTab");
+			});
+		});
+		
+		
+	</script>
+
+{%endblock%}
+
+
+{%endblock%}
+
+{%block tablecontent %}
+
+
+{%endblock%}

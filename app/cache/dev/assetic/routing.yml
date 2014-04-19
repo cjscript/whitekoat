@@ -2,4 +2,4 @@ _assetic:
     resource: .
     type: assetic
 _app:
-    resource: 'C:/Dev/Netbeans.Projects/whitekoat/app/config/routing_dev.yml'
+    resource: 'D:/inetpub/wwwroot/KNWebSite/WK/app/config/routing_dev.yml'

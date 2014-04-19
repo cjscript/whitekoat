@@ -4,6 +4,7 @@ namespace AxonMedicine\WhiteKoatBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use AxonMedicine\WhiteKoatBundle\Entity\DrugCardView;
+use AxonMedicine\WhiteKoatBundle\Dto\StudentDrugInfoDto;
 
 /**
  * The drug card service.
@@ -30,6 +31,40 @@ class DrugCardService extends RelationshipService
         }
         return $drugcards;
     }
+	
+	public function getDrugCardViews()
+	{
+		$repo = $this->em->getRepository('AxonMedicineWhiteKoatBundle:DrugCardView');
+		$drugCards = $repo->findAll();
+		$drugCardViews = array();
+		
+		foreach ($drugCards as $drugCard)
+		{
+			$name = $drugCard->getDrugname()->getName();
+			$brands = $this->splice($drugCard->getDrugbrand());
+			$classes = $this->splice($drugCard->getDrugbrand());
+			$targets = $this->splice($drugCard->getDrugtarget());
+			$mechanism = $drugCard->getDrugmechanism();
+			$treatments = $this->splice($drugCard->getDrugtreatment());
+			$sideEffects = $this->splice($drugCard->getDrugsideeffect());
+			$contrainds = $this->splice($drugCard->getDrugcontraind());
+			
+			$drugDTO = new StudentDrugInfoDto($drugCard->getId(), $name, $brands, $classes, $targets, $treatments, $mechanism, $sideEffects, $contrainds);
+			array_push($drugCardViews, $drugDTO);
+		}
+		
+		return $drugCardViews;
+	}
+	
+	private function splice($values) 
+	{
+		$stringArr = array();
+		foreach ($values as $value)
+		{
+			array_push($stringArr, $value->getName());
+		}
+		return implode(", ", $stringArr);
+	}	
 
     public function getStudentDrugCardBy($name)
     {
@@ -100,6 +135,7 @@ class DrugCardService extends RelationshipService
     public function createDrugCardBy($genericDrugId, $brandDrugIds, $drugClassIds, $drugTargetIds, $drugTreatmentIds, $mechanism, $drugSideEffectIds, $drugContraIndIds, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication)
     {
         $genericDrug = $this->em->find('AxonMedicineWhiteKoatBundle:Libraryvalue', $genericDrugId);
+		echo $genericDrugId."\n\n\n";
 
         if ($genericDrug)
         {
@@ -112,7 +148,7 @@ class DrugCardService extends RelationshipService
             $contraInds = $this->processDirectRelationship($genericDrug, $drugContraIndIds, $relatesToContraindication, true);
 
             // create drug view.
-            $this->createDrugView($genericDrug->getName(), $brands, $classes, $targets, $treatments, $mechanism, $sideEffects, $contraInds);
+            $this->createDrugView($genericDrug, $brands, $classes, $targets, $treatments, $mechanism, $sideEffects, $contraInds);
 
             $this->em->flush();
         }

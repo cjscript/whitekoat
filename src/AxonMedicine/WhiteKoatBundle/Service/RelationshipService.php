@@ -27,11 +27,10 @@ class RelationshipService extends BaseService
                 {
                     $this->createRelationship($left, $ret, $relatesTo);
                 }
-                array_push($arr, $ret->getName());
+                array_push($arr, $ret);
             }
         }
-        $ret = implode(", ", $arr);
-        return $ret;
+        return $arr;
     }
 
     protected function createRelationship($left, $right, $relatesTo)
