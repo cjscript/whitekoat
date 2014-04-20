@@ -196,8 +196,6 @@ class DiseaseDataParser extends DataParser
 
     private function processDisease($input, $generic)
     {
-        $this->debug("===>Disease name: " . $input . EOL);
-
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -209,8 +207,6 @@ class DiseaseDataParser extends DataParser
 
     private function processDiseaseType($input, $generic)
     {
-        $this->debug("===>Disease type: " . $input . EOL);
-
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -256,6 +252,8 @@ class DiseaseDataParser extends DataParser
         $rightSideValue = $input;
         $lookupName = 'Treatment';
 
+        echo 'input: ' . $input . EOL;
+        
         $rels = $this->controller->relationshipService()->getByFull($leftSideType, $rightSideType, $rightSideValue, $lookupName);
 
         // get library values from relationships.
@@ -269,6 +267,8 @@ class DiseaseDataParser extends DataParser
             }
         }
         $ret = implode(":", $arrItems);
+        
+        echo 'returning: ' . $ret . EOL;
 
         return $ret;
     }
