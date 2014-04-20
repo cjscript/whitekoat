@@ -1,3 +1,6 @@
+use `mysql`;
+
+create database `simpletest`;
 
 drop database if exists `whitekoat`;
 
