@@ -98,7 +98,6 @@ class ImportDrugDataController extends GenericController
         $output = shell_exec($command);
         
         echo 'output from shell: ' . $output;
-        exit;
     }
 
     private function process($original, $new)
