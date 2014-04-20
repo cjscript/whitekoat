@@ -196,6 +196,15 @@ class DiseaseDataParser extends DataParser
 
     private function processDisease($input, $generic)
     {
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease name action: " . implode(', ', $actions) . EOL);
+        }
+
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -207,6 +216,15 @@ class DiseaseDataParser extends DataParser
 
     private function processDiseaseType($input, $generic)
     {
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease type action: " . implode(', ', $actions) . EOL);
+        }
+
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -218,6 +236,15 @@ class DiseaseDataParser extends DataParser
 
     private function processCause($input, $generic)
     {
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease cause action: " . implode(', ', $actions) . EOL);
+        }
+
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -231,6 +258,15 @@ class DiseaseDataParser extends DataParser
 
     private function processSymptom($input, $generic)
     {
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease symptom action: " . implode(', ', $actions) . EOL);
+        }
+
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -253,7 +289,7 @@ class DiseaseDataParser extends DataParser
         $lookupName = 'Treatment';
 
         echo 'input: ' . $input . EOL;
-        
+
         $rels = $this->controller->relationshipService()->getByFull($leftSideType, $rightSideType, $rightSideValue, $lookupName);
 
         // get library values from relationships.
@@ -267,8 +303,6 @@ class DiseaseDataParser extends DataParser
             }
         }
         $ret = implode(":", $arrItems);
-        
-        echo 'returning: ' . $ret . EOL;
 
         return $ret;
     }

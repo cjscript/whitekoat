@@ -24,6 +24,7 @@
             <th>Disease Type(s)</th>
             <th>Disease Cause(s)</th>
             <th>Disease Symptom(s)</th>
+            <th>Disease Treatment(s)</th>
             <th>Action</th>
         </tr>
     </thead>     
@@ -35,6 +36,7 @@
             <td>{%for lib in diseasecard.diseasetype%}{{lib.name}}<br>{%endfor%}</td>
             <td>{%for lib in diseasecard.diseasecause%}{{lib.name}}<br>{%endfor%}</td>
             <td>{%for lib in diseasecard.diseasesymptom%}{{lib.name}}<br>{%endfor%}</td>
+            <td>{%for lib in diseasecard.diseasetreatment%}{{lib.name}}<br>{%endfor%}</td>
             <td><a href="{{path('drug_route_remove', { 'id': diseasecard.id })}}">remove</a>
         </tr>
              {%endfor%}

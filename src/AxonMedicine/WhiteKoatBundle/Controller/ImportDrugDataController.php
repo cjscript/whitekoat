@@ -102,7 +102,7 @@ class ImportDrugDataController extends GenericController
     {
         // parse alias data...
 //        $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
-$databaseFile = 'C:\WK\www\symfony\src\AxonMedicine\WhiteKoatBundle\Database\wk_db82332_1Qxdf\whitekoat.sql';
+$databaseFile = '/WK/www/symfony/src/AxonMedicine/WhiteKoatBundle/Database/wk_db82332_1Qxdf/whitekoat.sql';
 //        echo 'database file: ' . $databaseFile;
         $this->refreshDb($databaseFile);
         // parse alias data...
