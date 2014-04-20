@@ -1,3 +1,4 @@
+
 drop database if exists `whitekoat`;
 
 create database `whitekoat`;
