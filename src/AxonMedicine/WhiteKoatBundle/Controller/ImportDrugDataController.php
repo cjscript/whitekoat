@@ -86,7 +86,6 @@ class ImportDrugDataController extends GenericController
     {
         $vals['db_host'] = '127.0.0.1';
         $vals['db_user'] = 'root';
-        $vals['db_pass'] = '<enter password here>';
         $vals['db_pass'] = '45drTweXsit24E3';
         $vals['db_name'] = 'whitekoat';
 
@@ -101,12 +100,11 @@ class ImportDrugDataController extends GenericController
 
     private function process($original, $new)
     {
-        $this->refreshDb('<enter path to whitekoat script>');
-		// parse alias data...
-        $this->refreshDb('/Database/wk_db82332_1Qxdf/whitekoat.sql');
-		// parse alias data...
-
-
+        // parse alias data...
+        $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
+//        echo 'database file: ' . $databaseFile;
+        $this->refreshDb($databaseFile);
+        // parse alias data...
         (new AliasDataParser($this))->parse($original, $new);
         // parse drug data...
         (new DrugDataParser($this))->parse($original, $new);
