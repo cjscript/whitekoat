@@ -89,7 +89,7 @@ class ImportDrugDataController extends GenericController
         $vals['db_pass'] = '45drTweXsit24E3';
         $vals['db_name'] = 'whitekoat';
 
-        $command = 'mysql'
+        $command = '/xampp/mysql/bin/mysql'
                 . ' --host=' . $vals['db_host']
                 . ' --user=' . $vals['db_user']
                 . ' --password=' . $vals['db_pass']
