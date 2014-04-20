@@ -96,16 +96,17 @@ class ImportDrugDataController extends GenericController
                 . ' --database=' . $vals['db_name']
                 . ' --execute="SOURCE ' . $script . '"';
         $output = shell_exec($command);
-        
-        echo 'output from shell: ' . $output;
     }
 
     private function process($original, $new)
     {
         // parse alias data...
-        $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
+//        $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
+$databaseFile = '/WK/Database/wk_db82332_1Qxdf/whitekoat.sql';
 //        echo 'database file: ' . $databaseFile;
         $this->refreshDb($databaseFile);
+        
+        exit;
         
         // parse alias data...
         (new AliasDataParser($this))->parse($original, $new);
