@@ -468,6 +468,10 @@ class DrugDataParser extends DataParser
                     $ret = $this->controller->diseaseLibService()->save($name, $name, 'Diseases');
 
                     break;
+                case "ref:drug":
+                    $ret = $this->controller->drugLibService()->save($name, $name, 'Drugs');
+
+                    break;
             }
         }
         return $ret;

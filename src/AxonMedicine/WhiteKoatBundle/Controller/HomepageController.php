@@ -385,6 +385,7 @@ class HomepageController extends GenericController
 	}	
 	
 	private function searchAllDrugCardFieldsByLibVal($val) {
+            
 		$repo = $this->getDoctrine()->getRepository('AxonMedicineWhiteKoatBundle:DrugCardView');
 		$query = $repo->createQueryBuilder('card')
 				  ->where(':val MEMBER OF card.drugbrand')

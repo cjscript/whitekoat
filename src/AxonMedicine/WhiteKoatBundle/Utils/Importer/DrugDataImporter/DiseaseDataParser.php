@@ -196,7 +196,14 @@ class DiseaseDataParser extends DataParser
 
     private function processDisease($input, $generic)
     {
-        $this->debug("===>Disease name: " . $input . EOL);
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease name action: " . implode(', ', $actions) . EOL);
+        }
 
         $name = $input;
         $desc = 'Using name for description: ' . $name;
@@ -209,7 +216,14 @@ class DiseaseDataParser extends DataParser
 
     private function processDiseaseType($input, $generic)
     {
-        $this->debug("===>Disease type: " . $input . EOL);
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease type action: " . implode(', ', $actions) . EOL);
+        }
 
         $name = $input;
         $desc = 'Using name for description: ' . $name;
@@ -222,6 +236,15 @@ class DiseaseDataParser extends DataParser
 
     private function processCause($input, $generic)
     {
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease cause action: " . implode(', ', $actions) . EOL);
+        }
+
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -235,6 +258,15 @@ class DiseaseDataParser extends DataParser
 
     private function processSymptom($input, $generic)
     {
+        $actions = null;
+
+        $input = $this->processActions($input, $actions);
+
+        if ($actions != null)
+        {
+            $this->debug("===>disease symptom action: " . implode(', ', $actions) . EOL);
+        }
+
         $name = $input;
         $desc = 'Using name for description: ' . $name;
 
@@ -255,6 +287,8 @@ class DiseaseDataParser extends DataParser
         $rightSideType = 'Diseases';
         $rightSideValue = $input;
         $lookupName = 'Treatment';
+
+        echo 'input: ' . $input . EOL;
 
         $rels = $this->controller->relationshipService()->getByFull($leftSideType, $rightSideType, $rightSideValue, $lookupName);
 

@@ -42,7 +42,7 @@ class DrugCardService extends RelationshipService
 		{
 			$name = $drugCard->getDrugname()->getName();
 			$brands = $this->splice($drugCard->getDrugbrand());
-			$classes = $this->splice($drugCard->getDrugbrand());
+			$classes = $this->splice($drugCard->getDrugclass());
 			$targets = $this->splice($drugCard->getDrugtarget());
 			$mechanism = $drugCard->getDrugmechanism();
 			$treatments = $this->splice($drugCard->getDrugtreatment());
@@ -135,7 +135,7 @@ class DrugCardService extends RelationshipService
     public function createDrugCardBy($genericDrugId, $brandDrugIds, $drugClassIds, $drugTargetIds, $drugTreatmentIds, $mechanism, $drugSideEffectIds, $drugContraIndIds, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication)
     {
         $genericDrug = $this->em->find('AxonMedicineWhiteKoatBundle:Libraryvalue', $genericDrugId);
-		echo $genericDrugId."\n\n\n";
+//		echo $genericDrugId."\n\n\n";
 
         if ($genericDrug)
         {

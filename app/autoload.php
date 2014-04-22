@@ -9,8 +9,7 @@ use Composer\Autoload\ClassLoader;
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 // added phpexcel include below for library reference.
-// require '../vendor/phpexcel/PHPExcel.php';
-
+require '../vendor/phpexcel/PHPExcel.php';
 
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
