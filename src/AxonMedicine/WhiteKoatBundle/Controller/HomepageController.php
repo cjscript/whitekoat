@@ -22,11 +22,11 @@ class HomepageController extends GenericController
 {
 
     /**
-     * @Route("/home", name="homepage_route_get" )
+     * @Route("/results", name="results_route_get" )
      * @param request the request
      * @return type
      */
-    public function retrieveSearchAction(Request $request)
+    public function renderResultsPage(Request $request)
     {
         $session = $this->getRequest()->getSession();
 
@@ -44,26 +44,20 @@ class HomepageController extends GenericController
 			$diseaseCards = array();
 			if ($params) {
 				foreach ($params as $p) {
-					$libVal = $this->doLibValQueryByName($p);
-					$drugCard = $this->findDrugCardByName($libVal);
-					$diseaseCard = $this->findDiseaseCardByName($libVal);
-					if ($drugCard) {
-						$this->setLibValHasImages($drugCard);
-						array_push($drugCards, $drugCard);
-					} else if ($diseaseCard) {
-						$this->setLibValueHasImages($diseaseCard);
-						array_push($diseaseCards, $diseaseCard);
+					$cards = $this->doDrugDiseaseQuery($p);
+					foreach ($cards as $card) {
+						if ($card->getCardType() === "Drug") {
+							$this->setLibValHasImages($card);
+							array_push($drugCards, $card);
+						} else if ($card->getCardType() === "Disease") {
+							$this->setLibValHasImages($card);
+							array_push($diseaseCards, $card);
+						}	
 					}
-					//if not a drug card:
-					//   search disease cards
-					//if not a diseaese card:
-					//   search results cards
 				}
 			}
 				
-				
-			//TODO: add ?drugID ?drugName ?diseaseID ?diseaseName ?valueID ?valueName checks on page load,
-			//      add to homepage template a spot for them to be rendered on pageload
+			//TODO: results card on first page load?
             return $this->render('AxonMedicineWhiteKoatBundle:Default:homepage.main.html.twig', array('name' => $loginInfo->getUsername(), 'drugCards' => $drugCards, 'diseaseCards' => $diseaseCards, 'resultsCards' => array()));
         }
     }
@@ -93,6 +87,31 @@ class HomepageController extends GenericController
 			return $response;
 		}
 
+	}
+
+
+	/**
+     * @Route("/home", name="homepage_route_get" )
+     * @param request the request
+     * @return type
+     */
+	public function renderStudentHome(Request $request) {
+		$session = $this->getRequest()->getSession();
+		 
+		$searchTerm = $request->query->get('term');
+
+// always check session.
+        if (!$session->has('logininfo'))
+        {
+            $session->clear();
+            return $this->redirect($this->generateUrl('login_route'));
+        } else
+        {
+        	$loginInfo = $session->get('logininfo');
+			return $this->render('AxonMedicineWhiteKoatBundle:Default:studenthome.html.twig', array('name' => $loginInfo->getUsername()));	
+		}
+
+		
 	}
 	
 	/**

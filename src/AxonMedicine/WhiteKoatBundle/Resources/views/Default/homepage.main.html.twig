@@ -188,6 +188,7 @@
 	
 $(document).ready(function() {
 	var $cardArea = $("#cardArea");
+	updateCardAreaWidth(null);
 	
 	$cardArea.on('click', '.closeButton', function(e) {
 		$removeThis = $(this).closest(".card");
@@ -267,7 +268,7 @@ $(document).ready(function() {
 					{% include 'AxonMedicineWhiteKoatBundle:Default:drugCard.html.twig' with {"card": drugCard } only %}
 				{% endfor %}
 				{% for diseaseCard in diseaseCards %}
-					{{diseaseCard}}
+					{% include 'AxonMedicineWhiteKoatBundle:Default:diseaseCard.html.twig' with {"card": diseaseCard } only %}
 				{% endfor %}
 				{% for resultsCard in resultsCards %}
 					{{resultsCard}}
@@ -276,7 +277,6 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-
 </div>
 
 
