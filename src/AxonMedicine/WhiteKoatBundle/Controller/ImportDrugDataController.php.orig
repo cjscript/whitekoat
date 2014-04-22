@@ -13,6 +13,8 @@ use AxonMedicine\WhiteKoatBundle\Utils\Importer\DrugDataImporter\DiseaseDataPars
 
 /**
  * This is the main controller for home page and all links in menu.
+ * 
+ * @Route("/dimpc") 
  *
  * @Route("/dimpc")
  */
@@ -100,29 +102,36 @@ class ImportDrugDataController extends GenericController
 
     private function process($original, $new)
     {
+// parse alias data...
+
         // parse alias data...
         $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
+
 <<<<<<< HEAD
 
+
+=======
+>>>>>>> 9c1e551f5a49db505a689a41754d1d5e2b5097ec
         // refresh database
         $this->refreshDb($databaseFile);
 
-=======
-//        echo 'database file: ' . $databaseFile;
-        $this->refreshDb($databaseFile);
->>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
         // parse alias data...
         (new AliasDataParser($this))->parse($original, $new);
 
         // parse drug data...
-        (new DrugDataParser($this))->parse($original, $new);
 <<<<<<< HEAD
+		
+		(new DrugDataParser($this))->parse($original, $new);
+		
+        // parse disease data...
+		
+=======
+>>>>>>> 9c1e551f5a49db505a689a41754d1d5e2b5097ec
+        (new DrugDataParser($this))->parse($original, $new);
 
 // parse disease data...
-=======
-        // parse disease data...
->>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
         (new DiseaseDataParser($this))->parse($original, $new);
+		
     }
 
     private function upload($request, $file, &$message, &$uploadedURL, $valid_filetypes)
