@@ -7,7 +7,7 @@ use `whitekoat`;
 CREATE FUNCTION GETID() RETURNS CHAR(32)
 		RETURN REPLACE(UUID(),'-','');
 
-create table `User` (
+CREATE TABLE `User` (
     `Id` char(32) primary key not null,
     `UserName` varchar(64),
     `Password` char(40),
@@ -22,7 +22,7 @@ create table `User` (
     unique index (`UserName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into `User` (`Id`, `UserName`,`Password`, `Version`,`Created`) values
+INSERT INTO `User` (`Id`, `UserName`,`Password`, `Version`,`Created`) values
 	  (GETID(), 'k@whitekoat.com', sha1('doctor2468'), 1, now()),
 	  (GETID(), 'cjscript@whitekoat.com', sha1('doctor2468'), 1, now()),
 	  (GETID(), 'steven@whitekoat.com', sha1('doctor2468'), 1, now()),
@@ -30,7 +30,7 @@ insert into `User` (`Id`, `UserName`,`Password`, `Version`,`Created`) values
 	  (GETID(), 'student@whitekoat.com', sha1('doctork'), 1, now());
 
 	-- not currently used.  Placeholder for user images.  Images should be saved externally.
-create table `UserImage` (
+CREATE TABLE `UserImage` (
     `Id` char(32) primary key not null,
     `Image` blob,
     `Inactive` tinyint(1) default 0,
@@ -41,7 +41,7 @@ create table `UserImage` (
     `ModifiedBy` varchar(64)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table `Role` (
+CREATE TABLE `Role` (
     `Id` char(32) primary key not null,
     `RoleName` varchar(64),
     `Inactive` tinyint(1) default 0,
@@ -53,14 +53,14 @@ create table `Role` (
     unique index (`RoleName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into `Role` (`Id`,`RoleName`,`Version`,`Created`) values
+INSERT INTO `Role` (`Id`,`RoleName`,`Version`,`Created`) values
 	  (GETID(), 'SUPERADMIN', 1, now()),
 	  (GETID(), 'ADMIN', 1, now()),
 	  (GETID(), 'STUDENT', 1, now()),
 	  (GETID(), 'TESTER', 1, now());
 
 
-create table `UserRole` (
+CREATE TABLE `UserRole` (
     `Id` char(32) primary key not null,
     `UserId` varchar(32),
     `RoleId` varchar(32),
@@ -74,11 +74,11 @@ create table `UserRole` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 	-- create user roles
-insert into `UserRole` (`Id`, `UserId`,`RoleId`, `Version`,`Created`) values
+INSERT INTO `UserRole` (`Id`, `UserId`,`RoleId`, `Version`,`Created`) values
 	  ((GETID()), (select Id from `User` where `UserName`='keisuke'), (select Id from `Role` where `RoleName`='ADMIN'), 1, now());
 
 
-create table `LibraryType` (
+CREATE TABLE `LibraryType` (
     `Id` char(32) primary key not null,
     `Name` char(255) not null,
     `Inactive` tinyint(1) default 0,
@@ -90,7 +90,7 @@ create table `LibraryType` (
     unique index (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into `LibraryType` (`Id`,`Name`,`Version`,`Created`) values
+INSERT INTO `LibraryType` (`Id`,`Name`,`Version`,`Created`) values
 	  (GETID(), 'Drugs', 1, now()),
 	  (GETID(), 'Classes', 1, now()),
 	  (GETID(), 'Molecules', 1, now()),
@@ -103,7 +103,7 @@ insert into `LibraryType` (`Id`,`Name`,`Version`,`Created`) values
 	  (GETID(), 'Actions', 1, now()),
 	  (GETID(), 'Aliases', 1, now());
 
-create table `LibraryValue` (
+CREATE TABLE `LibraryValue` (
     `Id` char(32) primary key not null,
     `Type` char(32) not null,
     `Name` varchar(255) not null,
@@ -120,7 +120,7 @@ create table `LibraryValue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 	-- defines the aliases and related parents
-create table `Alias` (
+CREATE TABLE `Alias` (
     `Id` char(32) primary key not null,
     `Original` char(255) not null,
     `Alias` char(255) not null,
@@ -135,7 +135,7 @@ create table `Alias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-create table `DrugLibraryProp` (
+CREATE TABLE `DrugLibraryProp` (
     `Id` char(32) primary key not null,
     `Generic` tinyint(1) default null,
     `Inactive` tinyint(1) default 0,
@@ -148,7 +148,7 @@ create table `DrugLibraryProp` (
         references `LibraryValue` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table `TempLookup` (
+CREATE TABLE `TempLookup` (
     `Id` char(32) primary key not null,
     `Name` char(255) not null,
     `DisplayName` char(255) not null,
@@ -161,7 +161,7 @@ create table `TempLookup` (
     index (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into `TempLookup` (`Id`,`Name`,`DisplayName`,`Version`,`Created`) values
+INSERT INTO `TempLookup` (`Id`,`Name`,`DisplayName`,`Version`,`Created`) values
 	  (GETID(), 'Drug Target', 'Molecule', 1, now()),
 	  (GETID(), 'Treatment', 'Indications', 1, now()),
 	  (GETID(), 'Side Effect', 'Side Effects', 1, now()),
@@ -179,7 +179,7 @@ insert into `TempLookup` (`Id`,`Name`,`DisplayName`,`Version`,`Created`) values
 -- diseases and causes
 -- diseases and symptoms
 -- diseases and treatments
-create table `Relationship` (
+CREATE TABLE `Relationship` (
     `Id` char(32) primary key not null,
     `LeftSide` char(32) not null,
     `RelatesTo` char(32) null,
@@ -198,7 +198,7 @@ create table `Relationship` (
         references `LibraryValue` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table `DrugCardView` (
+CREATE TABLE `DrugCardView` (
     `Id` char(32) primary key not null,
     `DrugName` varchar(255) not null,
     `DrugBrand` varchar(1024) not null,
@@ -216,7 +216,7 @@ create table `DrugCardView` (
     `ModifiedBy` varchar(64)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table `DiseaseCardView` (
+CREATE TABLE `DiseaseCardView` (
     `Id` char(32) primary key not null,
     `DiseaseName` varchar(255) not null,
     `DiseaseType` varchar(1024) not null,
@@ -232,7 +232,7 @@ create table `DiseaseCardView` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- maps drop down items to library types.
-create table `TypeQuestionMapping` (
+CREATE TABLE `TypeQuestionMapping` (
     `Id` char(32) primary key not null,
     `Display` varchar(1024) not null,
     `DiseaseType` varchar(1024) not null,
@@ -249,7 +249,7 @@ create table `TypeQuestionMapping` (
 
 -- select * from image;
 
-create table `Image` (
+CREATE TABLE `Image` (
     `Id` char(32) primary key not null,
     `OriginalFileName` varchar(255) not null,
     `OriginalFileExt` char(4) not null,
@@ -262,7 +262,7 @@ create table `Image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- library values and images
-create table `ImageLibraryValue` (
+CREATE TABLE `ImageLibraryValue` (
     `Id` char(32) primary key not null,
     `ImageRef` char(32) not null,
     `LibraryRef` char(32) not null,
@@ -282,7 +282,7 @@ create table `ImageLibraryValue` (
 
 	/**
 	-- a drug card can have multiple drug name items
-create table `DrugCardName`
+CREATE TABLE `DrugCardName`
 	(
 	  `DrugCardId` mediumint not null,
 	  `DrugLibId` mediumint not null,
@@ -297,7 +297,7 @@ create table `DrugCardName`
 	constraint foreign key (`DrugLibId`) references `LibraryValue`(`Id`)
 	);
 
-create table `DrugCardContraInd`
+CREATE TABLE `DrugCardContraInd`
 	(
 	  `DrugCardId` mediumint not null,
 	  `GenericLibId` mediumint not null,

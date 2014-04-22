@@ -14,8 +14,6 @@ use AxonMedicine\WhiteKoatBundle\Utils\Importer\DrugDataImporter\DiseaseDataPars
 /**
  * This is the main controller for home page and all links in menu.
  * 
- * @Route("/dimpc") 
- *
  * @Route("/dimpc")
  */
 class ImportDrugDataController extends GenericController
@@ -48,7 +46,35 @@ class ImportDrugDataController extends GenericController
     }
 
     /**
-     * @Route("/u", name="import_route_upload" )
+     * @Route("/init", name="import_route_initdb" )
+     * @Method({"POST"})
+     * @param request the request
+     * @return type
+     */
+    public function initDb(Request $request)
+    {
+        $session = $request->getSession();
+
+        // always check session.
+        if (!$session->has('logininfo'))
+        {
+            $session->clear();
+            return $this->redirect($this->generateUrl('login_route'));
+        } else
+        {
+            // refresh database
+            $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
+            $this->refreshDb($databaseFile);
+
+            $session->getFlashBag()->add('notice', "Database cleared");
+            $loginInfo = $session->get('logininfo');
+
+            return $this->render('AxonMedicineWhiteKoatBundle:Default:import.drug.data.html.twig', array('name' => $loginInfo->getUsername()));
+        }
+    }
+
+    /**
+     * @Route("/upload", name="import_route_upload" )
      * @Method({"POST"})
      * @param request the request
      * @return type
@@ -97,17 +123,11 @@ class ImportDrugDataController extends GenericController
                 . ' --password=' . $vals['db_pass']
                 . ' --database=' . $vals['db_name']
                 . ' --execute="SOURCE ' . $script . '"';
-        $output = shell_exec($command);
+        shell_exec($command);
     }
 
     private function process($original, $new)
     {
-        // parse alias data...
-        $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
-
-        // refresh database
-        $this->refreshDb($databaseFile);
-
         // parse alias data...
         (new AliasDataParser($this))->parse($original, $new);
 

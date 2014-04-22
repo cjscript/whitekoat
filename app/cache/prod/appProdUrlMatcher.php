@@ -384,8 +384,19 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                 return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\ImportDrugDataController::retrieveAction',  '_route' => 'import_route_get',);
             }
 
+            // import_route_initdb
+            if ($pathinfo === '/dimpc/init') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_import_route_initdb;
+                }
+
+                return array (  '_controller' => 'AxonMedicine\\WhiteKoatBundle\\Controller\\ImportDrugDataController::initDb',  '_route' => 'import_route_initdb',);
+            }
+            not_import_route_initdb:
+
             // import_route_upload
-            if ($pathinfo === '/dimpc/u') {
+            if ($pathinfo === '/dimpc/upload') {
                 if ($this->context->getMethod() != 'POST') {
                     $allow[] = 'POST';
                     goto not_import_route_upload;

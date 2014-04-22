@@ -6,9 +6,15 @@
     <div class="row-fluid">
         <div class="fileupload fileupload-new" data-provides="fileupload">
             <div class="input-append">
+                <form class="form" method ="POST"  enctype="multipart/form-data" action="{{path('import_route_initdb')}}">
+                    <fieldset id="importdrugdata">
+                        <legend>Step 1: Clear Data</legend>
+                        <button class="btn btn-primary" type="submit">Clear Data</button>
+                    </fieldset>
+                </form>
                 <form class="form" method ="POST"  enctype="multipart/form-data" action="{{path('import_route_upload')}}">
                     <fieldset id="importdrugdata">
-                        <legend>Drug and Related Data Import</legend>
+                        <legend>Step 2: Drug and Related Data Import</legend>
                         <div class="uneditable-input span6">
                             <i class="icon-file fileupload-exists"></i> 
                             <span class="fileupload-preview"></span>
@@ -30,7 +36,7 @@
 <!--    <img src="{{asset(uploadedURL)}}"> -->
    {% endif %}
 {% else %} 
-  
+
 {% endif %}
 
 {%endblock%}
