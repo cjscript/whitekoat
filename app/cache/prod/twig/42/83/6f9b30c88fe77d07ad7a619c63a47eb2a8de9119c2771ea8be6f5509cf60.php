@@ -54,13 +54,17 @@ class __TwigTemplate_42836f9b30c88fe77d07ad7a619c63a47eb2a8de9119c2771ea8be6f550
             <th>Disease Type(s)</th>
             <th>Disease Cause(s)</th>
             <th>Disease Symptom(s)</th>
+<<<<<<< HEAD
             <th>Disease Treatment(s)</th>
+=======
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
             <th>Action</th>
         </tr>
     </thead>     
     <tbody>
 
             ";
+<<<<<<< HEAD
         // line 33
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["diseasecards"]) ? $context["diseasecards"] : $this->getContext($context, "diseasecards")));
@@ -73,6 +77,20 @@ class __TwigTemplate_42836f9b30c88fe77d07ad7a619c63a47eb2a8de9119c2771ea8be6f550
             echo "</td>
             <td>";
             // line 36
+=======
+        // line 32
+        $context['_parent'] = (array) $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["diseasecards"]) ? $context["diseasecards"] : $this->getContext($context, "diseasecards")));
+        foreach ($context['_seq'] as $context["_key"] => $context["diseasecard"]) {
+            // line 33
+            echo "\t\t\t\t<tr >
+\t\t\t\t\t<td>";
+            // line 34
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["diseasecard"]) ? $context["diseasecard"] : $this->getContext($context, "diseasecard")), "diseasename"), "name"), "html", null, true);
+            echo "</td>
+\t\t\t\t\t<td>";
+            // line 35
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
             $context['_parent'] = (array) $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["diseasecard"]) ? $context["diseasecard"] : $this->getContext($context, "diseasecard")), "diseasetype"));
             foreach ($context['_seq'] as $context["_key"] => $context["lib"]) {
@@ -83,8 +101,13 @@ class __TwigTemplate_42836f9b30c88fe77d07ad7a619c63a47eb2a8de9119c2771ea8be6f550
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['lib'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
             echo "</td>
+<<<<<<< HEAD
             <td>";
             // line 37
+=======
+\t\t\t\t\t<td>";
+            // line 36
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
             $context['_parent'] = (array) $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["diseasecard"]) ? $context["diseasecard"] : $this->getContext($context, "diseasecard")), "diseasecause"));
             foreach ($context['_seq'] as $context["_key"] => $context["lib"]) {
@@ -95,8 +118,13 @@ class __TwigTemplate_42836f9b30c88fe77d07ad7a619c63a47eb2a8de9119c2771ea8be6f550
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['lib'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
             echo "</td>
+<<<<<<< HEAD
             <td>";
             // line 38
+=======
+\t\t\t\t\t<td>";
+            // line 37
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
             $context['_parent'] = (array) $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["diseasecard"]) ? $context["diseasecard"] : $this->getContext($context, "diseasecard")), "diseasesymptom"));
             foreach ($context['_seq'] as $context["_key"] => $context["lib"]) {
@@ -107,6 +135,7 @@ class __TwigTemplate_42836f9b30c88fe77d07ad7a619c63a47eb2a8de9119c2771ea8be6f550
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['lib'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
             echo "</td>
+<<<<<<< HEAD
             <td>";
             // line 39
             $context['_parent'] = (array) $context;
@@ -124,12 +153,23 @@ class __TwigTemplate_42836f9b30c88fe77d07ad7a619c63a47eb2a8de9119c2771ea8be6f550
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("drug_route_remove", array("id" => $this->getAttribute((isset($context["diseasecard"]) ? $context["diseasecard"] : $this->getContext($context, "diseasecard")), "id"))), "html", null, true);
             echo "\">remove</a>
         </tr>
+=======
+\t\t\t\t\t<td><a href=\"";
+            // line 38
+            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("drug_route_remove", array("id" => $this->getAttribute((isset($context["diseasecard"]) ? $context["diseasecard"] : $this->getContext($context, "diseasecard")), "id"))), "html", null, true);
+            echo "\">remove</a>
+\t\t\t\t</tr>
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
              ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['diseasecard'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
+<<<<<<< HEAD
         // line 43
+=======
+        // line 41
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
         echo "    </tbody>
 </table>
 
@@ -149,6 +189,10 @@ class __TwigTemplate_42836f9b30c88fe77d07ad7a619c63a47eb2a8de9119c2771ea8be6f550
 
     public function getDebugInfo()
     {
+<<<<<<< HEAD
         return array (  133 => 43,  124 => 40,  112 => 39,  100 => 38,  88 => 37,  76 => 36,  72 => 35,  69 => 34,  65 => 33,  35 => 6,  31 => 4,  28 => 3,);
+=======
+        return array (  120 => 41,  111 => 38,  99 => 37,  87 => 36,  75 => 35,  71 => 34,  68 => 33,  64 => 32,  35 => 6,  31 => 4,  28 => 3,);
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
     }
 }

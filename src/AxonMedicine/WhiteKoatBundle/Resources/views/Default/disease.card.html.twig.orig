@@ -1,0 +1,51 @@
+{%extends "AxonMedicineWhiteKoatBundle:Default:home.html.twig"%}
+
+{%block libcontent %}
+
+<div id="someclass">
+    <form method="POST" action="{{path('drug_card_route_save')}}" data-validate="parsley">
+
+        <fieldset id="drugrelationships">
+            <legend>Disease Characteristics</legend>
+        </fieldset>
+
+
+        <div style="padding-top:30px">
+            <input class="btn btn-primary btn-lg" type="submit" value="Add Disease Card">
+        </div>
+
+    </form>
+</div>
+
+<table class="table table-striped ">
+    <thead>
+        <tr>
+            <th>Disease Name</th>
+            <th>Disease Type(s)</th>
+            <th>Disease Cause(s)</th>
+            <th>Disease Symptom(s)</th>
+            <th>Disease Treatment(s)</th>
+            <th>Action</th>
+        </tr>
+    </thead>     
+    <tbody>
+
+            {%for diseasecard in diseasecards%}
+        <tr>
+            <td>{{diseasecard.diseasename.name}}</td>
+            <td>{%for lib in diseasecard.diseasetype%}{{lib.name}}<br>{%endfor%}</td>
+            <td>{%for lib in diseasecard.diseasecause%}{{lib.name}}<br>{%endfor%}</td>
+            <td>{%for lib in diseasecard.diseasesymptom%}{{lib.name}}<br>{%endfor%}</td>
+<<<<<<< HEAD
+            <td>{%for lib in diseasecard.diseasetreatment%}{{lib.name}}<br>{%endfor%}</td>
+=======
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
+            <td><a href="{{path('drug_route_remove', { 'id': diseasecard.id })}}">remove</a>
+        </tr>
+             {%endfor%}
+    </tbody>
+</table>
+
+
+{%endblock%}
+

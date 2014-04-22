@@ -1,0 +1,33 @@
+.WhiteKoatLogo {
+	width:200px;
+	height:80px;
+	display:block;
+	background-image:url('../images/logo.png');
+	background-size:contain;
+	background-repeat:no-repeat;
+	overflow:visible;
+	padding-top: 125px;
+}
+
+.home-content {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+#searchContainer {
+	text-align:center;
+}
+
+
+#homeLogo {
+	display: block;
+	margin: auto;
+	padding-top: 125px
+}
+
+
+#cardSearch {
+	display: block;
+	margin: auto;
+}

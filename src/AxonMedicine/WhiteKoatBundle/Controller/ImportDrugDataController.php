@@ -13,6 +13,8 @@ use AxonMedicine\WhiteKoatBundle\Utils\Importer\DrugDataImporter\DiseaseDataPars
 
 /**
  * This is the main controller for home page and all links in menu.
+ * 
+ * @Route("/dimpc") 
  *
  * @Route("/dimpc")
  */
@@ -100,8 +102,12 @@ class ImportDrugDataController extends GenericController
 
     private function process($original, $new)
     {
+// parse alias data...
+
         // parse alias data...
         $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
+
+
 
         // refresh database
         $this->refreshDb($databaseFile);
@@ -110,10 +116,16 @@ class ImportDrugDataController extends GenericController
         (new AliasDataParser($this))->parse($original, $new);
 
         // parse drug data...
+		
+		(new DrugDataParser($this))->parse($original, $new);
+		
+        // parse disease data...
+		
         (new DrugDataParser($this))->parse($original, $new);
 
 // parse disease data...
         (new DiseaseDataParser($this))->parse($original, $new);
+		
     }
 
     private function upload($request, $file, &$message, &$uploadedURL, $valid_filetypes)

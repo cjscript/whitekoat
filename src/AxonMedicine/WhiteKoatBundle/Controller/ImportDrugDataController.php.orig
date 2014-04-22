@@ -13,8 +13,8 @@ use AxonMedicine\WhiteKoatBundle\Utils\Importer\DrugDataImporter\DiseaseDataPars
 
 /**
  * This is the main controller for home page and all links in menu.
- * 
- * @Route("/dimpc") 
+ *
+ * @Route("/dimpc")
  */
 class ImportDrugDataController extends GenericController
 {
@@ -89,7 +89,7 @@ class ImportDrugDataController extends GenericController
         $vals['db_pass'] = '45drTweXsit24E3';
         $vals['db_name'] = 'whitekoat';
 
-        $command = 'mysql'
+        $command = '/xampp/mysql/bin/mysql'
                 . ' --host=' . $vals['db_host']
                 . ' --user=' . $vals['db_user']
                 . ' --password=' . $vals['db_pass']
@@ -100,24 +100,29 @@ class ImportDrugDataController extends GenericController
 
     private function process($original, $new)
     {
+        // parse alias data...
+        $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
 <<<<<<< HEAD
-        $this->refreshDb('/Database/wk_db82332_1Qxdf/whitekoat.sql');
-		// parse alias data...
-=======
-        //      $this->refreshDb('/Dev/project.whitekoat/Database/wk_db82332_1Qxdf/whitekoat.sql');
-        $this->refreshDb('/WK/wk_db82332_1Qxdf/whitekoat.sql');
-// parse alias data...
 
->>>>>>> 6297e7025e6c1e114e574c240244132c49c53694
+        // refresh database
+        $this->refreshDb($databaseFile);
+
+=======
+//        echo 'database file: ' . $databaseFile;
+        $this->refreshDb($databaseFile);
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
+        // parse alias data...
         (new AliasDataParser($this))->parse($original, $new);
+
         // parse drug data...
-		
-		(new DrugDataParser($this))->parse($original, $new);
-		
+        (new DrugDataParser($this))->parse($original, $new);
+<<<<<<< HEAD
+
+// parse disease data...
+=======
         // parse disease data...
-		
+>>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
         (new DiseaseDataParser($this))->parse($original, $new);
-		
     }
 
     private function upload($request, $file, &$message, &$uploadedURL, $valid_filetypes)
