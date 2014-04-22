@@ -451,6 +451,7 @@ CREATE TABLE `drugs_treatments` (
   CONSTRAINT FOREIGN KEY (`DrugTreatment`) REFERENCES `drugcardview` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -460,3 +461,5 @@ CREATE TABLE `drugs_treatments` (
 
 
 >>>>>>> 325d6dd8a0486a2ecb905ae7c41211ed6e9f60dc
+=======
+>>>>>>> 9c1e551f5a49db505a689a41754d1d5e2b5097ec

@@ -106,10 +106,17 @@ class ImportDrugDataController extends GenericController
 
         // parse alias data...
         $databaseFile = dirname(dirname(__FILE__)) . '/Database/wk_db82332_1Qxdf/whitekoat.sql';
+<<<<<<< .mine
 
 
 
         // refresh database
+=======
+
+        // refresh database
+
+
+>>>>>>> .theirs
         $this->refreshDb($databaseFile);
 
         // parse alias data...
