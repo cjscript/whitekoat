@@ -92,19 +92,20 @@ class ImageUploadController extends GenericController
     {
 
         $originalName = $original->getClientOriginalName();
-        $extension = explode('.', $originalName)[1];
+        $pieces = explode('.', $originalName);
+        $extension = $pieces[count($pieces) - 1];
 
         $image = $this->typeLibService()->saveImage($originalName, $extension, $libIds, $userName);
 
         $newFileURL = $this->IMAGES_DIRECTORY . DIRECTORY_SEPARATOR . $image->getId();
-		$thumbFileURL = $newFileURL . '_thmb.' . $extension;
-		$newFileURL = $newFileURL . "." . $extension;
+        $thumbFileURL = $newFileURL . '_thmb.' . $extension;
+        $newFileURL = $newFileURL . "." . $extension;
         $newFileURL = str_replace('\\\\', '/', $newFileURL);
 
         rename($uploadedURL, $newFileURL);
 
         // create a thumbnail for later view.
-        $this->createThumbnail($newFileURL, $thumbFileURL, 160);
+        $this->createThumbnail($newFileURL, $thumbFileURL, 100);
     }
 
     private function createThumbnail($src, $dest, $desiredMaxDim)
@@ -113,17 +114,18 @@ class ImageUploadController extends GenericController
         $source_image = imagecreatefromjpeg($src);
         $width = imagesx($source_image);
         $height = imagesy($source_image);
-		$aspectRatio = $width / $height;
-		
-		// calculate thumbnail size
-		if ($width > $height) {
-			$desired_width = $desiredMaxDim;
-			$desired_height = floor($desired_width / $aspectRatio);
-		}
-		else {
-			$desired_height = $desiredMaxDim;
-			$desired_width = floor($desired_height * $aspectRatio);
-		}
+        $aspectRatio = $width / $height;
+
+        // calculate thumbnail size
+        if ($width > $height)
+        {
+            $desired_width = $desiredMaxDim;
+            $desired_height = floor($desired_width / $aspectRatio);
+        } else
+        {
+            $desired_height = $desiredMaxDim;
+            $desired_width = floor($desired_height * $aspectRatio);
+        }
 
         // create a new, "virtual" image
         $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
