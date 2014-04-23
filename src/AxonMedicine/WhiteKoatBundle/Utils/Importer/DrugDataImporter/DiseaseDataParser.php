@@ -249,7 +249,7 @@ class DiseaseDataParser extends DataParser
         $desc = 'Using name for description: ' . $name;
 
         // create disease cause
-        $ret = $this->controller->diseaseLibService()->save($name, $desc, 'DiseaseCauses');
+        $ret = $this->controller->diseaseLibService()->save($name, $desc, 'Molecules');
 
         $this->debug("===>Disease cause: " . $input . EOL);
 
@@ -271,7 +271,7 @@ class DiseaseDataParser extends DataParser
         $desc = 'Using name for description: ' . $name;
 
         // create disease symptom
-        $ret = $this->controller->diseaseLibService()->save($name, $desc, 'DiseaseSymptoms');
+        $ret = $this->controller->diseaseLibService()->save($name, $desc, 'Symptoms');
 
         $this->debug("===>Disease symptom: " . $input . EOL);
 
@@ -288,7 +288,7 @@ class DiseaseDataParser extends DataParser
         $rightSideValue = $input;
         $lookupName = 'Treatment';
 
-        echo 'input: ' . $input . EOL;
+//        echo 'input: ' . $input . EOL;
 
         $rels = $this->controller->relationshipService()->getByFull($leftSideType, $rightSideType, $rightSideValue, $lookupName);
 

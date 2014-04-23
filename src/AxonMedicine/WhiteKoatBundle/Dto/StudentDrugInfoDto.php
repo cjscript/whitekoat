@@ -33,6 +33,11 @@ class StudentDrugInfoDto
         $this->contrainds = $contrainds;
     }
 
+    public function getSortValue()
+    {
+        return $this->generic;
+    }
+
     public function getId()
     {
         return $this->id;

@@ -91,17 +91,14 @@ CREATE TABLE `LibraryType` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `LibraryType` (`Id`,`Name`,`Version`,`Created`) values
-	  (GETID(), 'Drugs', 1, now()),
+	  (GETID(), 'Actions', 1, now()),
+	  (GETID(), 'Aliases', 1, now()),
 	  (GETID(), 'Classes', 1, now()),
-	  (GETID(), 'Molecules', 1, now()),
 	  (GETID(), 'Diseases', 1, now()),
 	  (GETID(), 'DiseaseTypes', 1, now()),
-	  (GETID(), 'DiseaseCauses', 1, now()),
-	  (GETID(), 'DiseaseSymptoms', 1, now()),
-	  (GETID(), 'DiseaseTreatments', 1, now()),
-	  (GETID(), 'Symptoms', 1, now()),
-	  (GETID(), 'Actions', 1, now()),
-	  (GETID(), 'Aliases', 1, now());
+	  (GETID(), 'Drugs', 1, now()),
+	  (GETID(), 'Molecules', 1, now()),
+	  (GETID(), 'Symptoms', 1, now());
 
 CREATE TABLE `LibraryValue` (
     `Id` char(32) primary key not null,

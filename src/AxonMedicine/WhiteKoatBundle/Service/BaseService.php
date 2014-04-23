@@ -49,4 +49,14 @@ class BaseService
         return $ret;
     }
 
+    function cardSort($a, $b)
+    {
+        return strcasecmp($a->getSortValue(), $b->getSortValue());
+    }
+
+    function cardSortByName($a, $b)
+    {
+        return strcasecmp($a->getName(), $b->getName());
+    }
+
 }

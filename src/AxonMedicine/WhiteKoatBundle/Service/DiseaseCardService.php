@@ -24,10 +24,14 @@ class DiseaseCardService extends RelationshipService
     {
         $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\DiseaseCardView a order by a.diseasename');
         $diseasecards = $query->getResult();
+
         if (!$diseasecards)
         {
             $diseasecards = array();
         }
+
+        usort($diseasecards, array($this, 'cardSortByName'));
+
         return $diseasecards;
     }
 

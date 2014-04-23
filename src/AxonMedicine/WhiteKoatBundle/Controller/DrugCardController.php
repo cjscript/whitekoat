@@ -5,7 +5,7 @@ namespace AxonMedicine\WhiteKoatBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
-use AxonMedicine\WhiteKoatBundle\Dto\DrugDiseaseDto;
+use AxonMedicine\WhiteKoatBundle\Dto\DiseaseDto;
 
 //use Doctrine\ORM\AbstractQuery;
 
@@ -85,13 +85,13 @@ class DrugCardController extends GenericController
 
         foreach ($drugs as $drug)
         {
-            $dto = new DrugDiseaseDto($drug->getId(), $drug->getName(), $drug->getDescription());
+            $dto = new DiseaseDto($drug->getId(), $drug->getName(), $drug->getDescription());
             array_push($merged, $dto);
         }
 
         foreach ($diseases as $disease)
         {
-            $dto = new DrugDiseaseDto($disease->getId(), $disease->getName(), $disease->getDescription());
+            $dto = new DiseaseDto($disease->getId(), $disease->getName(), $disease->getDescription());
             array_push($merged, $dto);
         }
 
@@ -399,4 +399,5 @@ class DrugCardController extends GenericController
             return $this->redirect($this->generateUrl('drug_card_route_get'));
         }
     }
+
 }

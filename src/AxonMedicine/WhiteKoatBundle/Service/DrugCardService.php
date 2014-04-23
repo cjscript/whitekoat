@@ -31,40 +31,42 @@ class DrugCardService extends RelationshipService
         }
         return $drugcards;
     }
-	
-	public function getDrugCardViews()
-	{
-		$repo = $this->em->getRepository('AxonMedicineWhiteKoatBundle:DrugCardView');
-		$drugCards = $repo->findAll();
-		$drugCardViews = array();
-		
-		foreach ($drugCards as $drugCard)
-		{
-			$name = $drugCard->getDrugname()->getName();
-			$brands = $this->splice($drugCard->getDrugbrand());
-			$classes = $this->splice($drugCard->getDrugclass());
-			$targets = $this->splice($drugCard->getDrugtarget());
-			$mechanism = $drugCard->getDrugmechanism();
-			$treatments = $this->splice($drugCard->getDrugtreatment());
-			$sideEffects = $this->splice($drugCard->getDrugsideeffect());
-			$contrainds = $this->splice($drugCard->getDrugcontraind());
-			
-			$drugDTO = new StudentDrugInfoDto($drugCard->getId(), $name, $brands, $classes, $targets, $treatments, $mechanism, $sideEffects, $contrainds);
-			array_push($drugCardViews, $drugDTO);
-		}
-		
-		return $drugCardViews;
-	}
-	
-	private function splice($values) 
-	{
-		$stringArr = array();
-		foreach ($values as $value)
-		{
-			array_push($stringArr, $value->getName());
-		}
-		return implode(", ", $stringArr);
-	}	
+
+    public function getDrugCardViews()
+    {
+        $repo = $this->em->getRepository('AxonMedicineWhiteKoatBundle:DrugCardView');
+        $drugCards = $repo->findAll();
+        $drugCardViews = array();
+
+        foreach ($drugCards as $drugCard)
+        {
+            $name = $drugCard->getDrugname()->getName();
+            $brands = $this->splice($drugCard->getDrugbrand());
+            $classes = $this->splice($drugCard->getDrugclass());
+            $targets = $this->splice($drugCard->getDrugtarget());
+            $mechanism = $drugCard->getDrugmechanism();
+            $treatments = $this->splice($drugCard->getDrugtreatment());
+            $sideEffects = $this->splice($drugCard->getDrugsideeffect());
+            $contrainds = $this->splice($drugCard->getDrugcontraind());
+
+            array_push($drugCardViews, new StudentDrugInfoDto($drugCard->getId(), $name, $brands, $classes, $targets, $treatments, $mechanism, $sideEffects, $contrainds));
+        }
+
+        usort($drugCardViews, array($this, 'cardSort'));
+
+
+        return $drugCardViews;
+    }
+
+    private function splice($values)
+    {
+        $stringArr = array();
+        foreach ($values as $value)
+        {
+            array_push($stringArr, $value->getName());
+        }
+        return implode(", ", $stringArr);
+    }
 
     public function getStudentDrugCardBy($name)
     {
@@ -170,5 +172,4 @@ class DrugCardService extends RelationshipService
         $drugView->setCreatedby("cjscript");
         $this->em->persist($drugView);
     }
-
 }
