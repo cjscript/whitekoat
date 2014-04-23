@@ -93,7 +93,7 @@ class TypeLibService extends BaseService
     // TODO move to image service
     public function getImageLibs()
     {
-        $query = $this->em->createQuery('select b.id as id, b.originalfilename as originalfilename, GROUP_CONCAT(c.name) as name '
+        $query = $this->em->createQuery('select b.id as id, b.originalfilename as originalfilename, b.originalfileext as originalfileext, GROUP_CONCAT(c.name) as name '
                 . '  FROM AxonMedicine\WhiteKoatBundle\Entity\Imagelibraryvalue a '
                 . ' INNER JOIN a.imageref b '
                 . ' INNER JOIN a.libraryref c '

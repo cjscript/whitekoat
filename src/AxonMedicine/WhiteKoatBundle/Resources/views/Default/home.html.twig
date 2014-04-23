@@ -253,78 +253,36 @@
          }, "json");
          */
     }
-	
+
 
 
 </script>
 
 <div class="main">
-    <table width="800px">
-        <tr>
-            <td>
-                <table>
-                    <tr>
-                        <td>
-                            <a href="{{path('dlc_route_get')}}">Drug</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('clc_route_get')}}">Class</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('mlc_route_get')}}">Targ/Molec</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('dislc_route_get')}}">Dis/Treatment</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('symlc_route_get')}}">Symptom</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('actc_route_get')}}">Action</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('alic_route_get')}}">Alias</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('drug_card_route_get')}}">Drug Card</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('disease_card_route_get')}}">Disease Card</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('import_route_get')}}">Import</a> |  
-                        </td>
-                        <td>
-                            <a href="{{path('img_route_get')}}">Image</a> |  
-                        </td>
-                        <td><a href="">Help</a>
-                        </td>
-                        <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{path('logout_route')}}">Logout</a>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <table>
-                    <tr><td>
-                            Welcome {{name}}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <table width="800px">
-        <tr align="right">
-            <td style="paddding-right:15px">
-                <img src="{{ asset('bundles/axonmedicinewhitekoat/images/linux-penguin.jpg') }}" width="30px" alt="img" />
-                </div>
+    <div class="nav-bar">
+        <div class="nav-tabs-nobs-full">
+            <ul class="nav-nobs">
+                <li class="active"><a href="{{path('dlc_route_get')}}">Drug</a></li>
+                <li><a href="{{path('clc_route_get')}}">Class</a></li>
+                <li><a href="{{path('mlc_route_get')}}">Molecule</a></li>
+                <li><a href="{{path('dislc_route_get')}}">Treatment</a></li>
+                <li><a href="{{path('symlc_route_get')}}">Symptom</a></li>
+                <li><a href="{{path('actc_route_get')}}">Action</a></li>
+                <li><a href="{{path('alic_route_get')}}">Alias</a></li>
+                <li><a href="{{path('drug_card_route_get')}}">Drug Card</a></li>
+                <li><a href="{{path('disease_card_route_get')}}">Disease Card</a></li>
+                <li><a href="{{path('import_route_get')}}">Importer</a></li>
+                <li><a href="{{path('img_route_get')}}">Image</a></li>
+                <li><a href="{{path('logout_route')}}">Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
 
-            </td>
-        </tr>
-    </table>
+
+    <div align="right" class="smaller-text">
+        Welcome {{name}}
+    </div>
+
 
     {%block libcontent %}
     {%endblock%}

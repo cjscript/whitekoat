@@ -3,7 +3,7 @@
 {%block stylesheets %}
 
 <style type="text/css">
-    
+
 </style>
 
 {%endblock%}
@@ -84,7 +84,7 @@
                     }
             );
         });
-		
+
 
 
 
@@ -268,33 +268,35 @@
          }, "json");
          */
     }
-	$(document).ready(function() {
-		var resizeCardAreaFn = function($this) {
-			var newHeight = $(window).height()-150;
-			$this.height(newHeight);
-			console.log('new height', newHeight);
-		};
-		var $outerCardArea = $("#outerCardArea");
-		resizeCardAreaFn($outerCardArea);
-		$(window).resize(function(){resizeCardAreaFn($outerCardArea);});
-	});
+    $(document).ready(function() {
+        var resizeCardAreaFn = function($this) {
+            var newHeight = $(window).height() - 150;
+            $this.height(newHeight);
+            console.log('new height', newHeight);
+        };
+        var $outerCardArea = $("#outerCardArea");
+        resizeCardAreaFn($outerCardArea);
+        $(window).resize(function() {
+            resizeCardAreaFn($outerCardArea);
+        });
+    });
 
 </script>
 
 
 <div class="main">
-    
-	<div class="nav-bar">
-		<div class="nav-tabs-nobs">
-			<ul class="nav-nobs ">
-				<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-				<li><a href="#about" data-toggle="tab">About</a></li>
-				<li><a href="#help" data-toggle="tab">Help</a></li>
-				<li><a href="{{path('logout_route')}}" data-toggle="tab">Sign Out</a></li>
-			</ul>
-		</div>
-		<span id="WhiteKoatLogo">&nbsp;</span>
-	</div>
+
+    <div class="nav-bar">
+        <div class="nav-tabs-nobs">
+            <ul class="nav-nobs">
+                <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+                <li><a href="#about" data-toggle="tab">About</a></li>
+                <li><a href="#help" data-toggle="tab">Help</a></li>
+                <li><a href="{{path('logout_route')}}" data-toggle="tab">Sign Out</a></li>
+            </ul>
+        </div>
+        <span id="WhiteKoatLogo">&nbsp;</span>
+    </div>
 
         {%block libcontent %}
         {%endblock%}
@@ -331,7 +333,7 @@
     </div><!-- /.modal -->
             {%endblock%}
 
-	<div class="push"></div>
+    <div class="push"></div>
 </div>
 <div id="footer">&copy;2013-14 Axon Medicine, LLC</div>
 

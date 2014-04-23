@@ -7,69 +7,68 @@
 {%block cardprejavascripts%}
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$(function() {
-			$("#cardSearchField").autocomplete({
-				/*source: function(request, response) {
-					$.ajax({
-						url: "home/autocomplete",
-						dataType: "json",
-						data: {
-							term: request.term
-						},
-						success: function(data) {
-							//console.log(data);
-							response(data);
-						}
-					});
-				},*/
-				source: "home/autocomplete",
-				minLength: 1,
-				focus: function(event, ui) {
-					$("#cardSearchField").val(ui.item.label);
-					return false;
-				},
-				select: function(event, ui) {
-					 window.location.href = "results?term[]=" + ui.item.label;
-				}
-					
-
-			})
-			/*.data("ui-autocomplete")._renderItem = function(ul, item) {
-				return $("<li>")
-					.append('<span class="cardName">' + item.label + ': </span><span class="cardType">' + item.cardType + '</span>')
-					.appendTo(ul);
-			};*/
-		});
-	});
+    $(document).ready(function() {
+        $(function() {
+            $("#cardSearchField").autocomplete({
+                /*source: function(request, response) {
+                 $.ajax({
+                 url: "home/autocomplete",
+                 dataType: "json",
+                 data: {
+                 term: request.term
+                 },
+                 success: function(data) {
+                 //console.log(data);
+                 response(data);
+                 }
+                 });
+                 },*/
+                source: "home/autocomplete",
+                minLength: 1,
+                focus: function(event, ui) {
+                    $("#cardSearchField").val(ui.item.label);
+                    return false;
+                },
+                select: function(event, ui) {
+                    window.location.href = "results?term[]=" + ui.item.label;
+                }
 
 
-		
-	
+            })
+            /*.data("ui-autocomplete")._renderItem = function(ul, item) {
+             return $("<li>")
+             .append('<span class="cardName">' + item.label + ': </span><span class="cardType">' + item.cardType + '</span>')
+             .appendTo(ul);
+             };*/
+        });
+    });
+
+
+
+
 </script>
 {%endblock%}
 <link href="{{asset('bundles/axonmedicinewhitekoat/css/home.css')}}" rel="stylesheet">
 <div class="home-content">
 
- 
-		<div id="imageContainer">
-			<img src="{{asset('bundles/axonmedicinewhitekoat/images/logo.png')}}" id="homeLogo" width="300px" height="120px"></img>
-		</div>
-		<div id="searchContainer">
-			<form id="cardSearch" action="" autocomplete="off">	
-				<input type="text" id="cardSearchField" placeholder="Drug or Disease"/><input type="submit" value="search"/>
-			</form>
-		</div>
-	</div>
+    <div id="imageContainer">
+        <img src="{{asset('bundles/axonmedicinewhitekoat/images/logo.png')}}" id="homeLogo" width="300px" height="120px"></img>
+    </div>
+    <div id="searchContainer">
+        <form id="cardSearch" action="" autocomplete="off">	
+            <input type="text" id="cardSearchField" placeholder="Drug or Disease"/><input type="submit" value="search"/>
+        </form>
+    </div>
+</div>
 </div>
 
 <script type="text/javascript">
-	$("#cardSearch").submit(function(event) {
-			var cardName = ($("#cardSearchField").val());
-			window.location.href = "results?term[]=" + cardName;
-			event.preventDefault();
-			return false;
-	});
+    $("#cardSearch").submit(function(event) {
+        var cardName = ($("#cardSearchField").val());
+        window.location.href = "results?term[]=" + cardName;
+        event.preventDefault();
+        return false;
+    });
 </script>
 
 {%endblock%}
