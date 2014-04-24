@@ -190,7 +190,23 @@ class DiseaseDataParser extends DataParser
                 }
             }
         }
-        $ret = implode(":", $arrItems);
+        echo 'disease item with dups: ';
+        print_r($arrItems);
+        echo EOL;
+
+        // remove duplicates
+        $arrItemsWithoutDups = array_unique($arrItems);
+
+        echo 'disease item without dups: ';
+        print_r($arrItemsWithoutDups);
+        echo EOL;
+
+
+
+
+
+
+        $ret = implode(":", $arrItemsWithoutDups);
         return $ret;
     }
 
@@ -206,7 +222,7 @@ class DiseaseDataParser extends DataParser
         }
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
 
         // create record
         $ret = $this->controller->diseaseLibService()->save($name, $desc, 'Diseases');
@@ -226,7 +242,7 @@ class DiseaseDataParser extends DataParser
         }
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
 
         // create generic record
         $ret = $this->controller->diseaseLibService()->save($name, $desc, 'DiseaseTypes');
@@ -246,7 +262,7 @@ class DiseaseDataParser extends DataParser
         }
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
 
         // create disease cause
         $ret = $this->controller->diseaseLibService()->save($name, $desc, 'Molecules');
@@ -268,7 +284,7 @@ class DiseaseDataParser extends DataParser
         }
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
 
         // create disease symptom
         $ret = $this->controller->diseaseLibService()->save($name, $desc, 'Symptoms');
@@ -322,7 +338,7 @@ class DiseaseDataParser extends DataParser
             foreach ($actions as $action)
             {
                 $name = $action;
-                $desc = 'Using name for description: ' . $action;
+                $desc = null;
                 $this->controller->actionLibService()->save($name, $desc);
                 $this->debug('Action lib ' . $name . ' saved.' . EOL);
             }

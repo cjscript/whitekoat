@@ -236,7 +236,21 @@ class DrugDataParser extends DataParser
 
         try
         {
-            $ret = implode(":", $arrItems);
+            echo 'drug item with dups: ';
+            print_r($arrItems);
+            echo EOL;
+
+            // remove duplicates
+            $arrItemsWithoutDups = array_unique($arrItems);
+
+            echo 'drug item without dups: ';
+            print_r($arrItemsWithoutDups);
+            echo EOL;
+
+
+
+
+            $ret = implode(":", $arrItemsWithoutDups);
         } catch (\Exception $e)
         {
             echo 'exception with input: ' . $input;
@@ -250,7 +264,7 @@ class DrugDataParser extends DataParser
         $this->debug("===>Generic drug name: " . $input . EOL);
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
         $generic = true;
 
         // create generic record
@@ -265,7 +279,7 @@ class DrugDataParser extends DataParser
         $this->debug('===>brand item: ' . $input . EOL);
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
         $generic = false;
 
         // create generic record
@@ -280,7 +294,7 @@ class DrugDataParser extends DataParser
         $this->debug("===>Drug class name: " . $input . EOL);
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
 
         // create generic record
         $ret = $this->controller->classLibService()->save($name, $desc);
@@ -301,7 +315,7 @@ class DrugDataParser extends DataParser
         }
 
         $name = $input;
-        $desc = 'Using name for description: ' . $name;
+        $desc = null;
 
         // create target/molecule record
         $ret = $this->controller->moleculeLibService()->save($name, $desc);
@@ -359,11 +373,11 @@ class DrugDataParser extends DataParser
 
         if (!$ret)
         {
-            $this->error("Missing side effect symptom reference for '$input'.  Defaulting to Symptom Type" . EOL);
+            $this->debug("Missing side effect symptom reference for '$input'.  Defaulting to Symptom Type" . EOL);
             $ret = $this->controller->symptomLibService()->save($input, $input);
             if ($ret == null)
             {
-                $this->error("Problem with side effect: " . $input);
+                $this->debug("Problem with side effect: " . $input);
             }
         }
 
@@ -421,7 +435,7 @@ class DrugDataParser extends DataParser
             foreach ($actions as $action)
             {
                 $name = $action;
-                $desc = 'Using name for description: ' . $action;
+                $desc = null;
 
                 // create action record
                 //                try

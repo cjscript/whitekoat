@@ -3,7 +3,6 @@
 namespace AxonMedicine\WhiteKoatBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\EntityManager;
 
 /**
  * DrugCardView
@@ -14,9 +13,7 @@ use Doctrine\ORM\EntityManager;
 class DrugCardView extends BaseEntity implements GenericCard
 {
 
-    
-
-	/**
+    /**
      * @var \Libraryvalue
      *
      * @ORM\ManyToOne(targetEntity="Libraryvalue")
@@ -31,8 +28,8 @@ class DrugCardView extends BaseEntity implements GenericCard
      *
      * @ORM\ManyToMany(targetEntity="Libraryvalue")
      * @ORM\JoinTable(name="drugs_brands",
-	 *		joinColumns={@ORM\JoinColumn(name="DrugBrand", referencedColumnName="Id")},
-	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * 		joinColumns={@ORM\JoinColumn(name="DrugBrand", referencedColumnName="Id")},
+     * 		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
      * )
      */
     private $drugbrand;
@@ -42,8 +39,8 @@ class DrugCardView extends BaseEntity implements GenericCard
      *
      * @ORM\ManyToMany(targetEntity="Libraryvalue")
      * @ORM\JoinTable(name="drugs_classes",
-	 *		joinColumns={@ORM\JoinColumn(name="DrugClass", referencedColumnName="Id")},
-	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * 		joinColumns={@ORM\JoinColumn(name="DrugClass", referencedColumnName="Id")},
+     * 		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
      * )
      */
     private $drugclass;
@@ -53,8 +50,8 @@ class DrugCardView extends BaseEntity implements GenericCard
      *
      * @ORM\ManyToMany(targetEntity="Libraryvalue")
      * @ORM\JoinTable(name="drugs_targets",
-	 *		joinColumns={@ORM\JoinColumn(name="DrugTarget", referencedColumnName="Id")},
-	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * 		joinColumns={@ORM\JoinColumn(name="DrugTarget", referencedColumnName="Id")},
+     * 		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
      * )
      */
     private $drugtarget;
@@ -71,8 +68,8 @@ class DrugCardView extends BaseEntity implements GenericCard
      *
      * @ORM\ManyToMany(targetEntity="Libraryvalue")
      * @ORM\JoinTable(name="drugs_treatments",
-	 *		joinColumns={@ORM\JoinColumn(name="DrugTreatment", referencedColumnName="Id")},
-	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * 		joinColumns={@ORM\JoinColumn(name="DrugTreatment", referencedColumnName="Id")},
+     * 		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
      * )
      */
     private $drugtreatment;
@@ -82,8 +79,8 @@ class DrugCardView extends BaseEntity implements GenericCard
      *
      * @ORM\ManyToMany(targetEntity="Libraryvalue")
      * @ORM\JoinTable(name="drugs_sideeffects",
-	 *		joinColumns={@ORM\JoinColumn(name="DrugSideEffect", referencedColumnName="Id")},
-	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * 		joinColumns={@ORM\JoinColumn(name="DrugSideEffect", referencedColumnName="Id")},
+     * 		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
      * )
      */
     private $drugsideeffect;
@@ -93,24 +90,22 @@ class DrugCardView extends BaseEntity implements GenericCard
      *
      * @ORM\ManyToMany(targetEntity="Libraryvalue")
      * @ORM\JoinTable(name="drugs_contrainds",
-	 *		joinColumns={@ORM\JoinColumn(name="DrugContraInd", referencedColumnName="Id")},
-	 *		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
+     * 		joinColumns={@ORM\JoinColumn(name="DrugContraInd", referencedColumnName="Id")},
+     * 		inverseJoinColumns={@ORM\JoinColumn(name="Id", referencedColumnName="Id")}
      * )
      */
     private $drugcontraind;
-	
-	
-	public function __construct() {
-		parent::__construct();
-		$this->drugbrand = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->drugclass = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->drugtarget = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->drugtreatment = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->drugsideefect = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->drugcontraind = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-	
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->drugbrand = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->drugclass = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->drugtarget = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->drugtreatment = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->drugsideefect = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->drugcontraind = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set drugname
@@ -157,13 +152,11 @@ class DrugCardView extends BaseEntity implements GenericCard
     {
         return $this->drugbrand;
     }
-	
 
-	
-	public function getDrugBrandValuesString()
-	{
-		return implode(", ", $this->getDrugBrandValues());
-	}
+    public function getDrugBrandValuesString()
+    {
+        return implode(", ", $this->getDrugBrandValues());
+    }
 
     /**
      * Set drugclass
@@ -302,39 +295,37 @@ class DrugCardView extends BaseEntity implements GenericCard
 
         return $this;
     }
-	
-	public function getName()
-	{
-		return $this->getDrugname()->getName();
-	}
-	
-	public function getCardType()
-	{
-		return "Drug";
-	}
-	
-	
-	
-	public function getStringArray()
-	{
-		$array = array(
-		   'id' => $this->id,
-		   'label' => $this->getName(),
-		   'brandName' => $this->drugbrand,
-		   'target' => $this->drugtarget,
-		   'mechanism' => $this->drugmechanism,
-		   'treatment' => $this->drugtreatment,
-		   'sideEffects' => $this->drugsideeffect,
-		   'contraind' => $this->drugcontraind,
-		   'cardType' => $this->getCardType(),
-		   'class' => $this->drugclass);
-		   
-		   
-		   
-		   
-		   
-		   
-		return $array;
-	}
-	
+
+    public function getName()
+    {
+        return $this->getDrugname()->getName();
+    }
+
+    public function getCardType()
+    {
+        return "Drug";
+    }
+
+    public function getStringArray()
+    {
+        $array = array(
+            'id' => $this->id,
+            'label' => $this->getName(),
+            'brandName' => $this->drugbrand,
+            'target' => $this->drugtarget,
+            'mechanism' => $this->drugmechanism,
+            'treatment' => $this->drugtreatment,
+            'sideEffects' => $this->drugsideeffect,
+            'contraind' => $this->drugcontraind,
+            'cardType' => $this->getCardType(),
+            'class' => $this->drugclass);
+
+
+
+
+
+
+        return $array;
+    }
+
 }
