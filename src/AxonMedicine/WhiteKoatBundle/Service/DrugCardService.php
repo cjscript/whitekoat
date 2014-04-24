@@ -134,11 +134,8 @@ class DrugCardService extends RelationshipService
         }
     }
 
-    public function createDrugCardBy($genericDrugId, $brandDrugIds, $drugClassIds, $drugTargetIds, $drugTreatmentIds, $mechanism, $drugSideEffectIds, $drugContraIndIds, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication)
+    public function createDrugCardBy($genericDrug, $brandDrugIds, $drugClassIds, $drugTargetIds, $drugTreatmentIds, $mechanism, $drugSideEffectIds, $drugContraIndIds, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication)
     {
-        $genericDrug = $this->em->find('AxonMedicineWhiteKoatBundle:Libraryvalue', $genericDrugId);
-//		echo $genericDrugId."\n\n\n";
-
         if ($genericDrug)
         {
             // direct relationships
@@ -154,7 +151,6 @@ class DrugCardService extends RelationshipService
 
             $this->em->flush();
         }
-        return $genericDrug;
     }
 
     private function createDrugView($generic, $brand, $class, $target, $treatment, $mechanism, $sideEffect, $contraInd)

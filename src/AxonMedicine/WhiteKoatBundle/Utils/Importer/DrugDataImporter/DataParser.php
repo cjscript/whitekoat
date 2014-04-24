@@ -16,7 +16,7 @@ define('NONE_MODE', 4);
 abstract class DataParser
 {
 
-    protected $selMode = DEBUG_MODE;
+    protected $selMode = ERROR_MODE;
     protected $controller;
 
     public function __construct($controller)

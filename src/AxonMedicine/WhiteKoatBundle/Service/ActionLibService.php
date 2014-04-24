@@ -12,6 +12,27 @@ use AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue;
 class ActionLibService extends BaseService
 {
 
+    public function getDrugActionBy($drug, $receiver)
+    {
+//        TODO finish
+        
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+                ->from('AxonMedicineWhiteKoatBundle:Libraryvalue', 'a')
+                ->innerJoin('a.type', 'b')
+                ->where('b.name=:p1')->setParameter('p1', 'Actions');
+
+        $actions = $qb->getQuery()->getResult();
+
+        if (!$actions)
+        {
+            $actions = array();
+        }
+
+        return $actions;
+    }
+
     public function getActions()
     {
         $qb = $this->em->createQueryBuilder();
@@ -33,11 +54,9 @@ class ActionLibService extends BaseService
 
     public function save($name, $description)
     {
-        $item = $this->getIfExists('Actions', $name);
+        $ret = $this->getIfExists('Actions', $name);
 
-        $retId = null;
-
-        if ($item == null)
+        if ($ret == null)
         {
             $repository = $this->em->getRepository("AxonMedicineWhiteKoatBundle:Librarytype");
             $value = new Libraryvalue();
@@ -48,10 +67,14 @@ class ActionLibService extends BaseService
             $value->setCreatedby("cjscript");
             $this->em->persist($value);
             $this->em->flush();
-            $retId = $value->getId();
+            $ret = $value;
         }
 
-        return $retId;
+        return $ret;
+    }
+
+    public function createDrugActionReceiver($drug, $action, $receiver)
+    {
     }
 
 }

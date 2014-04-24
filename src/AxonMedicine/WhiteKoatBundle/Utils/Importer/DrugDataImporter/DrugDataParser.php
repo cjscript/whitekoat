@@ -57,13 +57,17 @@ class DrugDataParser extends DataParser
             $inputFileType = \PHPExcel_IOFactory::identify($new);
             $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($new);
+            echo '++++++++++++++++++++++++++++++++++' . EOL;
+            echo '++++DRUG DATA IMPORT STARTING+++++' . EOL;
             $this->processDrugData($objPHPExcel, $this->SHEET_TAB_NAME, $this->DRUG_DATA_NAME_COUNT_MAP, $this->DRUG_DATA_IDX_NAME_MAP);
         } catch (Exception $e)
         {
             die('Error loading file "' . pathinfo($new, PATHINFO_BASENAME) . '": ' . $e->getMessage());
         }
 
-        echo '++++DRUG DATA IMPORT FINISHED+++++' . EOL . EOL;
+        echo EOL;
+        echo '++++DRUG DATA IMPORT FINISHED+++++' . EOL;
+        echo '++++++++++++++++++++++++++++++++++' . EOL . EOL;
     }
 
     private function processDrugData($objPHPExcel, $sheetName, $colToCountArray, $indexToNameArray)
@@ -114,6 +118,7 @@ class DrugDataParser extends DataParser
 
         for ($row = 2; $row <= $highestRow; $row++)
         {
+            $drug = null;
             $genericRet = null;
             $brandRet = null;
             $classRet1 = null;
@@ -138,32 +143,33 @@ class DrugDataParser extends DataParser
                             // drug data
                             case 'Generic Name':
                                 $genericRet = $this->processRecord($colvalue, 'processGeneric', 'Drugs', null);
+                                $drug = $this->controller->drugLibService()->getBy($genericRet);
                                 break;
                             case 'Brand Name':
-                                $brandRet = $this->processRecord($colvalue, 'processBrand', 'Drugs', $genericRet);
+                                $brandRet = $this->processRecord($colvalue, 'processBrand', 'Drugs', $drug);
                                 break;
                             case 'Type':
                                 break;
                             case 'Therapeutic Class':
-                                $classRet1 = $this->processRecord($colvalue, 'processClass', 'Classes', $genericRet);
+                                $classRet1 = $this->processRecord($colvalue, 'processClass', 'Classes', $drug);
                                 break;
                             case 'Pharmacologic Class':
-                                $classRet2 = $this->processRecord($colvalue, 'processClass', 'Classes', $genericRet);
+                                $classRet2 = $this->processRecord($colvalue, 'processClass', 'Classes', $drug);
                                 break;
                             case 'Drug Target':
-                                $targetRet = $this->processRecord($colvalue, 'processTarget', 'Molecules', $genericRet);
+                                $targetRet = $this->processRecord($colvalue, 'processTarget', 'Molecules', $drug);
                                 break;
                             case 'Mechanism':
-                                $mechanismRet = $this->processRecord($colvalue, 'processMechanism', 'Mechanism', $genericRet);
+                                $mechanismRet = $this->processRecord($colvalue, 'processMechanism', 'Mechanism', $drug);
                                 break;
                             case 'Treatment':
-                                $treatmentRet = $this->processRecord($colvalue, 'processTreatment', 'Diseases', $genericRet);
+                                $treatmentRet = $this->processRecord($colvalue, 'processTreatment', 'Diseases', $drug);
                                 break;
                             case 'Side Effect':
-                                $sideEffectRet = $this->processRecord($colvalue, 'processSideEffect', 'SideEffects', $genericRet);
+                                $sideEffectRet = $this->processRecord($colvalue, 'processSideEffect', 'SideEffects', $drug);
                                 break;
                             case 'Contraindication':
-                                $contraRet = $this->processRecord($colvalue, 'processContraInd', 'ContraInd', $genericRet);
+                                $contraRet = $this->processRecord($colvalue, 'processContraInd', 'ContraInd', $drug);
                                 break;
                             default:
                                 break;
@@ -191,12 +197,13 @@ class DrugDataParser extends DataParser
                 $classRet = implode(":", $classArr);
 
                 $this->controller->drugCardService()->createDrugCardBy(
-                        $genericRet, $brandRet, $classRet, $targetRet, $treatmentRet, $mechanismRet, $sideEffectRet, $contraRet, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication
+                        $drug, $brandRet, $classRet, $targetRet, $treatmentRet, $mechanismRet, $sideEffectRet, $contraRet, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication
                 );
                 $successCount++;
             }
 
             $loops++;
+            echo ".";
         }
 
         $processInfo->setLoops($loops);
@@ -204,7 +211,7 @@ class DrugDataParser extends DataParser
         return $processInfo;
     }
 
-    private function processRecord($input, $callback, $type, $generic)
+    private function processRecord($input, $callback, $type, $drug)
     {
         // Processed in the order below:
         // 1) Items - Separated by '+++'
@@ -217,7 +224,7 @@ class DrugDataParser extends DataParser
         foreach ($items as $item)
         {
             // create the record.
-            $retFromFunc = call_user_func_array(array($this, $callback), array($item, $generic));
+            $retFromFunc = call_user_func_array(array($this, $callback), array($item, $drug));
 
             if ($retFromFunc != null)
             {
@@ -236,16 +243,15 @@ class DrugDataParser extends DataParser
 
         try
         {
-            echo 'drug item with dups: ';
-            print_r($arrItems);
-            echo EOL;
-
+//            echo 'drug item with dups: ';
+            //          print_r($arrItems);
+            //        echo EOL;
             // remove duplicates
             $arrItemsWithoutDups = array_unique($arrItems);
 
-            echo 'drug item without dups: ';
-            print_r($arrItemsWithoutDups);
-            echo EOL;
+//            echo 'drug item without dups: ';
+            //          print_r($arrItemsWithoutDups);
+            //        echo EOL;
 
 
 
@@ -259,7 +265,7 @@ class DrugDataParser extends DataParser
         return $ret;
     }
 
-    private function processGeneric($input, $generic)
+    private function processGeneric($input, $drug)
     {
         $this->debug("===>Generic drug name: " . $input . EOL);
 
@@ -274,7 +280,7 @@ class DrugDataParser extends DataParser
         return $ret;
     }
 
-    private function processBrand($input, $generic)
+    private function processBrand($input, $drug)
     {
         $this->debug('===>brand item: ' . $input . EOL);
 
@@ -289,7 +295,7 @@ class DrugDataParser extends DataParser
         return $ret;
     }
 
-    private function processClass($input, $generic)
+    private function processClass($input, $drug)
     {
         $this->debug("===>Drug class name: " . $input . EOL);
 
@@ -302,17 +308,12 @@ class DrugDataParser extends DataParser
         return $ret;
     }
 
-    private function processTarget($input, $generic)
+    private function processTarget($input, $drug)
     {
         // Each drug can perform an action on a target - Separated by []
-        $actions = null;
+        $action = null;
 
-        $input = $this->processActions($input, $actions);
-
-        if ($actions != null)
-        {
-            $this->debug("===>target item action: " . implode(', ', $actions) . EOL);
-        }
+        $input = $this->parseActions($input, $action);
 
         $name = $input;
         $desc = null;
@@ -320,12 +321,15 @@ class DrugDataParser extends DataParser
         // create target/molecule record
         $ret = $this->controller->moleculeLibService()->save($name, $desc);
 
+        // create drug action
+//        $this->controller->actionLibService()->createDrugActionReceiver($drug, $action, $ret);
+
         $this->debug('target/molecule lib ' . $name . ' saved.' . EOL);
 
         return $ret;
     }
 
-    private function processMechanism($input, $generic)
+    private function processMechanism($input, $drug)
     {
         // current does nothing.  Depends on drug card view.
         $this->debug("===>Drug mechanism name: " . $input . EOL);
@@ -333,14 +337,14 @@ class DrugDataParser extends DataParser
         return $input;
     }
 
-    private function processTreatment($input, $generic)
+    private function processTreatment($input, $drug)
     {
         // Action - Separated by []
         $actions = null;
 
         $this->debug("===>Treatment item action: " . $input . EOL);
 
-        $input = $this->processActions($input, $actions);
+        $input = $this->parseActions($input, $actions);
 
         $ret = $this->processRefType($input);
 
@@ -360,14 +364,14 @@ class DrugDataParser extends DataParser
         return $ret;
     }
 
-    private function processSideEffect($input, $generic)
+    private function processSideEffect($input, $drug)
     {
         // Action - Separated by []
         $actions = null;
 
         $this->debug("===>Side effect item action: " . $input . EOL);
 
-        $input = $this->processActions($input, $actions);
+        $input = $this->parseActions($input, $actions);
 
         $ret = $this->processRefType($input);
 
@@ -390,14 +394,14 @@ class DrugDataParser extends DataParser
         return $ret;
     }
 
-    private function processContraInd($input, $generic)
+    private function processContraInd($input, $drug)
     {
         // Action - Separated by []
         $actions = null;
 
         $this->debug("===>Contra-ind item action: " . $input . EOL);
 
-        $input = $this->processActions($input, $actions);
+        $input = $this->parseActions($input, $actions);
 
         $ret = $this->processRefType($input);
 
@@ -420,7 +424,7 @@ class DrugDataParser extends DataParser
         return $ret;
     }
 
-    private function processActions($input, &$actions)
+    private function parseActions($input, &$actions)
     {
         $actionToExclude = "";
 
@@ -437,19 +441,9 @@ class DrugDataParser extends DataParser
                 $name = $action;
                 $desc = null;
 
-                // create action record
-                //                try
-                //                {
-                // save if doesn't exist.
-
-                $this->controller->actionLibService()->save($name, $desc);
-                $this->debug('Action lib ' . $name . ' saved.' . EOL);
-
-                /**                } catch (\Exception $e)
-                  {
-                  echo 'Already exists: ' . $name . EOL;
-                  break;
-                  } */
+                $newOrExistingAction = $this->controller->actionLibService()->save($name, $desc);
+                array_push($actions, $newOrExistingAction);
+//                $this->debug('Action lib ' . $newOrExistingAction->getName() . ' saved.' . EOL);
             }
         }
 

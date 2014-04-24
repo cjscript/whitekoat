@@ -36,13 +36,17 @@ class AliasDataParser extends DataParser
             $inputFileType = \PHPExcel_IOFactory::identify($new);
             $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($new);
-            $processInfo = $this->processData($objPHPExcel, 'Alias', $this->ALIAS_DATA_NAME_COUNT_MAP, $this->ALIAS_DATA_IDX_NAME_MAP);
+            echo '++++++++++++++++++++++++++++++++++' . EOL;
+            echo '++++ALIAS DATA IMPORT STARTING+++++' . EOL;
+            $this->processData($objPHPExcel, 'Alias', $this->ALIAS_DATA_NAME_COUNT_MAP, $this->ALIAS_DATA_IDX_NAME_MAP);
         } catch (Exception $e)
         {
             die('Error loading file "' . pathinfo($new, PATHINFO_BASENAME) . '": ' . $e->getMessage());
         }
 
-        echo '++++ALIAS IMPORT FINISHED+++++' . EOL . EOL;
+        echo EOL;
+        echo '++++ALIAS DATA IMPORT FINISHED+++++' . EOL;
+        echo '++++++++++++++++++++++++++++++++++' . EOL . EOL;
     }
 
     private function processData($objPHPExcel, $sheetName, $colToCountArray, $indexToNameArray)
@@ -122,6 +126,7 @@ class AliasDataParser extends DataParser
             }
             $successCount++;
             $loops++;
+            echo ".";
         }
         $processInfo->setLoops($loops);
         $processInfo->setSuccessCount($successCount);

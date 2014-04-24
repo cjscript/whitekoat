@@ -13,6 +13,14 @@ use AxonMedicine\WhiteKoatBundle\Entity\Druglibraryprop;
 class DrugLibService extends BaseService
 {
 
+    public function getBy($id)
+    {
+        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue a where a.id=?1');
+        $query->setParameter(1, $id);
+        $drug = $query->getSingleResult();
+        return $drug;
+    }
+
     public function getDrugBy($name)
     {
         $sql = 'select a FROM AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue a inner join a.type b where a.type=b.id and a.name=?1 and b.name=?2 ';

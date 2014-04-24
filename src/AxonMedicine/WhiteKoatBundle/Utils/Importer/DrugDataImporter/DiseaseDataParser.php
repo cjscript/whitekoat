@@ -48,13 +48,17 @@ class DiseaseDataParser extends DataParser
             $inputFileType = \PHPExcel_IOFactory::identify($new);
             $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($new);
-            $processInfo = $this->processData($objPHPExcel, 'FULL Disease Data', $this->DISEASE_DATA_NAME_COUNT_MAP, $this->DISEASE_DATA_IDX_NAME_MAP);
+            echo '++++++++++++++++++++++++++++++++++' . EOL;
+            echo '++++DISEASE DATA IMPORT STARTING+++++' . EOL;
+            $this->processData($objPHPExcel, 'FULL Disease Data', $this->DISEASE_DATA_NAME_COUNT_MAP, $this->DISEASE_DATA_IDX_NAME_MAP);
         } catch (Exception $e)
         {
             die('Error loading file "' . pathinfo($new, PATHINFO_BASENAME) . '": ' . $e->getMessage());
         }
 
-        echo '++++DISEASE DATA IMPORT FINISHED+++++' . EOL . EOL;
+        echo EOL;
+        echo '++++DISEASE DATA IMPORT FINISHED+++++' . EOL;
+        echo '++++++++++++++++++++++++++++++++++' . EOL . EOL;
     }
 
     private function processData($objPHPExcel, $sheetName, $colToCountArray, $indexToNameArray)
@@ -158,6 +162,7 @@ class DiseaseDataParser extends DataParser
                 $successCount++;
             }
             $loops++;
+            echo ".";
         }
         $processInfo->setLoops($loops);
         $processInfo->setSuccessCount($successCount);
@@ -190,16 +195,16 @@ class DiseaseDataParser extends DataParser
                 }
             }
         }
-        echo 'disease item with dups: ';
-        print_r($arrItems);
-        echo EOL;
+//        echo 'disease item with dups: ';
+  //      print_r($arrItems);
+    //    echo EOL;
 
         // remove duplicates
         $arrItemsWithoutDups = array_unique($arrItems);
 
-        echo 'disease item without dups: ';
-        print_r($arrItemsWithoutDups);
-        echo EOL;
+//        echo 'disease item without dups: ';
+  //      print_r($arrItemsWithoutDups);
+    //    echo EOL;
 
 
 

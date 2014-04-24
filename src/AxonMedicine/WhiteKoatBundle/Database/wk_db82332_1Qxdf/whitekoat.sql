@@ -313,7 +313,25 @@ latin1_swedish_ci
 	*/
 
 
-/** TABLES BELOW shuld be removed and existing tables used. */
+/**
+ * Defines the actions each drug can have on a receiver.
+ * Example: Abciximab prevents Percutaneous.
+ *   Drug is 'Abciximab'
+ *   Action is 'prevents'
+ *   Receiver is Percutaneous
+ */
+CREATE TABLE `drugs_actions` (
+  `DrugId` char(32) NOT NULL,
+  `ActionId` char(32) NOT NULL,
+  `ReceiverId` char(32) NOT NULL,
+  PRIMARY KEY (`DrugId`,`ActionId`, `ReceiverId`),
+  CONSTRAINT FOREIGN KEY (`DrugId`) REFERENCES `LibraryValue` (`Id`),
+  CONSTRAINT FOREIGN KEY (`ActionId`) REFERENCES `LibraryValue` (`Id`),
+  CONSTRAINT FOREIGN KEY (`ReceiverId`) REFERENCES `LibraryValue` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+/** TABLES BELOW should be checked */
 
 CREATE TABLE `diseases_causes` (
   `Id` char(32) NOT NULL,
