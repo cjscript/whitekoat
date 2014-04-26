@@ -331,7 +331,7 @@ CREATE TABLE `drugs_actions` (
   `Created` timestamp not null default current_timestamp,
   `Modified` timestamp,
   `CreatedBy` varchar(64) not null default 'cjscript',
-  `ModifiedBy` varchar(64)  
+  `ModifiedBy` varchar(64), 
   PRIMARY KEY (`Id`),
   UNIQUE(`Drug`,`Action`, `Receiver`),
   CONSTRAINT FOREIGN KEY (`Drug`) REFERENCES `LibraryValue` (`Id`),
