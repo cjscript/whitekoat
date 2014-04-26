@@ -22,18 +22,14 @@ class DiseaseDataParser extends DataParser
         "Organ System" => -1,
         "Structure" => -1,
         "Cause" => -1,
-        "Symptom" => -1,
-        "Treatment" => -1,
-        "Pathology" => -1);
+        "Symptom" => -1);
     private $DISEASE_DATA_IDX_NAME_MAP = array(
         0 => "Disease Name",
         1 => "DiseaseType",
         2 => "Organ System",
         3 => "Structure",
         4 => "Cause",
-        5 => "Symptom",
-        6 => "Treatment",
-        7 => "Pathology");
+        5 => "Symptom");
 
     public function __construct($controller)
     {
@@ -107,10 +103,10 @@ class DiseaseDataParser extends DataParser
         for ($row = 2; $row <= $highestRow; $row++)
         {
             $diseaseRet = null;
+            $disease = null;
             $typeRet = null;
             $causeRet = null;
             $symptomRet = null;
-            $treatmentRet = null;
             $output = "";
 
             //  Read a row of data into array
@@ -119,11 +115,7 @@ class DiseaseDataParser extends DataParser
             {
                 if (array_key_exists($colkey, $indexToNameArray))
                 {
-                    // treatment is separate.
-                    if ($indexToNameArray[$colkey] === 'Treatment')
-                    {
-                        $treatmentRet = $this->processTreatment($diseaseRet);
-                    } else if (!empty($colvalue))
+                    if (!empty($colvalue))
                     {
                         try
                         {
@@ -132,15 +124,16 @@ class DiseaseDataParser extends DataParser
                                 // disease data
                                 case "Disease Name":
                                     $diseaseRet = $this->processRecord($colvalue, 'processDisease', 'Diseases', null);
+                                    $disease = $this->controller->diseaseLibService()->getLibBy($diseaseRet);
                                     break;
                                 case "DiseaseType":
-                                    $typeRet = $this->processRecord($colvalue, 'processDiseaseType', 'Types', $diseaseRet);
+                                    $typeRet = $this->processRecord($colvalue, 'processDiseaseType', 'Types', $disease);
                                     break;
                                 case "Cause":
-                                    $causeRet = $this->processRecord($colvalue, 'processCause', 'Causes', $diseaseRet);
+                                    $causeRet = $this->processRecord($colvalue, 'processCause', 'Causes', $disease);
                                     break;
                                 case "Symptom":
-                                    $symptomRet = $this->processRecord($colvalue, 'processSymptom', 'Symptoms', $diseaseRet);
+                                    $symptomRet = $this->processRecord($colvalue, 'processSymptom', 'Symptoms', $disease);
                                     break;
                                 default:
                                     break;
@@ -158,7 +151,7 @@ class DiseaseDataParser extends DataParser
             if ($diseaseRet)
             {
                 $this->controller->diseaseCardService()
-                        ->createCardBy($diseaseRet, $typeRet, $causeRet, $symptomRet, $treatmentRet);
+                        ->createCardBy($disease, $typeRet, $causeRet, $symptomRet);
                 $successCount++;
             }
             $loops++;
@@ -195,24 +188,8 @@ class DiseaseDataParser extends DataParser
                 }
             }
         }
-//        echo 'disease item with dups: ';
-  //      print_r($arrItems);
-    //    echo EOL;
 
-        // remove duplicates
-        $arrItemsWithoutDups = array_unique($arrItems);
-
-//        echo 'disease item without dups: ';
-  //      print_r($arrItemsWithoutDups);
-    //    echo EOL;
-
-
-
-
-
-
-        $ret = implode(":", $arrItemsWithoutDups);
-        return $ret;
+        return array_unique($arrItems);
     }
 
     private function processDisease($input, $generic)
@@ -303,6 +280,7 @@ class DiseaseDataParser extends DataParser
     {
         // find all related drug treatments for the current disease.
         $this->debug("===>Treatments processed" . EOL);
+
 
         $leftSideType = 'Drugs';
         $rightSideType = 'Diseases';

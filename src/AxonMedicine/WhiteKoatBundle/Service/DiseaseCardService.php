@@ -73,19 +73,18 @@ class DiseaseCardService extends RelationshipService
         return $molecules;
     }
 
-    public function createCardBy($diseaseId, $typeIds, $causeIds, $symptomIds, $treatmentIds)
+    public function createCardBy($disease, $types, $causes, $symptoms)
     {
-        $disease = $this->em->find('AxonMedicineWhiteKoatBundle:Libraryvalue', $diseaseId);
+        $disease = $this->em->find('AxonMedicineWhiteKoatBundle:Libraryvalue', $disease);
 
         if ($disease)
         {
-            $types = $this->processDirectRelationship($disease, $typeIds, null, true);
-            $causes = $this->processDirectRelationship($disease, $causeIds, null, true);
-            $symptoms = $this->processDirectRelationship($disease, $symptomIds, null, true);
-            $treatments = $this->processDirectRelationship($disease, $treatmentIds, null, false);
+            $types = $this->processDirectRelationship($disease, $types, null, true);
+            $causes = $this->processDirectRelationship($disease, $causes, null, true);
+            $symptoms = $this->processDirectRelationship($disease, $symptoms, null, true);
 
             // create drug view.
-            $this->createView($disease, $types, $causes, $symptoms, $treatments);
+            $this->createView($disease, $types, $causes, $symptoms);
 
             $this->em->flush();
         } else
@@ -96,14 +95,14 @@ class DiseaseCardService extends RelationshipService
         return $disease;
     }
 
-    private function createView($disease, $types, $causes, $symptoms, $treatments)
+    private function createView($disease, $types, $causes, $symptoms)
     {
         $diseaseView = new DiseaseCardView();
         $diseaseView->setDiseasename($disease);
         $diseaseView->setDiseasetype($types);
         $diseaseView->setDiseasecause($causes);
         $diseaseView->setDiseasesymptom($symptoms);
-        $diseaseView->setDiseasetreatment($treatments);
+//        $diseaseView->setDiseasetreatment($treatments);
         $diseaseView->setVersion('1');
         $diseaseView->setCreatedby("cjscript");
         $this->em->persist($diseaseView);

@@ -320,15 +320,25 @@ latin1_swedish_ci
  *   Action is 'prevents'
  *   Receiver is Percutaneous
  */
+DROP TABLE IF EXISTS `drugs_actions`;
 CREATE TABLE `drugs_actions` (
-  `DrugId` char(32) NOT NULL,
-  `ActionId` char(32) NOT NULL,
-  `ReceiverId` char(32) NOT NULL,
-  PRIMARY KEY (`DrugId`,`ActionId`, `ReceiverId`),
-  CONSTRAINT FOREIGN KEY (`DrugId`) REFERENCES `LibraryValue` (`Id`),
-  CONSTRAINT FOREIGN KEY (`ActionId`) REFERENCES `LibraryValue` (`Id`),
-  CONSTRAINT FOREIGN KEY (`ReceiverId`) REFERENCES `LibraryValue` (`Id`)
+  `Id` char(32) NOT NULL,
+  `Drug` char(32) NOT NULL,
+  `Action` char(32) NOT NULL,
+  `Receiver` char(32) NOT NULL,
+  `Inactive` tinyint(1) default 0,
+  `Version` int(11) not null,
+  `Created` timestamp not null default current_timestamp,
+  `Modified` timestamp,
+  `CreatedBy` varchar(64) not null default 'cjscript',
+  `ModifiedBy` varchar(64)  
+  PRIMARY KEY (`Id`),
+  UNIQUE(`Drug`,`Action`, `Receiver`),
+  CONSTRAINT FOREIGN KEY (`Drug`) REFERENCES `LibraryValue` (`Id`),
+  CONSTRAINT FOREIGN KEY (`Action`) REFERENCES `LibraryValue` (`Id`),
+  CONSTRAINT FOREIGN KEY (`Receiver`) REFERENCES `LibraryValue` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 /** TABLES BELOW should be checked */

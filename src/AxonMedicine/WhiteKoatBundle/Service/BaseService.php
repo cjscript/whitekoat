@@ -20,6 +20,14 @@ class BaseService
         $this->em = $entityManager;
     }
 
+    public function getLibBy($id)
+    {
+        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue a where a.id=?1');
+        $query->setParameter(1, $id);
+        $ret = $query->getSingleResult();
+        return $ret;
+    }
+
     /**
      * Library value is the base table.  Get all library values.
      */

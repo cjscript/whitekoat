@@ -43,7 +43,7 @@
             </div>
             <div style="padding-bottom:15px">
                 <input type="hidden" name="drugtargetnameids" id="drugtargetnameids">
-                 <table>
+                <table>
                     <tr>
                         <td><select style="width:400px" size="3" id="drugtargetnames" name="drugtargetnames"></td>
                         <td valign="top"><a href="#" id="drugtargetbutton" class="btn btn-primary btn-lg">Add Target</a></td>
@@ -97,35 +97,70 @@
 {%endblock%}
 
 {%block tablecontent %}
-<div style="height:300px;overflow:auto;">
-    <table class="table table-striped ">
-        <thead>
-            <tr>
-                <th>Generic</th>
-                <th>Brand(s)</th>
-                <th>Class</th>
-                <th>Target</th>
-                <th>Treatment</th>
-                <th>Side Effect</th>
-                <th>Contra-ind</th>
-                <th>Action</th>
-            </tr>
-        </thead>     
-        <tbody>
+
+<div style="padding-top:10px">
+    <fieldset id="drugrelationships">
+        <legend>Drug Card Ouput</legend>
+        <div style="height:300px;overflow:auto;">
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>Generic</th>
+                        <th>Brand(s)</th>
+                        <th>Class</th>
+                        <th>Target</th>
+                        <th>Treatment</th>
+                        <th>Side Effect</th>
+                        <th>Contra-ind</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>     
+                <tbody>
 
             {%for drugcard in drugcards%}
-            <tr>
-                <td>{{drugcard.generic}}</td>
-                <td>{{drugcard.brands}}</td>
-                <td>{{drugcard.classes}}</td>
-                <td>{{drugcard.targets}}</td>
-                <td>{{drugcard.treatments}}</td>
-                <td>{{drugcard.sideeffects}}</td>
-                <td>{{drugcard.contrainds}}</td>
-                <td><a href="{{path('drug_route_remove', { 'id': drugcard.id, 'drugname' : drugcard.generic })}}">remove</a>
-            </tr>
+                    <tr>
+                        <td>{{drugcard.generic}}</td>
+                        <td>{{drugcard.brands}}</td>
+                        <td>{{drugcard.classes}}</td>
+                        <td>{{drugcard.targets}}</td>
+                        <td>{{drugcard.treatments}}</td>
+                        <td>{{drugcard.sideeffects}}</td>
+                        <td>{{drugcard.contrainds}}</td>
+                        <td><a href="{{path('drug_route_remove', { 'id': drugcard.id, 'drugname' : drugcard.generic })}}">remove</a>
+                    </tr>
              {%endfor%}
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
+<div style="padding-top:10px">
+    <fieldset id="drugrelationships">
+        <legend>Drug Actions</legend>
+
+
+        <div style="height:300px;overflow:auto;">
+
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>Drug</th>
+                        <th>Does What</th>
+                        <th>On What</th>
+                    </tr>
+                </thead>     
+                <tbody>
+
+            {%for drugaction in drugactions%}
+                    <tr>
+                        <td>{{drugaction.drug.name}}</td>
+                        <td>{{drugaction.action.name}}</td>
+                        <td>{{drugaction.receiver.name}}</td>
+                    </tr>
+             {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
 </div>
 {%endblock%}

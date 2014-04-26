@@ -3,6 +3,7 @@
 namespace AxonMedicine\WhiteKoatBundle\Service;
 
 use AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue;
+use AxonMedicine\WhiteKoatBundle\Entity\DrugsActions;
 
 /**
  * The action lib service.
@@ -11,27 +12,6 @@ use AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue;
  */
 class ActionLibService extends BaseService
 {
-
-    public function getDrugActionBy($drug, $receiver)
-    {
-//        TODO finish
-        
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-                ->from('AxonMedicineWhiteKoatBundle:Libraryvalue', 'a')
-                ->innerJoin('a.type', 'b')
-                ->where('b.name=:p1')->setParameter('p1', 'Actions');
-
-        $actions = $qb->getQuery()->getResult();
-
-        if (!$actions)
-        {
-            $actions = array();
-        }
-
-        return $actions;
-    }
 
     public function getActions()
     {
@@ -73,8 +53,58 @@ class ActionLibService extends BaseService
         return $ret;
     }
 
+    public function saveDrugActionReceiver($drug, $action, $receiver)
+    {
+        $value = new DrugsActions();
+        $value->setDrug($drug);
+        $value->setAction($action);
+        $value->setReceiver($receiver);
+        $value->setVersion('1');
+        $value->setCreatedby("cjscript");
+        $this->em->persist($value);
+        $this->em->flush();
+        $ret = $value;
+        return $ret;
+    }
+
+    public function getDrugActionBy($drug, $action, $receiver)
+    {
+        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\DrugsActions a where a.drug=?1 and a.action=?2 and a.receiver=?3');
+        $query->setParameter(1, $drug);
+        $query->setParameter(2, $action);
+        $query->setParameter(3, $receiver);
+        $ret = $query->getResult();
+
+        $drugAction = null;
+
+        if ($ret != null)
+        {
+            $drugAction = $ret[0];
+        }
+
+        return $drugAction;
+    }
+
+    public function getDrugActions()
+    {
+        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\DrugsActions a inner join a.drug b inner join a.action c inner join a.receiver d order by b.name, c.name, d.name');
+        $ret = $query->getResult();
+        if (!$ret)
+        {
+            $ret = array();
+        }
+        return $ret;
+    }
+
     public function createDrugActionReceiver($drug, $action, $receiver)
     {
+        $drugAction = $this->getDrugActionBy($drug, $action, $receiver);
+
+        if ($drugAction == null)
+        {
+            $drugAction = $this->saveDrugActionReceiver($drug, $action, $receiver);
+        }
+        return $drugAction;
     }
 
 }

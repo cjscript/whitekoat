@@ -12,14 +12,12 @@ use AxonMedicine\WhiteKoatBundle\Entity\Relationship;
 class RelationshipService extends BaseService
 {
 
-    protected function processDirectRelationship($left, $itemString, $relatesTo, $create)
+    protected function processDirectRelationship($left, $items, $relatesTo, $create)
     {
         $arr = array();
 
-        if ($itemString != null)
+        if (!empty($items))
         {
-            $items = explode(":", $itemString);
-
             foreach ($items as $item)
             {
                 $ret = $this->em->find('AxonMedicineWhiteKoatBundle:Libraryvalue', $item);

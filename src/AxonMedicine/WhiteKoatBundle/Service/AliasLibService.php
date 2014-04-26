@@ -42,28 +42,4 @@ class AliasLibService extends BaseService
         return $ret;
     }
 
-//    public function save($name, $description)
-//    {
-//        $item = $this->getIfExists('Aliases', $name);
-//
-//        $ret = null;
-//
-//        if ($item == null)
-//        {
-//            $repository = $this->em->getRepository("AxonMedicineWhiteKoatBundle:Librarytype");
-//            $value = new Libraryvalue();
-//            $value->setName($name);
-//            $value->setDescription($description);
-//            $value->setType($repository->findOneBy(array('name' => 'Aliases')));
-//            $value->setVersion('1');
-//            $value->setCreatedby("cjscript");
-//            $this->em->persist($value);
-//            $this->em->flush();
-//            $ret = $value;
-//        } else
-//        {
-//            $ret = $item[0];
-//        }
-//        return $ret;
-//    }
 }

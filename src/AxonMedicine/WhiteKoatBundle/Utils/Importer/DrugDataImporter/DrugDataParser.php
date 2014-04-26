@@ -103,7 +103,6 @@ class DrugDataParser extends DataParser
                 exit;
             }
         }
-
 //  Loop through each row of the worksheet in turn
         $highestRow = $sheet->getHighestRow();
 
@@ -143,7 +142,7 @@ class DrugDataParser extends DataParser
                             // drug data
                             case 'Generic Name':
                                 $genericRet = $this->processRecord($colvalue, 'processGeneric', 'Drugs', null);
-                                $drug = $this->controller->drugLibService()->getBy($genericRet);
+                                $drug = $this->controller->drugLibService()->getLibBy($genericRet);
                                 break;
                             case 'Brand Name':
                                 $brandRet = $this->processRecord($colvalue, 'processBrand', 'Drugs', $drug);
@@ -185,25 +184,26 @@ class DrugDataParser extends DataParser
 
             if ($genericRet)
             {
-                $classArr = array();
-                if (!empty($classRet1))
+                if (!$classRet1)
                 {
-                    array_push($classArr, $classRet1);
+                    $classRet1 = array();
                 }
-                if (!empty($classRet2))
+                if (!$classRet2)
                 {
-                    array_push($classArr, $classRet2);
+                    $classRet2 = array();
                 }
-                $classRet = implode(":", $classArr);
+
+                $classArray = array_merge($classRet1, $classRet2);
+
+                $classArrayWithoutDups = array_unique($classArray);
 
                 $this->controller->drugCardService()->createDrugCardBy(
-                        $drug, $brandRet, $classRet, $targetRet, $treatmentRet, $mechanismRet, $sideEffectRet, $contraRet, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication
+                        $drug, $brandRet, $classArrayWithoutDups, $targetRet, $treatmentRet, $mechanismRet, $sideEffectRet, $contraRet, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication
                 );
                 $successCount++;
             }
 
             $loops++;
-            echo ".";
         }
 
         $processInfo->setLoops($loops);
@@ -236,33 +236,20 @@ class DrugDataParser extends DataParser
                     array_push($arrItems, $retFromFunc);
                 } else
                 {
-                    echo 'no defined tpye: ' . $input . ' return: ' . $retFromFunc;
+                    echo 'no defined type: ' . $input . ' return: ' . $retFromFunc;
                 }
             }
         }
 
         try
         {
-//            echo 'drug item with dups: ';
-            //          print_r($arrItems);
-            //        echo EOL;
             // remove duplicates
-            $arrItemsWithoutDups = array_unique($arrItems);
-
-//            echo 'drug item without dups: ';
-            //          print_r($arrItemsWithoutDups);
-            //        echo EOL;
-
-
-
-
-            $ret = implode(":", $arrItemsWithoutDups);
+            return array_unique($arrItems);
         } catch (\Exception $e)
         {
             echo 'exception with input: ' . $input;
             die;
         }
-        return $ret;
     }
 
     private function processGeneric($input, $drug)
@@ -321,10 +308,18 @@ class DrugDataParser extends DataParser
         // create target/molecule record
         $ret = $this->controller->moleculeLibService()->save($name, $desc);
 
-        // create drug action
-//        $this->controller->actionLibService()->createDrugActionReceiver($drug, $action, $ret);
+        if ($ret)
+        {
+            $this->debug('target/molecule lib ' . $name . ' saved.' . EOL);
 
-        $this->debug('target/molecule lib ' . $name . ' saved.' . EOL);
+            if ($action)
+            {
+                // create drug action receiver
+                $drugAction = $this->controller->actionLibService()->createDrugActionReceiver($drug, $action, $ret);
+                $this->debug('drug/action/receiver created:  ' . $drugAction->getDrug()->getName() . '/' . $drugAction->getAction()->getName() . '/' . $drugAction->getReceiver()->getName() . ' saved.' . EOL);
+            }
+        }
+
 
         return $ret;
     }
@@ -340,24 +335,34 @@ class DrugDataParser extends DataParser
     private function processTreatment($input, $drug)
     {
         // Action - Separated by []
-        $actions = null;
+        $action = null;
 
         $this->debug("===>Treatment item action: " . $input . EOL);
 
-        $input = $this->parseActions($input, $actions);
+        $input = $this->parseActions($input, $action);
 
         $ret = $this->processRefType($input);
 
         if (!$ret)
         {
             $this->error("Missing treatment reference for '$input'.  Defaulting to Symptom Type" . EOL);
-            $ret = $this->controller->symptomLibService()->save($input, $input);
+            $ret = $this->controller->symptomLibService()->save($input, null);
             if ($ret == null)
             {
                 $this->error("Problem creating symptom: " . $input);
-            } else
+                exit;
+            }
+        }
+
+        if ($ret)
+        {
+            $this->debug("===>Treatment created: " . $input . " reference: " . EOL);
+
+            if ($action)
             {
-                $this->debug("===>Treatment created: " . $input . " reference: " . EOL);
+                // create drug action receiver
+                $drugAction = $this->controller->actionLibService()->createDrugActionReceiver($drug, $action, $ret);
+                $this->debug('drug/action/receiver created:  ' . $drugAction->getDrug()->getName() . '/' . $drugAction->getAction()->getName() . '/' . $drugAction->getReceiver()->getName() . ' saved.' . EOL);
             }
         }
 
@@ -367,29 +372,34 @@ class DrugDataParser extends DataParser
     private function processSideEffect($input, $drug)
     {
         // Action - Separated by []
-        $actions = null;
+        $action = null;
 
         $this->debug("===>Side effect item action: " . $input . EOL);
 
-        $input = $this->parseActions($input, $actions);
+        $input = $this->parseActions($input, $action);
 
         $ret = $this->processRefType($input);
 
         if (!$ret)
         {
             $this->debug("Missing side effect symptom reference for '$input'.  Defaulting to Symptom Type" . EOL);
-            $ret = $this->controller->symptomLibService()->save($input, $input);
+            $ret = $this->controller->symptomLibService()->save($input, null);
             if ($ret == null)
             {
                 $this->debug("Problem with side effect: " . $input);
             }
         }
 
-        if ($ret != null)
+        if ($ret)
         {
-            $this->debug("===>Side effect name: " . $ret->getName() . EOL);
+            $this->debug("===>Side effect created: " . $input . " reference: " . EOL);
+            if ($action)
+            {
+                // create drug action receiver
+                $drugAction = $this->controller->actionLibService()->createDrugActionReceiver($drug, $action, $ret);
+                $this->debug('drug/action/receiver created:  ' . $drugAction->getDrug()->getName() . '/' . $drugAction->getAction()->getName() . '/' . $drugAction->getReceiver()->getName() . ' saved.' . EOL);
+            }
         }
-
 
         return $ret;
     }
@@ -397,34 +407,40 @@ class DrugDataParser extends DataParser
     private function processContraInd($input, $drug)
     {
         // Action - Separated by []
-        $actions = null;
+        $action = null;
 
         $this->debug("===>Contra-ind item action: " . $input . EOL);
 
-        $input = $this->parseActions($input, $actions);
+        $input = $this->parseActions($input, $action);
 
         $ret = $this->processRefType($input);
 
         if (!$ret)
         {
-            $this->error("Missing side effect symptom reference for '$input'.  Defaulting to Symptom Type" . EOL);
-            $ret = $this->controller->symptomLibService()->save($input, $input);
+            $this->error("Missing contra-ind effect symptom reference for '$input'.  Defaulting to Symptom Type" . EOL);
+            $ret = $this->controller->symptomLibService()->save($input, null);
             if ($ret == null)
             {
                 $this->error("Problem with contra-ind: " . $input);
             }
         }
 
-        if ($ret != null)
+        if ($ret)
         {
-            $this->debug("===>Contra-ind name: " . $ret->getName() . EOL);
-        }
+            $this->debug("===>Contra-ind created: " . $input . " reference: " . EOL);
 
+            if ($action)
+            {
+                // create drug action
+                $drugAction = $this->controller->actionLibService()->createDrugActionReceiver($drug, $action, $ret);
+                $this->debug('drug/action/receiver created:  ' . $drugAction->getDrug()->getName() . '/' . $drugAction->getAction()->getName() . '/' . $drugAction->getReceiver()->getName() . ' saved.' . EOL);
+            }
+        }
 
         return $ret;
     }
 
-    private function parseActions($input, &$actions)
+    private function parseActions($input, &$action)
     {
         $actionToExclude = "";
 
@@ -434,17 +450,11 @@ class DrugDataParser extends DataParser
 
             $actionToExclude = $this->ACTION_TOKEN_START . $actionRet . $this->ACTION_TOKEN_END;
 
-            $actions = explode($this->ITEM_SPLIT_TOKEN, $actionRet);
+            $name = $actionRet;
 
-            foreach ($actions as $action)
-            {
-                $name = $action;
-                $desc = null;
+            $desc = null;
 
-                $newOrExistingAction = $this->controller->actionLibService()->save($name, $desc);
-                array_push($actions, $newOrExistingAction);
-//                $this->debug('Action lib ' . $newOrExistingAction->getName() . ' saved.' . EOL);
-            }
+            $action = $this->controller->actionLibService()->save($name, $desc);
         }
 
         $newInput = str_replace($actionToExclude, "", $input);

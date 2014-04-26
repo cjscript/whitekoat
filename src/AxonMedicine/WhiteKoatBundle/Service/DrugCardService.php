@@ -134,7 +134,10 @@ class DrugCardService extends RelationshipService
         }
     }
 
-    public function createDrugCardBy($genericDrug, $brandDrugIds, $drugClassIds, $drugTargetIds, $drugTreatmentIds, $mechanism, $drugSideEffectIds, $drugContraIndIds, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication)
+    public function createDrugCardBy($genericDrug, $brandDrugIds,
+            $drugClassIds, $drugTargetIds, $drugTreatmentIds, $mechanism, 
+            $drugSideEffectIds, $drugContraIndIds, $relatesToDrugTarget, 
+            $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication)
     {
         if ($genericDrug)
         {
