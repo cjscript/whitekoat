@@ -22,7 +22,7 @@ class DiseaseCardService extends RelationshipService
 
     public function getDiseaseCards()
     {
-        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\DiseaseCardView a order by a.diseasename');
+        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\DiseaseCardView a inner join a.diseasename b order by n.name ');
         $diseasecards = $query->getResult();
 
         if (!$diseasecards)
@@ -37,7 +37,7 @@ class DiseaseCardService extends RelationshipService
 
     public function getStudentDiseaseCardBy($name)
     {
-        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\DiseaseCardView a where a.diseasename=?1 ');
+        $query = $this->em->createQuery('select a from AxonMedicine\WhiteKoatBundle\Entity\DiseaseCardView a inner join a.diseasename b where a.diseasename=?1 order by n.name ');
         $query->setParameter(1, $name);
         $result = $query->getResult();
         $diseasecard = null;
