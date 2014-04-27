@@ -3,53 +3,55 @@
 {%block libcontent %}
 
 <form method="POST" action="{{path('symlc_route_save')}}" data-validate="parsley">
+    <fieldset id="symptomlib">
+        <legend>Symptom Library Item</legend>
 
-    <div style="padding-bottom:15px">
-        <input style="width:200px" type="text" id="itemname" name="itemname" placeholder="Item Name" data-trigger="change" data-required="true">
-    </div>
-    <div style="padding-bottom:15px">
-        <input style="width:400px" type="text" id="itemdescription" name="itemdescription" placeholder="Item Description" data-trigger="change" data-required="true">
-    </div>
+        <div style="padding-bottom:15px">
+            <input style="width:200px" type="text" id="itemname" name="itemname" placeholder="Item Name" data-trigger="change" data-required="true">
+        </div>
+        <div style="padding-bottom:15px">
+            <input style="width:400px" type="text" id="itemdescription" name="itemdescription" placeholder="Item Description" data-trigger="change" data-required="true">
+        </div>
 
-    <input class="btn btn-primary btn-lg" type="submit" value="Add Item">
+        <input class="btn btn-primary btn-lg" type="submit" value="Add Item">
 
-</form>
+        </form>
 
 
 {%endblock%}
 
 {%block tablecontent %}
 
-<!--<div id="" class="form-inline" role="grid">
-    <div class="row">
-        <div class="span8">
-        </div>
-        <div class="span4">
-            <div class="dataTables_filter" id="example_filter">
-                <label>Search: <input type="text" class="search-query"></label>
+        <!--<div id="" class="form-inline" role="grid">
+            <div class="row">
+                <div class="span8">
+                </div>
+                <div class="span4">
+                    <div class="dataTables_filter" id="example_filter">
+                        <label>Search: <input type="text" class="search-query"></label>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
--->
+        -->
 
-<table class="table table-striped ">
-    <thead>
-        <tr>
-            <th>Symptom Name</th>
-            <th>Description</th>
-            <th>Action</th>
-        </tr>
-    </thead>     
-    <tbody>
+        <table class="table table-striped ">
+            <thead>
+                <tr>
+                    <th>Symptom Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>     
+            <tbody>
 
             {%for symptom in symptoms%}
-        <tr >
-            <td>{{symptom.name}}</td>
-            <td>{{symptom.description}}</td>
-            <td><a href="{{path('symlc_route_remove', { 'id': symptom.id })}}">remove</a>
-        </tr>
+                <tr >
+                    <td>{{symptom.name}}</td>
+                    <td>{{symptom.description}}</td>
+                    <td><a href="{{path('symlc_route_remove', { 'id': symptom.id })}}">remove</a>
+                </tr>
              {%endfor%}
-    </tbody>
-</table>
+            </tbody>
+        </table>
 {%endblock%}

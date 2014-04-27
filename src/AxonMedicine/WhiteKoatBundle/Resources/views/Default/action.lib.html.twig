@@ -3,16 +3,18 @@
 {%block libcontent %}
 
 <form method="POST" action="{{path('actc_route_save')}}" data-validate="parsley">
+    <fieldset id="actionlib">
+        <legend>Action Library Item</legend>
 
-    <div style="padding-bottom:15px">
-        <input style="width:200px" type="text" id="itemname" name="itemname" placeholder="Item Name" data-trigger="change" data-required="true">
-    </div>
-    <div style="padding-bottom:15px">
-        <input style="width:400px" type="text" id="itemdescription" name="itemdescription" placeholder="Item Description" data-trigger="change" data-required="true">
-    </div>
+        <div style="padding-bottom:15px">
+            <input style="width:200px" type="text" id="itemname" name="itemname" placeholder="Item Name" data-trigger="change" data-required="true">
+        </div>
+        <div style="padding-bottom:15px">
+            <input style="width:400px" type="text" id="itemdescription" name="itemdescription" placeholder="Item Description" data-trigger="change" data-required="true">
+        </div>
 
-    <input class="btn btn-primary btn-lg" type="submit" value="Add Item">
-
+        <input class="btn btn-primary btn-lg" type="submit" value="Add Item">
+    </fieldset>
 </form>
 
 

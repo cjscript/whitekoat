@@ -35,30 +35,33 @@ class __TwigTemplate_387498cf1009406e52e3f11673921c8783e74529af5d01610d8402ed01d
         echo $this->env->getExtension('routing')->getPath("dlc_route_save");
         echo "\" data-validate=\"parsley\">
 
-    <div style=\"padding-bottom:15px\">
-        <input style=\"width:200px\" type=\"text\" id=\"itemname\" name=\"itemname\" placeholder=\"Item Name\" data-trigger=\"change\" data-required=\"true\">
-    </div>
-    <div style=\"padding-bottom:15px; padding-left:2px\">
-        <textarea style=\"width: 400px; height: 50px;\" id=\"itemdescription\" name=\"itemdescription\" placeholder=\"Drug Description\"></textarea>
-    </div>
-    <div style=\"padding-bottom:20px\">
-        <label class=\"checkbox\">
-            <input type=\"checkbox\" name=\"isgeneric\" id=\"isgeneric\">Check if generic
-        </label>
-    </div>
+    <fieldset id=\"druglib\">
+        <legend>Drug Library Item</legend>
 
-    <input class=\"btn btn-primary btn-lg\" type=\"submit\" value=\"Add Drug\">
+        <div style=\"padding-bottom:15px\">
+            <input style=\"width:200px\" type=\"text\" id=\"itemname\" name=\"itemname\" placeholder=\"Item Name\" data-trigger=\"change\" data-required=\"true\">
+        </div>
+        <div style=\"padding-bottom:15px; padding-left:2px\">
+            <textarea style=\"width: 400px; height: 50px;\" id=\"itemdescription\" name=\"itemdescription\" placeholder=\"Drug Description\"></textarea>
+        </div>
+        <div style=\"padding-bottom:20px\">
+            <label class=\"checkbox\">
+                <input type=\"checkbox\" name=\"isgeneric\" id=\"isgeneric\">Check if generic
+            </label>
+        </div>
 
+        <input class=\"btn btn-primary btn-lg\" type=\"submit\" value=\"Add Drug\">
+    </fieldset>
 </form>
 
 
 ";
     }
 
-    // line 26
+    // line 29
     public function block_tablecontent($context, array $blocks = array())
     {
-        // line 27
+        // line 30
         echo "
 <!--<div id=\"\" class=\"form-inline\" role=\"grid\">
     <div class=\"row\">
@@ -85,26 +88,26 @@ class __TwigTemplate_387498cf1009406e52e3f11673921c8783e74529af5d01610d8402ed01d
     <tbody>
 
             ";
-        // line 52
+        // line 55
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["drugs"]) ? $context["drugs"] : $this->getContext($context, "drugs")));
         foreach ($context['_seq'] as $context["_key"] => $context["drug"]) {
-            // line 53
+            // line 56
             echo "        <tr >
             <td>";
-            // line 54
+            // line 57
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["drug"]) ? $context["drug"] : $this->getContext($context, "drug")), "name"), "html", null, true);
             echo "</td>
             <td>";
-            // line 55
+            // line 58
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["drug"]) ? $context["drug"] : $this->getContext($context, "drug")), "description"), "html", null, true);
             echo "</td>
             <td>";
-            // line 56
+            // line 59
             echo (($this->getAttribute((isset($context["drug"]) ? $context["drug"] : $this->getContext($context, "drug")), "generic")) ? ("Yes") : ("No"));
             echo "</td>
             <td><a href=\"";
-            // line 57
+            // line 60
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("dlc_route_remove", array("id" => $this->getAttribute((isset($context["drug"]) ? $context["drug"] : $this->getContext($context, "drug")), "id"))), "html", null, true);
             echo "\">remove</a>
         </tr>
@@ -113,7 +116,7 @@ class __TwigTemplate_387498cf1009406e52e3f11673921c8783e74529af5d01610d8402ed01d
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['drug'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 60
+        // line 63
         echo "    </tbody>
 </table>
 ";
@@ -131,6 +134,6 @@ class __TwigTemplate_387498cf1009406e52e3f11673921c8783e74529af5d01610d8402ed01d
 
     public function getDebugInfo()
     {
-        return array (  117 => 60,  108 => 57,  104 => 56,  100 => 55,  96 => 54,  93 => 53,  89 => 52,  62 => 27,  59 => 26,  35 => 5,  32 => 4,  29 => 3,);
+        return array (  120 => 63,  111 => 60,  107 => 59,  103 => 58,  99 => 57,  96 => 56,  92 => 55,  65 => 30,  62 => 29,  35 => 5,  32 => 4,  29 => 3,);
     }
 }

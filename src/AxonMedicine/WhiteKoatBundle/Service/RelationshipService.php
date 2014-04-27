@@ -23,7 +23,8 @@ class RelationshipService extends BaseService
                 $ret = $this->em->find('AxonMedicineWhiteKoatBundle:Libraryvalue', $item);
                 if ($create)
                 {
-                    $this->createRelationship($left, $ret, $relatesTo);
+// TODO remove when relationship no longer needed
+//                    $this->createRelationship($left, $ret, $relatesTo);
                 }
                 array_push($arr, $ret);
             }
