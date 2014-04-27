@@ -14,8 +14,8 @@
         <div class="cardTabContainer">
             <div class="imageContent">
             	{% for image in images %}
-                <a href="/images_3921343193822/{{ image.imageref.id }}.{{ image.imageref.originalfileext }}" data-lightbox="{{ libValue.name }}">
-                    <img src="/images_3921343193822/{{ image.imageref.id  }}_thmb.{{ image.imageref.originalfileext  }}"></a>
+                <a href="./images_3921343193822/{{ image.imageref.id }}.{{ image.imageref.originalfileext }}" data-lightbox="{{ libValue.name }}">
+                    <img src="./images_3921343193822/{{ image.imageref.id  }}_thmb.{{ image.imageref.originalfileext  }}"></a>
                     {% if (loop.index is divisibleby(2)) and not loop.last %}
                 <br>
                     {% endif %}
