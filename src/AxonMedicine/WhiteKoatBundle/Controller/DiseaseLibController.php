@@ -34,14 +34,15 @@ class DiseaseLibController extends GenericController
         {
             $loginInfo = $session->get('logininfo');
             $em = $this->getDoctrine()->getManager();
-            $qb = $em->createQueryBuilder();
-
-            $qb->select('a')
-                    ->from('AxonMedicineWhiteKoatBundle:Libraryvalue', 'a')
-                    ->innerJoin('a.type', 'b')
-                    ->where('b.name=:p1')->setParameter('p1', 'Diseases');
-
-            $diseases = $qb->getQuery()->getResult();
+//            $qb = $em->createQueryBuilder();
+//
+//            $qb->select('a')
+//                    ->from('AxonMedicineWhiteKoatBundle:Libraryvalue', 'a')
+//                    ->innerJoin('a.type', 'b')
+//                    ->where('b.name=:p1')->setParameter('p1', 'Diseases');
+//
+//            $diseases = $qb->getQuery()->getResult();
+            $diseases = $this->getDiseases();
             if (!$diseases)
             {
                 $diseases = array();
@@ -51,6 +52,18 @@ class DiseaseLibController extends GenericController
         }
     }
 
+        public function getDiseases()
+    {
+        $diseases = $this->diseaseLibService()->getTreatments();
+
+        if (!$diseases)
+        {
+            $diseases = array();
+        }
+        return $diseases;
+    }
+
+    
     /**
      * @Route("/s", name="dislc_route_save" )
      * @Method({"POST"})

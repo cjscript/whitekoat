@@ -28,6 +28,8 @@ class DiseaseLibService extends BaseService
             $diseases = array();
         }
 
+        usort($diseases, array($this, 'cardSortByName'));
+
         return $diseases;
     }
 
