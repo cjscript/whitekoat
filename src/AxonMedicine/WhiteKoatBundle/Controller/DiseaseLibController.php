@@ -52,7 +52,7 @@ class DiseaseLibController extends GenericController
         }
     }
 
-        public function getDiseases()
+    public function getDiseases()
     {
         $diseases = $this->diseaseLibService()->getTreatments();
 
@@ -63,7 +63,6 @@ class DiseaseLibController extends GenericController
         return $diseases;
     }
 
-    
     /**
      * @Route("/s", name="dislc_route_save" )
      * @Method({"POST"})
@@ -129,4 +128,5 @@ class DiseaseLibController extends GenericController
             return $this->redirect($this->generateUrl('dislc_route_get'));
         }
     }
+
 }

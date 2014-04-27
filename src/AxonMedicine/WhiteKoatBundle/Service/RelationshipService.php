@@ -24,7 +24,7 @@ class RelationshipService extends BaseService
                 if ($create)
                 {
 // TODO remove when relationship no longer needed
-//                    $this->createRelationship($left, $ret, $relatesTo);
+                    $this->createRelationship($left, $ret, $relatesTo);
                 }
                 array_push($arr, $ret);
             }
