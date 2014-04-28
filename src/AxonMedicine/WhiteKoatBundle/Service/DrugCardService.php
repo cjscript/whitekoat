@@ -155,13 +155,20 @@ class DrugCardService extends RelationshipService
 
     private function createDrugView($generic, $brand, $class, $target, $treatment, $mechanism, $sideEffect, $contraInd)
     {
+        // mechanism is always a string.
+        $mechanismString = null;
+        if (!empty($mechanism))
+        {
+            $mechanismString = $mechanism[0];
+        }
+
         $drugView = new DrugCardView();
         $drugView->setDrugname($generic);
         $drugView->setDrugbrand($brand);
         $drugView->setDrugclass($class);
         $drugView->setDrugtarget($target);
         $drugView->setDrugtreatment($treatment);
-        $drugView->setDrugmechanism($mechanism);
+        $drugView->setDrugmechanism($mechanismString);
         $drugView->setDrugsideeffect($sideEffect);
         $drugView->setDrugcontraind($contraInd);
         $drugView->setVersion('1');

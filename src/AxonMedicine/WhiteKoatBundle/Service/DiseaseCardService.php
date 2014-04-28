@@ -83,8 +83,19 @@ class DiseaseCardService extends RelationshipService
             $causes = $this->processDirectRelationship($disease, $causes, null, true);
             $symptoms = $this->processDirectRelationship($disease, $symptoms, null, true);
 
+            // treatments are derived from drug card/ref:treatment
+            $treatments = $this->getTreatments($disease);
+
+            if ($treatments)
+            {
+                echo 'Drug treatments for disease ' . $disease->getName() . EOL;
+                foreach ($treatments as $treatment)
+                {
+                    echo '   ==>' . $treatment->getName() . EOL;
+                }
+            }
             // create drug view.
-            $this->createView($disease, $types, $causes, $symptoms);
+            $this->createView($disease, $types, $causes, $symptoms, $treatments);
 
             $this->em->flush();
         } else
@@ -95,14 +106,36 @@ class DiseaseCardService extends RelationshipService
         return $disease;
     }
 
-    private function createView($disease, $types, $causes, $symptoms)
+    public function getTreatments($disease)
+    {
+        $query = $this->em->createQuery('select dcv from AxonMedicine\WhiteKoatBundle\Entity\DrugCardView dcv inner join dcv.drugtreatment dt inner join dcv.drugname dn where dt.name=?1 ');
+
+        $query->setParameter(1, $disease->getName());
+
+        $drugCardViews = $query->getResult();
+
+        $drugsThatTreatDisease = array();
+
+        if ($drugCardViews)
+        {
+            foreach ($drugCardViews as $drugCardView)
+            {
+                $drugName = $drugCardView->getDrugname();
+                array_push($drugsThatTreatDisease, $drugName);
+            }
+        }
+//        usort($drugsThatTreatDisease, array($this, 'cardSortByName'));
+        return array_unique($drugsThatTreatDisease, SORT_REGULAR);
+    }
+
+    private function createView($disease, $types, $causes, $symptoms, $treatments)
     {
         $diseaseView = new DiseaseCardView();
         $diseaseView->setDiseasename($disease);
         $diseaseView->setDiseasetype($types);
         $diseaseView->setDiseasecause($causes);
         $diseaseView->setDiseasesymptom($symptoms);
-//        $diseaseView->setDiseasetreatment($treatments);
+        $diseaseView->setDiseasetreatment($treatments);
         $diseaseView->setVersion('1');
         $diseaseView->setCreatedby("cjscript");
         $this->em->persist($diseaseView);

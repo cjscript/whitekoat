@@ -5,9 +5,9 @@ namespace AxonMedicine\WhiteKoatBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DrugsActions
+ * DiseasesTreatments
  *
- * @ORM\Table(name="drugs_actions", uniqueConstraints={@ORM\UniqueConstraint(name="Drug", columns={"Drug", "Action", "Receiver"})}, indexes={@ORM\Index(name="Action", columns={"Action"}), @ORM\Index(name="Receiver", columns={"Receiver"}), @ORM\Index(name="IDX_680D3872DC048670", columns={"Drug"})})
+ * @ORM\Table(name="diseases_treatments", uniqueConstraints={@ORM\UniqueConstraint(name="Drug", columns={"Drug", "Action", "Receiver"})}, indexes={@ORM\Index(name="Action", columns={"Action"}), @ORM\Index(name="Receiver", columns={"Receiver"}), @ORM\Index(name="IDX_680D3872DC048670", columns={"Drug"})})
  * @ORM\Entity
  */
 class DrugsActions extends BaseEntity
@@ -42,16 +42,6 @@ class DrugsActions extends BaseEntity
      * })
      */
     private $receiver;
-
-    /**
-     * Get id
-     *
-     * @return string 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set receiver
