@@ -129,13 +129,16 @@ class ImportDrugDataController extends GenericController
     private function process($original, $new)
     {
         // parse alias data...
-//        (new AliasDataParser($this))->parse($original, $new);
+        (new AliasDataParser($this))->parse($original, $new);
 
         // parse drug data...
-  //      (new DrugDataParser($this))->parse($original, $new);
+        (new DrugDataParser($this))->parse($original, $new);
 
         // parse disease data...
         (new DiseaseDataParser($this))->parse($original, $new);
+        
+        // parse micro data...
+        (new MicroDataParser($this))->parse($original, $new);
     }
 
     private function upload($request, $file, &$message, &$uploadedURL, $valid_filetypes)

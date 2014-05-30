@@ -42,6 +42,9 @@
 					else if (ui.item.cardType === "Disease") {
 						addDiseaseCard(ui.item.cardId);
 					}
+					else if (ui.item.cardType === "Symptom") {
+						addResultsCard(ui.item.cardId, null);
+					}
 					return false;
 				}
 					
@@ -150,15 +153,16 @@
 		});
 	};
 	function addResultsCard(cardId, forEntry) {
-		$.ajax({
+        $.ajax({
 			url: 'home/resultsCard',
 			data: {
-				id: cardId
+                            id: cardId
 			},
 			dataType: 'text'
 		}).done(function (response) {
 			var $forEntry = $(forEntry);
 			var $card = $(response);
+                                                
 			addCard($card, $forEntry);
 		}).fail(function (response) {
 			console.log("Something went wrong with the results card.");

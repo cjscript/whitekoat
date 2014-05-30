@@ -10,7 +10,7 @@ use AxonMedicine\WhiteKoatBundle\Dto\ProcessInfoDto;
  *
  * @author cjscript
  */
-class DrugDataParser extends DataParser
+class MicroDataParser extends DataParser
 {
 
     private $ITEM_SPLIT_TOKEN = "+++";
@@ -20,28 +20,10 @@ class DrugDataParser extends DataParser
     private $ACTION_TOKEN_END = "]";
     private $SHEET_TAB_NAME = 'Full Drug Data - Steven Edits';
     private $DRUG_DATA_NAME_COUNT_MAP = array(
-        "Generic Name" => -1,
-        "Brand Name" => -1,
-        "Type" => -1,
-        "Therapeutic Class" => -1,
-        "Pharmacologic Class" => -1,
-        "Drug Target" => -1,
-        "Mechanism" => -1,
-        "Treatment" => -1,
-        "Side Effect" => -1,
-        "Contraindication" => -1
+        "Species" => -1,
     );
     private $DRUG_DATA_IDX_NAME_MAP = array(
-        0 => "Generic Name",
-        1 => "Brand Name",
-        2 => "Type",
-        3 => "Therapeutic Class",
-        4 => "Pharmacologic Class",
-        5 => "Drug Target",
-        6 => "Mechanism",
-        7 => "Treatment",
-        8 => "Side Effect",
-        9 => "Contraindication"
+        0 => "Species"
     );
 
     public function __construct($controller)
@@ -58,21 +40,21 @@ class DrugDataParser extends DataParser
             $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($new);
             echo '++++++++++++++++++++++++++++++++++' . EOL;
-            echo '++++DRUG DATA IMPORT STARTING+++++' . EOL;
-            $this->processDrugData($objPHPExcel, $this->SHEET_TAB_NAME, $this->DRUG_DATA_NAME_COUNT_MAP, $this->DRUG_DATA_IDX_NAME_MAP);
+            echo '++++MICRO DATA IMPORT STARTING+++++' . EOL;
+            $this->processMicroData($objPHPExcel, $this->SHEET_TAB_NAME, $this->DRUG_DATA_NAME_COUNT_MAP, $this->DRUG_DATA_IDX_NAME_MAP);
         } catch (Exception $e)
         {
             die('Error loading file "' . pathinfo($new, PATHINFO_BASENAME) . '": ' . $e->getMessage());
         }
 
         echo EOL;
-        echo '++++DRUG DATA IMPORT FINISHED+++++' . EOL;
+        echo '++++MICRO DATA IMPORT FINISHED+++++' . EOL;
         echo '++++++++++++++++++++++++++++++++++' . EOL . EOL;
     }
 
-    private function processDrugData($objPHPExcel, $sheetName, $colToCountArray, $indexToNameArray)
+    private function processMicroData($objPHPExcel, $sheetName, $colToCountArray, $indexToNameArray)
     {
-        $processInfo = new ProcessInfoDto();
+/**        $processInfo = new ProcessInfoDto();
 
         $sheet = $objPHPExcel->getSheetByName($sheetName);
         $highestColumn = $sheet->getHighestColumn();
@@ -107,26 +89,14 @@ class DrugDataParser extends DataParser
         $highestRow = $sheet->getHighestRow();
 
         // prime the lookup values.
-        $relatesToDrugTarget = $this->controller->typeLibService()->getTempLookupBy("Drug Target");
-        $relatesToTreatment = $this->controller->typeLibService()->getTempLookupBy("Treatment");
-        $relatesToSideEffect = $this->controller->typeLibService()->getTempLookupBy("Side Effect");
-        $relatesToContraindication = $this->controller->typeLibService()->getTempLookupBy("Contraindication");
+//        $relatesToDrugTarget = $this->controller->typeLibService()->getTempLookupBy("Drug Target");
 
         $loops = 0;
         $successCount = 0;
 
         for ($row = 2; $row <= $highestRow; $row++)
         {
-            $drug = null;
-            $genericRet = null;
-            $brandRet = null;
-            $classRet1 = null;
-            $classRet2 = null;
-            $targetRet = null;
-            $treatmentRet = null;
-            $mechanismRet = null;
-            $sideEffectRet = null;
-            $contraRet = null;
+            $species = null;
 
             //  Read a row of data into an array
             $dataRow = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $highestRow, NULL, TRUE, FALSE)[0];
@@ -140,35 +110,8 @@ class DrugDataParser extends DataParser
                         switch ($indexToNameArray[$colkey])
                         {
                             // drug data
-                            case 'Generic Name':
-                                $genericRet = $this->processRecord($colvalue, 'processGeneric', 'Drugs', null);
-                                $drug = $this->controller->drugLibService()->getLibBy($genericRet);
-                                break;
-                            case 'Brand Name':
-                                $brandRet = $this->processRecord($colvalue, 'processBrand', 'Drugs', $drug);
-                                break;
-                            case 'Type':
-                                break;
-                            case 'Therapeutic Class':
-                                $classRet1 = $this->processRecord($colvalue, 'processClass', 'Classes', $drug);
-                                break;
-                            case 'Pharmacologic Class':
-                                $classRet2 = $this->processRecord($colvalue, 'processClass', 'Classes', $drug);
-                                break;
-                            case 'Drug Target':
-                                $targetRet = $this->processRecord($colvalue, 'processTarget', 'Molecules', $drug);
-                                break;
-                            case 'Mechanism':
-                                $mechanismRet = $this->processRecord($colvalue, 'processMechanism', 'Mechanism', $drug);
-                                break;
-                            case 'Treatment':
-                                $treatmentRet = $this->processRecord($colvalue, 'processTreatment', 'Diseases', $drug);
-                                break;
-                            case 'Side Effect':
-                                $sideEffectRet = $this->processRecord($colvalue, 'processSideEffect', 'SideEffects', $drug);
-                                break;
-                            case 'Contraindication':
-                                $contraRet = $this->processRecord($colvalue, 'processContraInd', 'ContraInd', $drug);
+                            case 'Species':
+                                $species = $this->processRecord($colvalue, 'processGeneric', 'Species', null);
                                 break;
                             default:
                                 break;
@@ -182,26 +125,8 @@ class DrugDataParser extends DataParser
                 }
             }
 
-            if ($genericRet)
-            {
-                if (!$classRet1)
-                {
-                    $classRet1 = array();
-                }
-                if (!$classRet2)
-                {
-                    $classRet2 = array();
-                }
-
-                $classArray = array_merge($classRet1, $classRet2);
-
-                $classArrayWithoutDups = array_unique($classArray);
-
-                $this->controller->drugCardService()->createDrugCardBy(
-                        $drug, $brandRet, $classArrayWithoutDups, $targetRet, $treatmentRet, $mechanismRet, $sideEffectRet, $contraRet, $relatesToDrugTarget, $relatesToTreatment, $relatesToSideEffect, $relatesToContraindication
-                );
-                $successCount++;
-            }
+            $this->controller->microCardService()->createCardBy($species);
+            $successCount++;
 
             $loops++;
         }
@@ -209,6 +134,7 @@ class DrugDataParser extends DataParser
         $processInfo->setLoops($loops);
         $processInfo->setSuccessCount($successCount);
         return $processInfo;
+ */
     }
 
     private function processRecord($input, $callback, $type, $drug)

@@ -12,10 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Service/BaseService.php</file>
-            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Utils/Importer/DrugDataImporter/DrugDataParser.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Utils/Importer/DrugDataImporter/MicroDataParser.php</file>
             <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Controller/ImportDrugDataController.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Utils/Importer/DrugDataImporter/DrugDataParser.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Controller/HomepageController.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Service/DiseaseCardService.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Entity/DrugsActions.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Controller/DrugLibController.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Utils/Importer/DrugDataImporter/DiseaseDataParser.php</file>
             <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Service/ActionLibService.php</file>
+            <file>file:/C:/Dev/Netbeans.Projects/whitekoat/src/AxonMedicine/WhiteKoatBundle/Resources/views/Default/homepage.main.html.twig</file>
         </group>
     </open-files>
 </project-private>

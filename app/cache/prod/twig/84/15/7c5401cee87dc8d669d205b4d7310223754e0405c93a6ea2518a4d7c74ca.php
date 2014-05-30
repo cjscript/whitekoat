@@ -38,11 +38,11 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
         $this->displayBlock('cardstylesheets', $context, $blocks);
         // line 11
         $this->displayBlock('cardprejavascripts', $context, $blocks);
-        // line 257
+        // line 261
         echo "
 <div class=\"tab-content\">
     <link href=\"";
-        // line 259
+        // line 263
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/axonmedicinewhitekoat/css/cardSearch.css"), "html", null, true);
         echo "\" rel=\"stylesheet\">
     
@@ -53,39 +53,39 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 \t\t<div id=\"cardAreaWrapper\">
 \t\t\t<div id=\"cardArea\">
 \t\t\t\t";
-        // line 267
+        // line 271
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["drugCards"]) ? $context["drugCards"] : $this->getContext($context, "drugCards")));
         foreach ($context['_seq'] as $context["_key"] => $context["drugCard"]) {
-            // line 268
+            // line 272
             echo "\t\t\t\t\t";
             $this->env->loadTemplate("AxonMedicineWhiteKoatBundle:Default:drugCard.html.twig")->display(array("card" => (isset($context["drugCard"]) ? $context["drugCard"] : $this->getContext($context, "drugCard"))));
-            // line 269
+            // line 273
             echo "\t\t\t\t";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['drugCard'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 270
+        // line 274
         echo "\t\t\t\t";
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["diseaseCards"]) ? $context["diseaseCards"] : $this->getContext($context, "diseaseCards")));
         foreach ($context['_seq'] as $context["_key"] => $context["diseaseCard"]) {
-            // line 271
+            // line 275
             echo "\t\t\t\t\t";
             $this->env->loadTemplate("AxonMedicineWhiteKoatBundle:Default:diseaseCard.html.twig")->display(array("card" => (isset($context["diseaseCard"]) ? $context["diseaseCard"] : $this->getContext($context, "diseaseCard"))));
-            // line 272
+            // line 276
             echo "\t\t\t\t";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['diseaseCard'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 273
+        // line 277
         echo "\t\t\t\t";
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["resultsCards"]) ? $context["resultsCards"] : $this->getContext($context, "resultsCards")));
         foreach ($context['_seq'] as $context["_key"] => $context["resultsCard"]) {
-            // line 274
+            // line 278
             echo "\t\t\t\t\t";
             echo twig_escape_filter($this->env, (isset($context["resultsCard"]) ? $context["resultsCard"] : $this->getContext($context, "resultsCard")), "html", null, true);
             echo "
@@ -94,7 +94,7 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['resultsCard'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 276
+        // line 280
         echo "\t\t\t\t
 \t\t\t</div>
 \t\t</div>
@@ -103,9 +103,9 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 
 
 ";
-        // line 283
+        // line 287
         $this->displayBlock('cardpostjavascripts', $context, $blocks);
-        // line 471
+        // line 475
         echo "
 
 ";
@@ -158,6 +158,9 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 \t\t\t\t\t}
 \t\t\t\t\telse if (ui.item.cardType === \"Disease\") {
 \t\t\t\t\t\taddDiseaseCard(ui.item.cardId);
+\t\t\t\t\t}
+\t\t\t\t\telse if (ui.item.cardType === \"Symptom\") {
+\t\t\t\t\t\taddResultsCard(ui.item.cardId, null);
 \t\t\t\t\t}
 \t\t\t\t\treturn false;
 \t\t\t\t}
@@ -267,15 +270,16 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 \t\t});
 \t};
 \tfunction addResultsCard(cardId, forEntry) {
-\t\t\$.ajax({
+        \$.ajax({
 \t\t\turl: 'home/resultsCard',
 \t\t\tdata: {
-\t\t\t\tid: cardId
+                            id: cardId
 \t\t\t},
 \t\t\tdataType: 'text'
 \t\t}).done(function (response) {
 \t\t\tvar \$forEntry = \$(forEntry);
 \t\t\tvar \$card = \$(response);
+                                                
 \t\t\taddCard(\$card, \$forEntry);
 \t\t}).fail(function (response) {
 \t\t\tconsole.log(\"Something went wrong with the results card.\");
@@ -373,10 +377,10 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 ";
     }
 
-    // line 283
+    // line 287
     public function block_cardpostjavascripts($context, array $blocks = array())
     {
-        // line 284
+        // line 288
         echo "\t<script type=\"text/javascript\">
 \t\t\$(\"#cardSearch\").submit(function(event) {
 \t\t\taddTextSearchedCard(\$(\"#cardSearch\").serialize());
@@ -566,10 +570,10 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 ";
     }
 
-    // line 475
+    // line 479
     public function block_tablecontent($context, array $blocks = array())
     {
-        // line 476
+        // line 480
         echo "
 
 ";
@@ -587,6 +591,6 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 
     public function getDebugInfo()
     {
-        return array (  573 => 476,  570 => 475,  380 => 284,  377 => 283,  129 => 12,  126 => 11,  118 => 6,  115 => 5,  109 => 471,  107 => 283,  98 => 276,  89 => 274,  84 => 273,  78 => 272,  75 => 271,  70 => 270,  64 => 269,  61 => 268,  57 => 267,  46 => 259,  42 => 257,  40 => 11,  38 => 5,  35 => 4,  32 => 3,);
+        return array (  577 => 480,  574 => 479,  384 => 288,  381 => 287,  129 => 12,  126 => 11,  118 => 6,  115 => 5,  109 => 475,  107 => 287,  98 => 280,  89 => 278,  84 => 277,  78 => 276,  75 => 275,  70 => 274,  64 => 273,  61 => 272,  57 => 271,  46 => 263,  42 => 261,  40 => 11,  38 => 5,  35 => 4,  32 => 3,);
     }
 }

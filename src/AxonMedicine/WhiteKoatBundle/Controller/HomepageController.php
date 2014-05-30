@@ -10,6 +10,7 @@ use AxonMedicine\WhiteKoatBundle\Dto\StudentDrugInfoDto;
 use AxonMedicine\WhiteKoatBundle\Dto\StudentDiseaseInfoDto;
 use AxonMedicine\WhiteKoatBundle\Entity\DrugCardView;
 use AxonMedicine\WhiteKoatBundle\Entity\DiseaseCardView;
+use AxonMedicine\WhiteKoatBundle\Entity\ResultsCardView;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
 
@@ -85,10 +86,10 @@ class HomepageController extends GenericController
             return $this->redirect($this->generateUrl('login_route'));
         } else
         {
-            $autocompleteValues = $this->doAutocompleteSearch($searchTerm);
-            $autocompleteValues = $this->formatCardsAsStringArray($autocompleteValues);
+            $autocompleteCardValues = $this->doAutocompleteSearch($searchTerm);
+            $autocompleteCardValues = $this->formatCardsAsStringArray($autocompleteCardValues);
             $response = new JsonResponse();
-            $response->setData($autocompleteValues);
+            $response->setData($autocompleteCardValues);
             return $response;
         }
     }
@@ -328,14 +329,13 @@ class HomepageController extends GenericController
 
     private function doAutocompleteSearch($searchTerm)
     {
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
-        $drugQuery = $this->doDrugDiseaseQuery($searchTerm);
+        $cards = $this->doDrugDiseaseQuery($searchTerm);
         //$diseaseQuery = $this->doDiseaseQuery($em, $searchTerm);
-
-        $result = array();
+        //$result = array();
         //$result = array_merge($result, $drugQuery, $diseaseQuery);
-        return $drugQuery;
+        return $cards;
         //return $result;
     }
 
@@ -344,27 +344,36 @@ class HomepageController extends GenericController
         $em = $this->getDoctrine()->getManager();
         $drugType = $this->typeQuery('Drugs');
         $diseaseType = $this->typeQuery('Diseases');
-        $drugDiseaseQuery = $em->createQuery(
+        $symptomType = $this->typeQuery('Symptoms');
+        $drugDiseaseSymptomQuery = $em->createQuery(
                         'SELECT value
 	        FROM AxonMedicineWhiteKoatBundle:LibraryValue value
-			WHERE value.type IN(:drugType, :diseaseType) AND value.name LIKE :searchTerm
+			WHERE value.type IN(:drugType, :diseaseType, :symptomType) AND value.name LIKE :searchTerm
 			ORDER BY value.name ASC'
                 )->setParameter('drugType', $drugType->getId())
                 ->setParameter('diseaseType', $diseaseType->getId())
+                ->setParameter('symptomType', $symptomType->getId())
                 ->setParameter('searchTerm', '%' . $searchTerm . '%');
-        $result = $drugDiseaseQuery->getResult();
-
+        $result = $drugDiseaseSymptomQuery->getResult();
+// TODO change from cards to dtos
         $cards = array();
         $drugRepo = $this->getDoctrine()->getRepository('AxonMedicineWhiteKoatBundle:DrugCardView');
         $diseaseRepo = $this->getDoctrine()->getRepository('AxonMedicineWhiteKoatBundle:DiseaseCardView');
         foreach ($result as $d)
         {
+            $card = null;
+
             if ($d->getType() == $drugType)
             {
                 $card = $drugRepo->findOneBy(array('drugname' => $d->getId()));
             } else if ($d->getType() == $diseaseType)
             {
                 $card = $diseaseRepo->findOneBy(array('diseasename' => $d->getId()));
+            } else if ($d->getType() == $symptomType)
+            {
+                $card = new ResultsCardView();
+                $card->setId($d->getId());
+                $card->setName($d->getName());
             }
             if ($card)
             {
