@@ -437,7 +437,7 @@ class __TwigTemplate_70cf173b096d5d40f0fdb7f476fba0e820a51f8f6aca6e256941a554546
         $this->displayBlock('modalcontent', $context, $blocks);
         // line 321
         echo "
-    <div style=\"text-align:center; font-size: x-small\">&copy;2013-14 Axon Medicine, LLC</div>
+    <div style=\"text-align:center; font-size: x-small\">&copy;2013-14 Axon Medicine, LLC (Version 1.6)</div>
 
 </div>
 

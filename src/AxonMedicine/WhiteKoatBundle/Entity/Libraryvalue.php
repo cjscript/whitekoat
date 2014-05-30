@@ -36,14 +36,11 @@ class Libraryvalue extends BaseEntity
      * })
      */
     private $type;
-	
-	private $hasImages;
-	
-	
-	
-	function __construct()
+    private $hasImages;
+
+    function __construct()
     {
-		parent::__construct();
+        parent::__construct();
     }
 
     /**
@@ -114,16 +111,16 @@ class Libraryvalue extends BaseEntity
     {
         return $this->type;
     }
-	
-	public function setImages($hasImages) 
-	{
-		$this->hasImages = $hasImages;
-		return $this;
-	}
-	
-	public function hasImages()
-	{
-		return $this->hasImages;
-	}
+
+    public function setImages($hasImages)
+    {
+        $this->hasImages = $hasImages;
+        return $this;
+    }
+
+    public function hasImages()
+    {
+        return $this->hasImages;
+    }
 
 }

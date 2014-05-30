@@ -35,7 +35,7 @@ class __TwigTemplate_68304d1e4b2d458b4e0751efde0e55f55feeaefbefa8b0bb5c54d7e7386
         echo $this->env->getExtension('routing')->getPath("clc_route_save");
         echo "\" data-validate=\"parsley\">
 
-    <fieldset id=\"druglib\">
+    <fieldset id=\"classlib\">
         <legend>Class Library Item</legend>
 
         <div style=\"padding-bottom:15px\">
