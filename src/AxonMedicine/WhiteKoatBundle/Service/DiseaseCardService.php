@@ -139,6 +139,7 @@ class DiseaseCardService extends RelationshipService
         $diseaseView->setVersion('1');
         $diseaseView->setCreatedby("cjscript");
         $this->em->persist($diseaseView);
+        $this->em->flush();
     }
 
 }

@@ -42,6 +42,7 @@ class RelationshipService extends BaseService
         $relationship->setVersion('1');
         $relationship->setCreatedby("cjscript");
         $this->em->persist($relationship);
+        $this->em->flush();
     }
 
     public function getBy($leftSide, $displayName)

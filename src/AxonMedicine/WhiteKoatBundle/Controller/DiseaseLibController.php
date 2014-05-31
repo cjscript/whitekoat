@@ -92,7 +92,7 @@ class DiseaseLibController extends GenericController
             $value->setType($repository->findOneBy(array('name' => 'Diseases')));
             $value->setVersion('1');
             $value->setCreatedby("cjscript");
-            $this->getDoctrine()->getManager()->persist($value);
+            $em->persist($value);
             $em->flush();
             $session->getFlashBag()->add('notice', 'Disease ' . $name . ' successfully added to library');
             return $this->redirect($this->generateUrl('dislc_route_get'));

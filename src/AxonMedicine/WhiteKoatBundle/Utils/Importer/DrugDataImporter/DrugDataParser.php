@@ -70,6 +70,87 @@ class DrugDataParser extends DataParser
         echo '++++++++++++++++++++++++++++++++++' . EOL . EOL;
     }
 
+    private function processDrugData_modified($objPHPExcel, $sheetName, $colToCountArray, $indexToNameArray)
+    {
+        $processInfo = new ProcessInfoDto();
+
+        $sheet = $objPHPExcel->getSheetByName($sheetName);
+        $highestColumn = $sheet->getHighestColumn();
+
+        $sheetHeaderRow = $sheet->rangeToArray('A1:' . $highestColumn . '1', NULL, TRUE, FALSE)[0];
+
+        if ($sheetHeaderRow == null)
+        {
+            die("Must contain valid data");
+        }
+        $index = 0;
+
+        foreach ($sheetHeaderRow as $headerRowItem)
+        {
+            if (array_key_exists($headerRowItem, $colToCountArray))
+            {
+                $colToCountArray[$headerRowItem] = $index;
+            }
+            $index++;
+        }
+
+        foreach ($colToCountArray as $key => $value)
+        {
+            if ($value == -1)
+            {
+                print "Invalid import file.  Please check header for correct columns.  Currently supported:" . EOL;
+                print_r(array_keys($colToCountArray));
+                exit;
+            }
+        }
+//  Loop through each row of the worksheet in turn
+        $highestRow = $sheet->getHighestRow();
+
+        $loops = 0;
+        $successCount = 0;
+
+
+        $drug_names = array();
+
+        for ($row = 2; $row <= $highestRow; $row++)
+        {
+            //  Read a row of data into an array
+            $dataRow = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $highestRow, NULL, TRUE, FALSE)[0];
+            $output = "";
+            foreach ($dataRow as $colkey => $colvalue)
+            {
+                if (array_key_exists($colkey, $indexToNameArray) && !empty($colvalue))
+                {
+                    try
+                    {
+                        switch ($indexToNameArray[$colkey])
+                        {
+                            // drug data
+                            case 'Generic Name':
+                                array_push($drug_names, $colvalue);
+                                break;
+                            default:
+                                break;
+                        }
+                    } catch (\Exception $e)
+                    {
+                        $this->error("Exception caught: " . $e->getMessage() . EOL);
+                    }
+
+                    $output .= "col name: " . $indexToNameArray[$colkey] . EOL;
+                }
+            }
+
+            $loops++;
+        }
+
+        $this->controller->drugLibService()->saveAll($drug_names);
+        $successCount++;
+        $processInfo->setLoops($loops);
+        $processInfo->setSuccessCount($successCount);
+        return $processInfo;
+    }
+
     private function processDrugData($objPHPExcel, $sheetName, $colToCountArray, $indexToNameArray)
     {
         $processInfo = new ProcessInfoDto();
@@ -238,6 +319,10 @@ class DrugDataParser extends DataParser
                 {
                     echo 'no defined type: ' . $input . ' return: ' . $retFromFunc;
                 }
+            }
+            if ($type == "Drugs")
+            {
+                break;
             }
         }
 

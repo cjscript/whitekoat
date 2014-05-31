@@ -28,6 +28,9 @@ class MicroCardService extends RelationshipService
         $microView->setVersion('1');
         $microView->setCreatedby("cjscript");
         $this->em->persist($microView);
+        $this->em->flush();
+        $this->em->clear();
+        
     }
 
 }

@@ -68,7 +68,7 @@ class SymptomLibController extends GenericController
             $value->setType($repository->findOneBy(array('name' => 'Symptoms')));
             $value->setVersion('1');
             $value->setCreatedby("cjscript");
-            $this->getDoctrine()->getManager()->persist($value);
+            $em->persist($value);
             $em->flush();
             $session->getFlashBag()->add('notice', 'Symptom ' . $name . ' successfully added to library');
             return $this->redirect($this->generateUrl('symlc_route_get'));

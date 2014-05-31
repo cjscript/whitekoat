@@ -67,15 +67,15 @@ class DrugLibService extends BaseService
                 $value->setType($libTypeRepo->findOneBy(array('name' => 'Drugs')));
                 $value->setVersion('1');
                 $value->setCreatedby("cjscript");
+                $em->persist($value);
+                $em->flush();
 
                 $libProp = new Druglibraryprop();
                 $libProp->setId($value->getId());
                 $libProp->setGeneric($generic);
                 $libProp->setVersion('1');
                 $libProp->setCreatedby("cjscript");
-
                 $em->persist($libProp);
-                $em->persist($value);
                 $em->flush();
                 $em->getConnection()->commit();
 
@@ -87,6 +87,11 @@ class DrugLibService extends BaseService
                 $em->close();
                 throw $e;
             }
+
+            $em->clear();
+        } else
+        {
+            echo "  Drug " . $name . " already exists<br/>\r\n";
         }
         return $ret;
     }

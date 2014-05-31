@@ -48,6 +48,8 @@ class DiseaseLibService extends BaseService
             $value->setCreatedby("cjscript");
             $this->em->persist($value);
             $this->em->flush();
+            $this->em->clear();
+
             $ret = $value;
         }
         return $ret;

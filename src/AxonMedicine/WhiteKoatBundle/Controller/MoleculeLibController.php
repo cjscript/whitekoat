@@ -82,7 +82,7 @@ class MoleculeLibController extends GenericController
             $value->setType($repository->findOneBy(array('name' => 'Molecules')));
             $value->setVersion('1');
             $value->setCreatedby("cjscript");
-            $this->getDoctrine()->getManager()->persist($value);
+            $em->persist($value);
             $em->flush();
             $session->getFlashBag()->add('notice', 'Molecule ' . $name . ' successfully added to library');
             return $this->redirect($this->generateUrl('mlc_route_get'));

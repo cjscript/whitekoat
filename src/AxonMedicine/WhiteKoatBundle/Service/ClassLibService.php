@@ -46,6 +46,7 @@ class ClassLibService extends BaseService
             $value->setCreatedby("cjscript");
             $this->em->persist($value);
             $this->em->flush();
+
             $ret = $value;
         }
 

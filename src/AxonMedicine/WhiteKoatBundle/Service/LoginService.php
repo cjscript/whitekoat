@@ -11,6 +11,7 @@ use AxonMedicine\WhiteKoatBundle\Entity\User;
  */
 class LoginService extends BaseService
 {
+
     public function getBy($username, $password)
     {
         $repo = $this->em->getRepository("AxonMedicineWhiteKoatBundle:User");
