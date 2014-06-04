@@ -51,7 +51,7 @@ class __TwigTemplate_0f01a404cacfa3bb04654e8568c50627dddd6a70a4924ffd856f9175618
     </div>
     <div id=\"searchContainer\">
         <form id=\"cardSearch\" action=\"\" autocomplete=\"off\">\t
-            <input type=\"text\" id=\"cardSearchField\" placeholder=\"Drug or Disease\"/><input type=\"submit\" value=\"search\"/>
+            <input type=\"text\" id=\"cardSearchField\" placeholder=\"Drug or Disease or Symptom\"/><input type=\"submit\" value=\"search\"/>
         </form>
     </div>
 </div>
@@ -103,7 +103,7 @@ class __TwigTemplate_0f01a404cacfa3bb04654e8568c50627dddd6a70a4924ffd856f9175618
                     return false;
                 },
                 select: function(event, ui) {
-                    window.location.href = \"results?term[]=\" + ui.item.label;
+                    window.location.href = \"results?exmat=true&term[]=\" + ui.item.label;
                 }
 
 

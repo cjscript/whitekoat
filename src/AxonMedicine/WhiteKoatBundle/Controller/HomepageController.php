@@ -40,14 +40,17 @@ class HomepageController extends GenericController
         {
             $loginInfo = $session->get('logininfo');
             //this will allow saving an URL to load with cards in place on page load
-            $params = $request->query->get('term');
+            $exactMatch =$request->query->get('exmat');
+            $termParam = $request->query->get('term');
             $drugCards = array();
             $diseaseCards = array();
-            if ($params)
-            {
-                foreach ($params as $p)
+            $resultsCards = array();
+            
+            if ($termParam)
+            {                
+                foreach ($termParam as $p)
                 {
-                    $cards = $this->doDrugDiseaseQuery($p);
+                    $cards = $this->doDrugDiseaseQuery($p, $exactMatch);
                     foreach ($cards as $card)
                     {
                         if ($card->getCardType() === "Drug")
@@ -58,13 +61,19 @@ class HomepageController extends GenericController
                         {
                             $this->setLibValHasImages($card);
                             array_push($diseaseCards, $card);
+                        } else if ($card->getCardType() === "Symptom")
+                        {
+                            $this->setLibValHasImages($card);
+                            $value = $this->doLibValQueryById($card->getId());
+                            $card->setLibValue($value);
+                            array_push($resultsCards, $card);
                         }
                     }
                 }
             }
 
             //TODO: results card on first page load?
-            return $this->render('AxonMedicineWhiteKoatBundle:Default:homepage.main.html.twig', array('name' => $loginInfo->getUsername(), 'drugCards' => $drugCards, 'diseaseCards' => $diseaseCards, 'resultsCards' => array()));
+            return $this->render('AxonMedicineWhiteKoatBundle:Default:homepage.main.html.twig', array('name' => $loginInfo->getUsername(), 'drugCards' => $drugCards, 'diseaseCards' => $diseaseCards, 'resultsCards' => $resultsCards));
         }
     }
 
@@ -75,6 +84,7 @@ class HomepageController extends GenericController
      */
     public function getAutocompleteResults(Request $request)
     {
+        
         $session = $this->getRequest()->getSession();
 
         $searchTerm = $request->query->get('term');
@@ -240,6 +250,7 @@ class HomepageController extends GenericController
 
             $relatedDrugCards = $this->searchAllDrugCardFieldsByLibVal($value);
             $relatedDiseaseCards = $this->searchAllDiseaseCardFieldsByLibVal($value);
+            
             return $this->render('AxonMedicineWhiteKoatBundle:Default:resultsCard.html.twig', array('libValue' => $value, 'diseases' => $relatedDiseaseCards['diseaseCards'], 'drugs' => $relatedDrugCards['drugCards']));
         }
     }
@@ -339,21 +350,27 @@ class HomepageController extends GenericController
         //return $result;
     }
 
-    private function doDrugDiseaseQuery($searchTerm)
+    private function doDrugDiseaseQuery($searchTerm, $exactMatch = false)
     {
         $em = $this->getDoctrine()->getManager();
         $drugType = $this->typeQuery('Drugs');
         $diseaseType = $this->typeQuery('Diseases');
         $symptomType = $this->typeQuery('Symptoms');
+        
+        if (!$exactMatch)
+        {
+            $searchTerm = '%' . $searchTerm . '%';
+        }
+
         $drugDiseaseSymptomQuery = $em->createQuery(
-                        'SELECT value
+                        'SELECT distinct value
 	        FROM AxonMedicineWhiteKoatBundle:LibraryValue value
 			WHERE value.type IN(:drugType, :diseaseType, :symptomType) AND value.name LIKE :searchTerm
 			ORDER BY value.name ASC'
                 )->setParameter('drugType', $drugType->getId())
                 ->setParameter('diseaseType', $diseaseType->getId())
                 ->setParameter('symptomType', $symptomType->getId())
-                ->setParameter('searchTerm', '%' . $searchTerm . '%');
+                ->setParameter('searchTerm', $searchTerm);
         $result = $drugDiseaseSymptomQuery->getResult();
 // TODO change from cards to dtos
         $cards = array();
@@ -371,9 +388,17 @@ class HomepageController extends GenericController
                 $card = $diseaseRepo->findOneBy(array('diseasename' => $d->getId()));
             } else if ($d->getType() == $symptomType)
             {
+                // get the related drug/disease cards.
+                $relatedDrugCards = $this->searchAllDrugCardFieldsByLibVal($d);
+                $relatedDiseaseCards = $this->searchAllDiseaseCardFieldsByLibVal($d);
+                
+                // create results card view that stores data for the view.
                 $card = new ResultsCardView();
                 $card->setId($d->getId());
                 $card->setName($d->getName());
+                $card->setSearchTerm($searchTerm);
+                $card->setRelatedDrugCards($relatedDrugCards['drugCards']);
+                $card->setRelatedDiseases($relatedDiseaseCards['diseaseCards']);
             }
             if ($card)
             {

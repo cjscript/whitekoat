@@ -263,7 +263,7 @@ $(document).ready(function() {
     <link href="{{asset('bundles/axonmedicinewhitekoat/css/cardSearch.css')}}" rel="stylesheet">
     
 	<form id="cardSearch" action="" autocomplete="off">	
-		<input type="text" name="term" id="cardSearchField" placeholder="Drug or Disease"/><input type="submit" value="search"/>
+		<input type="text" name="term" id="cardSearchField" placeholder="Drug or Disease or Symptom"/><input type="submit" value="search"/>
 	</form>
 	<div id="outerCardArea">
 		<div id="cardAreaWrapper">
@@ -275,7 +275,7 @@ $(document).ready(function() {
 					{% include 'AxonMedicineWhiteKoatBundle:Default:diseaseCard.html.twig' with {"card": diseaseCard } only %}
 				{% endfor %}
 				{% for resultsCard in resultsCards %}
-					{{resultsCard}}
+{% include 'AxonMedicineWhiteKoatBundle:Default:resultsCard.html.twig' with {"libValue": resultsCard.libValue, "diseases":resultsCard.relatedDiseaseCards, "drugs":resultsCard.relatedDrugCards } only %}
 				{% endfor %}
 				
 			</div>

@@ -47,7 +47,7 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
         echo "\" rel=\"stylesheet\">
     
 \t<form id=\"cardSearch\" action=\"\" autocomplete=\"off\">\t
-\t\t<input type=\"text\" name=\"term\" id=\"cardSearchField\" placeholder=\"Drug or Disease\"/><input type=\"submit\" value=\"search\"/>
+\t\t<input type=\"text\" name=\"term\" id=\"cardSearchField\" placeholder=\"Drug or Disease or Symptom\"/><input type=\"submit\" value=\"search\"/>
 \t</form>
 \t<div id=\"outerCardArea\">
 \t\t<div id=\"cardAreaWrapper\">
@@ -86,10 +86,9 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
         $context['_seq'] = twig_ensure_traversable((isset($context["resultsCards"]) ? $context["resultsCards"] : $this->getContext($context, "resultsCards")));
         foreach ($context['_seq'] as $context["_key"] => $context["resultsCard"]) {
             // line 278
-            echo "\t\t\t\t\t";
-            echo twig_escape_filter($this->env, (isset($context["resultsCard"]) ? $context["resultsCard"] : $this->getContext($context, "resultsCard")), "html", null, true);
-            echo "
-\t\t\t\t";
+            $this->env->loadTemplate("AxonMedicineWhiteKoatBundle:Default:resultsCard.html.twig")->display(array("libValue" => $this->getAttribute((isset($context["resultsCard"]) ? $context["resultsCard"] : $this->getContext($context, "resultsCard")), "libValue"), "diseases" => $this->getAttribute((isset($context["resultsCard"]) ? $context["resultsCard"] : $this->getContext($context, "resultsCard")), "relatedDiseaseCards"), "drugs" => $this->getAttribute((isset($context["resultsCard"]) ? $context["resultsCard"] : $this->getContext($context, "resultsCard")), "relatedDrugCards")));
+            // line 279
+            echo "\t\t\t\t";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['resultsCard'], $context['_parent'], $context['loop']);
@@ -591,6 +590,6 @@ class __TwigTemplate_84157c5401cee87dc8d669d205b4d7310223754e0405c93a6ea2518a4d7
 
     public function getDebugInfo()
     {
-        return array (  577 => 480,  574 => 479,  384 => 288,  381 => 287,  129 => 12,  126 => 11,  118 => 6,  115 => 5,  109 => 475,  107 => 287,  98 => 280,  89 => 278,  84 => 277,  78 => 276,  75 => 275,  70 => 274,  64 => 273,  61 => 272,  57 => 271,  46 => 263,  42 => 261,  40 => 11,  38 => 5,  35 => 4,  32 => 3,);
+        return array (  576 => 480,  573 => 479,  383 => 288,  380 => 287,  128 => 12,  125 => 11,  117 => 6,  114 => 5,  108 => 475,  106 => 287,  97 => 280,  91 => 279,  89 => 278,  84 => 277,  78 => 276,  75 => 275,  70 => 274,  64 => 273,  61 => 272,  57 => 271,  46 => 263,  42 => 261,  40 => 11,  38 => 5,  35 => 4,  32 => 3,);
     }
 }

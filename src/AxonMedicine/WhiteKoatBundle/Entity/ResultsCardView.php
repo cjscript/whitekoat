@@ -12,6 +12,10 @@ class ResultsCardView extends BaseEntity implements GenericCard
 {
 
     private $name;
+    private $searchTerm;
+    private $libValue;
+    private $relatedDrugCards;
+    private $relatedDiseaseCards;
 
     public function __construct()
     {
@@ -26,6 +30,46 @@ class ResultsCardView extends BaseEntity implements GenericCard
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getLibValue()
+    {
+        return $this->libValue;
+    }
+
+    public function setLibValue(\AxonMedicine\WhiteKoatBundle\Entity\Libraryvalue $libValue = null)
+    {
+        $this->libValue = $libValue;
+    }
+
+    public function getRelatedDrugCards()
+    {
+        return $this->relatedDrugCards;
+    }
+
+    public function setRelatedDrugCards($relatedDrugCards = null)
+    {
+        $this->relatedDrugCards = $relatedDrugCards;
+    }
+
+    public function getRelatedDiseaseCards()
+    {
+        return $this->relatedDiseaseCards;
+    }
+
+    public function setRelatedDiseases($relatedDiseaseCards = null)
+    {
+        $this->relatedDiseaseCards = $relatedDiseaseCards;
+    }
+
+    public function getSearchTerm()
+    {
+        return $this->searchTerm;
+    }
+
+    public function setSearchTerm($searchTerm)
+    {
+        $this->searchTerm = $searchTerm;
     }
 
     public function getCardType()
