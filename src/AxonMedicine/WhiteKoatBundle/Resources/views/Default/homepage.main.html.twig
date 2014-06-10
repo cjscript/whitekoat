@@ -269,13 +269,13 @@ $(document).ready(function() {
 		<div id="cardAreaWrapper">
 			<div id="cardArea">
 				{% for drugCard in drugCards %}
-					{% include 'AxonMedicineWhiteKoatBundle:Default:drugCard.html.twig' with {"card": drugCard } only %}
+                                    {% include 'AxonMedicineWhiteKoatBundle:Default:drugCard.html.twig' with {"card": drugCard } only %}
 				{% endfor %}
 				{% for diseaseCard in diseaseCards %}
-					{% include 'AxonMedicineWhiteKoatBundle:Default:diseaseCard.html.twig' with {"card": diseaseCard } only %}
+                                    {% include 'AxonMedicineWhiteKoatBundle:Default:diseaseCard.html.twig' with {"card": diseaseCard } only %}
 				{% endfor %}
 				{% for resultsCard in resultsCards %}
-{% include 'AxonMedicineWhiteKoatBundle:Default:resultsCard.html.twig' with {"libValue": resultsCard.libValue, "diseases":resultsCard.relatedDiseaseCards, "drugs":resultsCard.relatedDrugCards } only %}
+                                    {% include 'AxonMedicineWhiteKoatBundle:Default:resultsCard.html.twig' with {"libValue": resultsCard.libValue, "diseases":resultsCard.relatedDiseaseCards, "drugs":resultsCard.relatedDrugCards } only %}
 				{% endfor %}
 				
 			</div>

@@ -16,7 +16,7 @@ class AliasLibService extends BaseService
     {
 //        $qb = $this->em->createQueryBuilder();
 
-        $query = $this->em->createQuery('select a.id, a.original, GROUP_CONCAT(a.alias) as alias FROM AxonMedicine\WhiteKoatBundle\Entity\Alias a group by a.original order by a.original');
+        $query = $this->em->createQuery('select a.id, a.original, GROUP_CONCAT(distinct a.alias) as alias FROM AxonMedicine\WhiteKoatBundle\Entity\Alias a group by a.original order by a.original');
 
         $aliases = $query->getResult();
 
